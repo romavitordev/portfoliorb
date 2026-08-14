@@ -1,4 +1,4 @@
-import { stack } from '@/lib/site'
+import { stackFlat, stackNota } from '@/lib/site'
 import { Reveal } from '@/components/ui/Reveal'
 
 /**
@@ -7,7 +7,7 @@ import { Reveal } from '@/components/ui/Reveal'
  * pela regra global do globals.css.
  */
 export function Stack() {
-  const fita = [...stack, ...stack]
+  const fita = [...stackFlat, ...stackFlat]
 
   return (
     <section className="relative section-y-tight overflow-hidden border-y border-linha bg-grafite/20">
@@ -37,9 +37,17 @@ export function Stack() {
         <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-carvao to-transparent" />
       </div>
 
+      <div className="container-page">
+        <Reveal>
+          <p className="measure mx-auto mt-10 text-center text-sm leading-relaxed text-creme/50">
+            {stackNota}
+          </p>
+        </Reveal>
+      </div>
+
       {/* Versão acessível da mesma informação, para leitor de tela */}
       <ul className="sr-only">
-        {stack.map((item) => (
+        {stackFlat.map((item) => (
           <li key={item.nome}>
             {item.nome} — {item.nota}
           </li>

@@ -187,15 +187,20 @@ export default function ProjetoPage({ params }: Params) {
             <h2 className="t-h2 mt-5 font-display">Funcionalidades</h2>
           </Reveal>
 
-          <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-linha bg-linha md:grid-cols-2">
+          <div className="grade-moldura grade-moldura-2 mt-12 md:grid-cols-2">
             {projeto.destaques.map((d, i) => (
-              <Reveal key={d.titulo} delay={i * 0.05}>
-                <div className="h-full bg-grafite p-8">
-                  <span className="font-mono text-[0.66rem] tracking-[0.2em] text-clay">
+              <Reveal key={d.titulo} className="h-full" delay={i * 0.05}>
+                <div className="celula">
+                  <span aria-hidden className="celula-num">
                     {String(i + 1).padStart(2, '0')}
                   </span>
-                  <h3 className="mt-4 font-display text-xl tracking-tight">{d.titulo}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-creme/60">{d.texto}</p>
+                  <span className="relative font-mono text-[0.66rem] tracking-[0.2em] text-clay">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <h3 className="relative mt-4 font-display text-xl tracking-tight">{d.titulo}</h3>
+                  <p className="relative mt-3 measure text-sm leading-relaxed text-creme/60">
+                    {d.texto}
+                  </p>
                 </div>
               </Reveal>
             ))}

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import { ExternalLink } from 'lucide-react'
 
-import { brand, imagens, manifesto, socios, stack } from '@/lib/site'
+import { brand, imagens, manifesto, socios, stack, stackNota } from '@/lib/site'
 import { projetos } from '@/lib/projetos'
 import { Reveal } from '@/components/ui/Reveal'
 import { Numeros } from '@/components/home/Numeros'
@@ -116,15 +116,22 @@ export default function EstudioPage() {
             <h2 className="t-h2 measure mt-5 font-display">Os combinados que a gente cumpre</h2>
           </Reveal>
 
-          <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-linha bg-linha md:grid-cols-2">
+          <div className="grade-moldura grade-moldura-2 mt-12 md:grid-cols-2">
             {manifesto.pontos.map((ponto, i) => (
-              <Reveal key={ponto.titulo} delay={i * 0.05}>
-                <div className="h-full bg-grafite p-8 md:p-10">
-                  <span className="font-mono text-[0.66rem] tracking-[0.2em] text-clay">
+              <Reveal key={ponto.titulo} className="h-full" delay={i * 0.05}>
+                <div className="celula md:p-10">
+                  <span aria-hidden className="celula-num">
                     {String(i + 1).padStart(2, '0')}
                   </span>
-                  <h3 className="mt-4 font-display text-2xl tracking-tight">{ponto.titulo}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-creme/60">{ponto.texto}</p>
+                  <span className="relative font-mono text-[0.66rem] tracking-[0.2em] text-clay">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <h3 className="relative mt-4 font-display text-2xl tracking-tight">
+                    {ponto.titulo}
+                  </h3>
+                  <p className="relative mt-3 text-sm leading-relaxed text-creme/60">
+                    {ponto.texto}
+                  </p>
                 </div>
               </Reveal>
             ))}
@@ -141,19 +148,32 @@ export default function EstudioPage() {
             <h2 className="t-h3 mt-5 font-display">O que roda debaixo do capô</h2>
           </Reveal>
 
-          <dl className="mt-10 grid gap-x-10 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
-            {stack.map((item, i) => (
-              <Reveal key={item.nome} delay={i * 0.03}>
-                <div className="border-l border-linha pl-5">
-                  <dt className="font-display text-lg tracking-tight">{item.nome}</dt>
-                  <dd className="mt-1 text-sm text-creme/55">{item.nota}</dd>
+          <div className="mt-12 space-y-12">
+            {stack.map((grupo, g) => (
+              <Reveal key={grupo.grupo} delay={g * 0.04}>
+                <div className="grid gap-6 md:grid-cols-[13rem_1fr]">
+                  <h3 className="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-clay md:pt-1">
+                    {grupo.grupo}
+                  </h3>
+
+                  <dl className="grid gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-3">
+                    {grupo.itens.map((item) => (
+                      <div key={item.nome} className="border-l border-linha pl-5">
+                        <dt className="font-display text-lg tracking-tight">{item.nome}</dt>
+                        <dd className="mt-1 text-sm text-creme/55">{item.nota}</dd>
+                      </div>
+                    ))}
+                  </dl>
                 </div>
               </Reveal>
             ))}
-          </dl>
+          </div>
 
           <Reveal>
-            <p className="mt-12 text-sm text-creme/45">
+            <p className="measure mt-14 border-l-2 border-clay/50 pl-5 text-sm leading-relaxed text-creme/60">
+              {stackNota}
+            </p>
+            <p className="mt-8 text-sm text-creme/45">
               Todo o código do estúdio é público em{' '}
               <a
                 href={brand.github}

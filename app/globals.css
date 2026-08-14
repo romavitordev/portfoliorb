@@ -149,6 +149,50 @@
   }
 
   /* ---------------------------------------------------------------- */
+  /* Grade emoldurada (gap-px sobre bg-linha)                         */
+  /* ---------------------------------------------------------------- */
+  /**
+   * Nessas grades a "célula vazia" da última linha aparece como um bloco
+   * chapado, porque o fundo é a própria moldura. Quando a contagem é
+   * ímpar, o último item ocupa a linha inteira — some o buraco e a peça
+   * final ganha destaque, como se fosse de propósito.
+   *
+   * `:nth-child(odd)` no último filho = contagem ímpar.
+   */
+  .grade-moldura {
+    @apply grid gap-px overflow-hidden rounded-2xl border border-linha bg-linha;
+  }
+
+  @media (min-width: 768px) {
+    .grade-moldura-2 > *:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* Variante de 3 colunas: quando sobra exatamente 1 na última linha,
+     ele ocupa a largura toda. (Sobrando 2, a linha já fica equilibrada
+     o suficiente — não vale forçar meia coluna.) */
+  @media (min-width: 1024px) {
+    .grade-moldura-3 > *:last-child:nth-child(3n + 1) {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* Célula de grade emoldurada, com o número-fantasma da marca */
+  .celula {
+    @apply relative h-full bg-grafite p-7 transition-colors duration-500 md:p-8;
+  }
+  .celula:hover {
+    background-color: rgba(29, 27, 24, 0.55);
+  }
+  .celula-num {
+    @apply pointer-events-none absolute right-5 top-3 font-display text-6xl text-creme/[0.05] transition-colors duration-500;
+  }
+  .celula:hover .celula-num {
+    color: rgba(217, 119, 87, 0.14);
+  }
+
+  /* ---------------------------------------------------------------- */
   /* Efeitos de marca                                                 */
   /* ---------------------------------------------------------------- */
   /* Halo clay — glow radial atrás de títulos/heros */

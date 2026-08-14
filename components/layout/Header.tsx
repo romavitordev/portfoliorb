@@ -5,10 +5,13 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import { brand, nav } from '@/lib/site'
+import { rolarPara } from '@/lib/lenis'
 
 export function Header() {
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
+  const [ativa, setAtiva] = useState<string | null>(null)
+  const naHome = pathname === '/'
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 32)
@@ -17,6 +20,44 @@ export function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  /**
+   * Marca no menu a seção que está na tela. Um IntersectionObserver com
+   * a faixa central da viewport evita o efeito de "duas ativas ao mesmo
+   * tempo" que acontece quando se observa a viewport inteira.
+   */
+  useEffect(() => {
+    if (!naHome) {
+      setAtiva(null)
+      return
+    }
+
+    const alvos = nav
+      .map((item) => document.getElementById(item.secao))
+      .filter((el): el is HTMLElement => el !== null)
+
+    if (alvos.length === 0) return
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const visivel = entries.filter((e) => e.isIntersecting)
+        if (visivel.length > 0) setAtiva(visivel[0].target.id)
+      },
+      { rootMargin: '-45% 0px -45% 0px' },
+    )
+
+    alvos.forEach((el) => obs.observe(el))
+    return () => obs.disconnect()
+  }, [naHome])
+
+  /** Na home, rola. Fora dela, deixa o Link navegar. */
+  function aoClicar(e: React.MouseEvent, secao: string) {
+    if (!naHome) return
+    e.preventDefault()
+    if (rolarPara(secao)) {
+      history.replaceState(null, '', `#${secao}`)
+    }
+  }
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-[80] border-b text-creme backdrop-blur-md transition-colors duration-500 ${
@@ -24,7 +65,11 @@ export function Header() {
       }`}
     >
       <div className="container-page flex h-16 items-center justify-between md:h-20">
-        <Link href="/" className="group flex items-baseline gap-2.5" aria-label={`${brand.nome} — página inicial`}>
+        <Link
+          href="/"
+          className="group flex items-baseline gap-2.5"
+          aria-label={`${brand.nome} — página inicial`}
+        >
           <span className="font-display text-[1.35rem] tracking-tight md:text-2xl">
             Roma <span className="text-clay">&amp;</span> Buganza
           </span>
@@ -33,23 +78,33 @@ export function Header() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex" aria-label="Navegação principal">
+        <nav className="hidden items-center gap-7 md:flex" aria-label="Navegação principal">
           {nav.map((item) => {
-            const ativo = pathname === item.href || pathname.startsWith(`${item.href}/`)
+            const destaca = naHome
+              ? ativa === item.secao
+              : pathname === item.href || pathname.startsWith(`${item.href}/`)
+
             return (
               <Link
-                key={item.href}
-                href={item.href}
-                aria-current={ativo ? 'page' : undefined}
-                className={`text-[0.8rem] tracking-wide transition-opacity hover:opacity-100 ${
-                  ativo ? 'opacity-100' : 'opacity-60'
+                key={item.secao}
+                href={naHome ? `#${item.secao}` : item.href}
+                onClick={(e) => aoClicar(e, item.secao)}
+                aria-current={destaca ? 'true' : undefined}
+                className={`relative text-[0.8rem] tracking-wide transition-opacity hover:opacity-100 ${
+                  destaca ? 'opacity-100' : 'opacity-60'
                 }`}
               >
                 {item.label}
-                {ativo && <span className="mt-1 block h-px w-full bg-clay" aria-hidden />}
+                <span
+                  aria-hidden
+                  className={`absolute -bottom-1.5 left-0 h-px bg-clay transition-all duration-500 ease-saida ${
+                    destaca ? 'w-full' : 'w-0'
+                  }`}
+                />
               </Link>
             )
           })}
+
           <Link href="/contato" className="btn-primary !px-5 !py-2.5 text-[0.8rem]">
             Começar um projeto
           </Link>

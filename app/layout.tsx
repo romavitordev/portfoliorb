@@ -8,6 +8,7 @@ import { Header } from '@/components/layout/Header'
 import { MobileBottomNav } from '@/components/layout/MobileBottomNav'
 import { LenisProvider } from '@/components/layout/LenisProvider'
 import { PageTransition } from '@/components/layout/PageTransition'
+import { ScrollParaHash } from '@/components/layout/ScrollParaHash'
 import { GrainOverlay } from '@/components/fx/GrainOverlay'
 import { Preloader } from '@/components/fx/Preloader'
 import { ScrollProgress } from '@/components/fx/ScrollProgress'
@@ -132,6 +133,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Preloader />
         <ScrollProgress />
         <LenisProvider />
+        <ScrollParaHash />
         <Header />
         <PageTransition>
           <main id="conteudo" className="overflow-x-clip">

@@ -6,7 +6,7 @@ import { Reveal } from '@/components/ui/Reveal'
 
 export function CtaFinal() {
   return (
-    <section className="relative overflow-hidden section-y">
+    <section id="contato" className="relative overflow-hidden section-y">
       <div className="malha absolute inset-0 opacity-50" aria-hidden />
       <div
         className="halo-clay left-1/2 top-1/2 h-[36rem] w-[36rem] -translate-x-1/2 -translate-y-1/2 animate-respirar"

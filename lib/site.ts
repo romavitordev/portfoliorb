@@ -31,11 +31,20 @@ export const brand = {
   fundacao: 2024,
 }
 
+/**
+ * Navegação principal. Cada item aponta para uma SEÇÃO da home (`secao`)
+ * e para uma PÁGINA dedicada (`href`).
+ *
+ * O header usa `secao` quando você já está na home — aí ele rola em vez
+ * de trocar de rota, que é bem mais suave. Fora da home, e no rodapé e
+ * na navbar do mobile, vale o `href`.
+ */
 export const nav = [
-  { href: '/projetos', label: 'Projetos' },
-  { href: '/servicos', label: 'Serviços' },
-  { href: '/estudio', label: 'Estúdio' },
-  { href: '/contato', label: 'Contato' },
+  { secao: 'projetos', href: '/projetos', label: 'Projetos' },
+  { secao: 'servicos', href: '/servicos', label: 'Serviços' },
+  { secao: 'plano-mensal', href: '/servicos#plano-mensal', label: 'Plano mensal' },
+  { secao: 'socios', href: '/estudio', label: 'Estúdio' },
+  { secao: 'contato', href: '/contato', label: 'Contato' },
 ]
 
 /** Monta um link de WhatsApp com mensagem pré-preenchida. */
@@ -317,9 +326,9 @@ export const manutencao = {
         'A gente sabe que o site caiu antes de você. Backup do banco e do conteúdo rodando, com restauração testada.',
     },
     {
-      titulo: 'Infra gerenciada',
+      titulo: 'Domínio e hospedagem inclusos',
       texto:
-        'Domínio, hospedagem, banco e storage seguem em contas suas, mas quem cuida somos nós: renovação, limites, custo sob controle. Você não lida com painel de fornecedor.',
+        'Não vêm como custo à parte: estão dentro da mensalidade. Renovação de domínio, certificado, hospedagem e banco por nossa conta — inclusive escolher o fornecedor que faz sentido pro seu caso, da Vercel à Hostinger.',
     },
   ],
 
@@ -328,14 +337,14 @@ export const manutencao = {
     'Cada ajuste vira orçamento e entra na fila',
     'Você descobre que o site caiu pelo cliente que ligou',
     'Atualização de segurança só quando alguém lembra',
-    'Renovação de domínio e limites de plano são problema seu',
+    'Domínio e hospedagem por sua conta, com a renovação na sua agenda',
     'Depois de um ano, o site parece um ano mais velho',
   ],
   comPlano: [
     'Ajuste pedido no WhatsApp, publicado sem orçamento novo',
     'A gente monitora e age antes de você perceber',
     'Dependências e certificados sempre em dia',
-    'Infra acompanhada por nós, no seu nome',
+    'Domínio e hospedagem inclusos — uma conta só',
     'O site evolui junto com o negócio, mês a mês',
   ],
 
@@ -358,7 +367,7 @@ export const manutencao = {
     },
   ],
 
-  nota: 'O valor de cada nível é fechado junto com o projeto — mesmo critério do orçamento: tamanho do que precisa ser cuidado e porte do negócio. Sem fidelidade: cancele quando quiser, levando o código.',
+  nota: 'Domínio e hospedagem estão inclusos nos três níveis. O valor é fechado junto com o projeto, pelo mesmo critério do orçamento: tamanho do que precisa ser cuidado e porte do negócio. Já tem hospedagem contratada? A gente publica lá e tira a infra da conta. Sem fidelidade: cancele quando quiser, levando o código.',
 }
 
 /* ------------------------------------------------------------------ */
@@ -372,20 +381,92 @@ export const numeros = [
   { valor: 30, sufixo: ' dias', label: 'de ajuste incluso' },
 ]
 
+/**
+ * Ferramentas agrupadas por camada. A home mostra a fita corrida
+ * (`stackFlat`); /estudio mostra agrupado, que é onde o cliente técnico
+ * vai procurar se a gente domina o que ele já usa.
+ */
 export const stack = [
-  { nome: 'Next.js', nota: 'App Router, SSR e static export' },
-  { nome: 'TypeScript', nota: 'tipagem ponta a ponta' },
-  { nome: 'React', nota: 'componentes reaproveitáveis' },
-  { nome: 'Tailwind CSS', nota: 'design system em tokens' },
-  { nome: 'Prisma', nota: 'modelagem e migrações' },
-  { nome: 'PostgreSQL', nota: 'via Supabase ou dedicado' },
-  { nome: 'Node.js', nota: 'APIs e serviços' },
-  { nome: 'Python', nota: 'automação e coleta de dados' },
-  { nome: 'GSAP + Lenis', nota: 'movimento e scroll' },
-  { nome: 'Framer Motion', nota: 'transições de interface' },
-  { nome: 'Vercel', nota: 'deploy e preview por branch' },
-  { nome: 'Blender', nota: 'modelagem e render 3D' },
+  {
+    grupo: 'Interface',
+    itens: [
+      { nome: 'Next.js', nota: 'App Router, SSR e static export' },
+      { nome: 'React', nota: 'componentes reaproveitáveis' },
+      { nome: 'TypeScript', nota: 'tipagem ponta a ponta' },
+      { nome: 'Tailwind CSS', nota: 'design system em tokens' },
+      { nome: 'GSAP + Lenis', nota: 'movimento e scroll suave' },
+      { nome: 'Framer Motion', nota: 'transições de interface' },
+      { nome: 'HTML + CSS + JS', nota: 'quando não vale um framework' },
+    ],
+  },
+  {
+    grupo: 'Servidor e dados',
+    itens: [
+      { nome: 'Node.js', nota: 'APIs e serviços' },
+      { nome: 'Express', nota: 'back-end desacoplado' },
+      { nome: 'Prisma', nota: 'modelagem e migrações' },
+      { nome: 'PostgreSQL', nota: 'o padrão da casa' },
+      { nome: 'SQL Server', nota: 'quando a empresa já roda nele' },
+      { nome: 'MySQL', nota: 'comum em hospedagem compartilhada' },
+      { nome: 'Zod', nota: 'validação compartilhada front/back' },
+    ],
+  },
+  {
+    grupo: 'Hospedagem e infra',
+    itens: [
+      { nome: 'Vercel', nota: 'deploy e preview por branch' },
+      { nome: 'Hostinger', nota: 'hospedagem e e-mail próprio' },
+      { nome: 'VPS Ubuntu', nota: 'controle total, sem lock-in' },
+      { nome: 'Nginx + PM2', nota: 'proxy reverso e processos de pé' },
+      { nome: 'Registro.br', nota: 'domínio .com.br' },
+      { nome: 'Supabase', nota: 'banco, storage e auth' },
+      { nome: 'Neon', nota: 'Postgres gerenciado' },
+      { nome: 'Cloudflare', nota: 'DNS, cache e proteção' },
+      { nome: 'GitHub Actions', nota: 'CI e deploy automático' },
+    ],
+  },
+  {
+    grupo: 'Integrações',
+    itens: [
+      { nome: 'WhatsApp', nota: 'conversão com mensagem pronta' },
+      { nome: 'Resend', nota: 'e-mail transacional' },
+      { nome: 'SMTP', nota: 'envio pelo servidor do cliente' },
+      { nome: 'Google Maps', nota: 'localização e rotas' },
+      { nome: 'Google Analytics', nota: 'medição de tráfego' },
+      { nome: 'Meta Pixel', nota: 'remarketing e campanhas' },
+      { nome: 'Mercado Pago', nota: 'checkout e assinatura' },
+      { nome: 'OpenAI', nota: 'chatbot e recursos de IA' },
+    ],
+  },
+  {
+    grupo: 'Automação',
+    itens: [
+      { nome: 'Python', nota: 'automação e coleta de dados' },
+      { nome: 'Selenium', nota: 'navegador controlado por script' },
+      { nome: 'Pandas', nota: 'tratamento de planilhas e dados' },
+      { nome: 'Cron / agendadores', nota: 'rotinas no horário certo' },
+    ],
+  },
+  {
+    grupo: 'Design e 3D',
+    itens: [
+      { nome: 'Blender', nota: 'modelagem e render 3D' },
+      { nome: 'Figma', nota: 'protótipo antes do código' },
+      { nome: 'Fotografia', nota: 'imagem própria, sem banco genérico' },
+      { nome: 'Impressão 3D', nota: 'da peça digital ao objeto' },
+    ],
+  },
 ]
+
+/** Lista corrida, para a fita da home. */
+export const stackFlat = stack.flatMap((g) => g.itens)
+
+/**
+ * Recado importante junto da stack: a escolha de plataforma é do
+ * cliente, não nossa. Muita gente já tem hospedagem contratada.
+ */
+export const stackNota =
+  'Essa é a caixa de ferramentas, não uma imposição. Se você já tem hospedagem na Hostinger, domínio em outro registrador ou banco rodando em SQL Server, a gente trabalha em cima do que existe — e diz com franqueza quando trocar vale mais a pena do que manter.'
 
 /* ------------------------------------------------------------------ */
 /* Manifesto                                                           */
@@ -422,9 +503,9 @@ export const manifesto = {
         'Performance e acessibilidade não são extra: entram no orçamento base. Site lento perde venda e some do Google.',
     },
     {
-      titulo: 'Infra à parte, no seu nome',
+      titulo: 'Uma conta só, sem surpresa',
       texto:
-        'Domínio, hospedagem e banco ficam em contas suas, pagas direto ao fornecedor. Você enxerga cada centavo e não paga margem nossa em cima disso — muito projeto começa gastando só o domínio.',
+        'No plano mensal, domínio e hospedagem entram inclusos. Você não recebe cobrança de três fornecedores diferentes nem descobre no susto que o domínio venceu — é uma mensalidade e o site fica no ar.',
     },
   ],
 }
@@ -452,11 +533,15 @@ export const faq = [
   },
   {
     q: 'Preciso pagar mensalidade?',
-    a: 'Obrigatório não é: o código é seu e o site não sai do ar se você não assinar. Mas recomendamos com convicção, e quase todo cliente fica. Com o plano mensal, o site deixa de ser mais uma coisa na sua cabeça: a gente monitora, faz backup, mantém segurança e dependências em dia, corrige bug sem cobrar à parte, publica as atualizações que você pedir pelo WhatsApp e senta com você meia hora por mês para decidir o próximo passo. Sem o plano, cada ajuste vira orçamento novo e entra na fila — e site largado envelhece rápido, perde posição no Google e vira problema caro lá na frente. Sem fidelidade: cancele quando quiser.',
+    a: 'Obrigatório não é: o código é seu e você pode levar o site embora quando quiser. Mas recomendamos com convicção, e quase todo cliente fica — porque com o plano o site deixa de ser mais uma coisa na sua cabeça. Domínio e hospedagem entram inclusos, então é uma conta só, sem cobrança pingando de três fornecedores. A gente monitora, faz backup, mantém segurança e dependências em dia, corrige bug sem cobrar à parte, publica as atualizações que você pedir pelo WhatsApp e senta com você meia hora por mês para decidir o próximo passo. Sem o plano, cada ajuste vira orçamento novo, a renovação do domínio passa a ser sua responsabilidade, e site largado envelhece rápido. Sem fidelidade: cancele quando quiser.',
   },
   {
     q: 'O que exatamente entra no plano mensal?',
-    a: 'Chamada mensal de meia hora, atualizações de conteúdo (preço, serviço, foto, texto), correção de bugs com prioridade e sem custo extra, atualização de segurança e dependências, monitoramento com aviso antes de você perceber que caiu, backup com restauração testada, e gestão da infraestrutura — domínio, hospedagem, banco e storage seguem em contas suas, mas quem cuida da renovação, dos limites e do custo somos nós. O nível do plano acompanha o tamanho do que precisa ser cuidado: um site institucional dá muito menos trabalho que um sistema com banco e upload.',
+    a: 'Domínio e hospedagem inclusos, chamada mensal de meia hora, atualizações de conteúdo (preço, serviço, foto, texto), correção de bugs com prioridade e sem custo extra, atualização de segurança e dependências, monitoramento com aviso antes de você perceber que caiu, e backup com restauração testada. O nível do plano acompanha o tamanho do que precisa ser cuidado: um site institucional dá muito menos trabalho — e consome muito menos infraestrutura — que um sistema com banco, upload de fotos e chatbot.',
+  },
+  {
+    q: 'Posso usar minha hospedagem atual?',
+    a: 'Pode. Se você já tem plano na Hostinger, domínio em outro registrador ou servidor da empresa, a gente publica lá e trabalha com o que existe — nesse caso a infra sai do plano e você segue pagando direto ao seu fornecedor. Quando não há nada contratado, a escolha é nossa e entra incluso: Vercel, Hostinger ou VPS, conforme o projeto pedir. A gente explica o porquê da escolha em vez de simplesmente apontar um nome.',
   },
   {
     q: 'Como funciona o pagamento?',

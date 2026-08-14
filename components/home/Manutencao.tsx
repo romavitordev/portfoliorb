@@ -57,12 +57,15 @@ export function Manutencao() {
           <p className="kicker-poeira mt-20">O que está incluso</p>
         </Reveal>
 
-        <div className="mt-8 grid gap-px overflow-hidden rounded-2xl border border-linha bg-linha md:grid-cols-2 lg:grid-cols-3">
+        <div className="grade-moldura grade-moldura-2 grade-moldura-3 mt-8 md:grid-cols-2 lg:grid-cols-3">
           {manutencao.inclui.map((item, i) => (
-            <Reveal key={item.titulo} delay={i * 0.05}>
-              <div className="h-full bg-grafite p-7">
-                <h3 className="font-display text-xl tracking-tight">{item.titulo}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-creme/60">{item.texto}</p>
+            <Reveal key={item.titulo} className="h-full" delay={i * 0.05}>
+              <div className="celula">
+                <span aria-hidden className="celula-num">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <h3 className="relative font-display text-xl tracking-tight">{item.titulo}</h3>
+                <p className="relative mt-3 text-sm leading-relaxed text-creme/60">{item.texto}</p>
               </div>
             </Reveal>
           ))}

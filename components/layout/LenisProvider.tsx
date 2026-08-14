@@ -5,6 +5,8 @@ import Lenis from 'lenis'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
+import { registrarLenis } from '@/lib/lenis'
+
 /**
  * Smooth scroll global (Lenis) sincronizado com o ScrollTrigger do GSAP.
  * Desativado por completo para quem prefere menos movimento.
@@ -17,6 +19,7 @@ export function LenisProvider() {
 
     const lenis = new Lenis({ lerp: 0.1, smoothWheel: true })
     lenis.on('scroll', ScrollTrigger.update)
+    registrarLenis(lenis)
 
     const raf = (time: number) => lenis.raf(time * 1000)
     gsap.ticker.add(raf)
@@ -24,6 +27,7 @@ export function LenisProvider() {
 
     return () => {
       gsap.ticker.remove(raf)
+      registrarLenis(null)
       lenis.destroy()
     }
   }, [])

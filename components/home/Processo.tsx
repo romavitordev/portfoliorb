@@ -14,23 +14,24 @@ export function Processo() {
           </p>
         </Reveal>
 
-        <ol className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-linha bg-linha md:grid-cols-2 lg:grid-cols-3">
+        <ol className="grade-moldura grade-moldura-2 grade-moldura-3 mt-16 md:grid-cols-2 lg:grid-cols-3">
           {processo.map((etapa, i) => (
-            <li key={etapa.numero}>
-              <Reveal delay={i * 0.05}>
-                <div className="group relative h-full bg-grafite p-8 transition-colors duration-500 hover:bg-grafite/55">
-                  <span
-                    aria-hidden
-                    className="pointer-events-none absolute right-6 top-4 font-display text-6xl text-creme/[0.06] transition-colors duration-500 group-hover:text-clay/15"
-                  >
+            <li key={etapa.numero} className="h-full">
+              <Reveal className="h-full" delay={i * 0.05}>
+                <div className="celula">
+                  <span aria-hidden className="celula-num">
                     {etapa.numero}
                   </span>
 
-                  <p className="font-mono text-[0.66rem] uppercase tracking-[0.2em] text-clay">
+                  <p className="relative font-mono text-[0.66rem] uppercase tracking-[0.2em] text-clay">
                     {etapa.duracao}
                   </p>
-                  <h3 className="mt-4 font-display text-2xl tracking-tight">{etapa.titulo}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-creme/60">{etapa.texto}</p>
+                  <h3 className="relative mt-4 font-display text-2xl tracking-tight">
+                    {etapa.titulo}
+                  </h3>
+                  <p className="relative mt-3 text-sm leading-relaxed text-creme/60">
+                    {etapa.texto}
+                  </p>
                 </div>
               </Reveal>
             </li>
