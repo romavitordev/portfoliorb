@@ -273,10 +273,93 @@ export const processo = [
     numero: '06',
     titulo: 'Depois',
     texto:
-      '30 dias de ajuste incluso. Depois disso, manutenção mensal ou sob demanda — sem contrato amarrado.',
+      '30 dias de ajuste incluso. A partir daí entra o plano mensal: a gente continua cuidando do site enquanto você cuida do negócio.',
     duracao: 'contínuo',
   },
 ]
+
+/* ------------------------------------------------------------------ */
+/* Plano mensal (manutenção e gestão)                                  */
+/* ------------------------------------------------------------------ */
+
+export const manutencao = {
+  kicker: 'Depois do lançamento',
+  titulo: 'Site no ar é começo, não linha de chegada',
+  texto:
+    'A entrega é o dia em que o site passa a existir — e a partir dali ele precisa de alguém. Navegador atualiza, dependência fica desatualizada, o Google muda critério, aparece um bug que ninguém previu, e o seu negócio muda: entra serviço novo, muda preço, muda o time. O plano mensal é a gente continuar responsável por tudo isso.',
+  argumento:
+    'É opcional, e vai continuar sendo — o código é seu e o site não para se você não assinar. Mas quase todo cliente fica, e por um motivo prático: ninguém abre uma empresa para virar administrador de site. Sai mais barato manter do que consertar depois de seis meses largado.',
+
+  inclui: [
+    {
+      titulo: 'Chamada mensal',
+      texto:
+        'Meia hora todo mês para olhar os números, ouvir o que mudou no negócio e decidir juntos o que ajustar no site. É aqui que a maioria das boas ideias aparece.',
+    },
+    {
+      titulo: 'Atualizações de conteúdo',
+      texto:
+        'Preço novo, serviço novo, foto nova, texto que envelheceu. Você manda no WhatsApp, a gente publica — sem abrir código, sem esperar orçamento.',
+    },
+    {
+      titulo: 'Correção de bugs',
+      texto:
+        'Apareceu erro, formulário parou, layout quebrou em algum aparelho: entra na fila com prioridade e sem custo extra.',
+    },
+    {
+      titulo: 'Segurança e dependências',
+      texto:
+        'Framework, bibliotecas e certificados atualizados antes de virarem problema. Site parado é site que vai ficando vulnerável.',
+    },
+    {
+      titulo: 'Monitoramento e backup',
+      texto:
+        'A gente sabe que o site caiu antes de você. Backup do banco e do conteúdo rodando, com restauração testada.',
+    },
+    {
+      titulo: 'Infra gerenciada',
+      texto:
+        'Domínio, hospedagem, banco e storage seguem em contas suas, mas quem cuida somos nós: renovação, limites, custo sob controle. Você não lida com painel de fornecedor.',
+    },
+  ],
+
+  /** Comparativo honesto — o que muda no dia a dia. */
+  semPlano: [
+    'Cada ajuste vira orçamento e entra na fila',
+    'Você descobre que o site caiu pelo cliente que ligou',
+    'Atualização de segurança só quando alguém lembra',
+    'Renovação de domínio e limites de plano são problema seu',
+    'Depois de um ano, o site parece um ano mais velho',
+  ],
+  comPlano: [
+    'Ajuste pedido no WhatsApp, publicado sem orçamento novo',
+    'A gente monitora e age antes de você perceber',
+    'Dependências e certificados sempre em dia',
+    'Infra acompanhada por nós, no seu nome',
+    'O site evolui junto com o negócio, mês a mês',
+  ],
+
+  /** Três níveis, pelo tamanho do que precisa ser cuidado. */
+  niveis: [
+    {
+      nome: 'Essencial',
+      para: 'Landing pages e sites institucionais',
+      itens: ['Uptime e backup', 'Pequenas correções', 'Ajustes de conteúdo no mês', 'Chamada mensal'],
+    },
+    {
+      nome: 'Catálogo',
+      para: 'Sites com catálogo e painel',
+      itens: ['Tudo do Essencial', 'Suporte a quem usa o painel', 'Atualizações de plataforma', 'Acompanhamento de métricas'],
+    },
+    {
+      nome: 'Sistema',
+      para: 'Sistemas sob medida e produtos',
+      itens: ['Tudo do Catálogo', 'Monitoramento ativo', 'Rotina de segurança', 'Evoluções pequenas todo mês'],
+    },
+  ],
+
+  nota: 'O valor de cada nível é fechado junto com o projeto — mesmo critério do orçamento: tamanho do que precisa ser cuidado e porte do negócio. Sem fidelidade: cancele quando quiser, levando o código.',
+}
 
 /* ------------------------------------------------------------------ */
 /* Números & stack                                                     */
@@ -326,7 +409,7 @@ export const manifesto = {
     {
       titulo: 'O código é seu',
       texto:
-        'Repositório entregue no fim do projeto. Sem refém de plataforma, sem mensalidade obrigatória pra manter o site no ar.',
+        'Repositório entregue no fim do projeto. Sem refém de plataforma e sem fidelidade: se um dia quiser seguir sem a gente, leva tudo e o site continua no ar.',
     },
     {
       titulo: 'Conteúdo que você edita',
@@ -369,7 +452,11 @@ export const faq = [
   },
   {
     q: 'Preciso pagar mensalidade?',
-    a: 'Para nós, não — manutenção mensal existe, mas é opcional, e o site continua no ar sem ela. O que sempre existe é o custo de infraestrutura, que você paga direto ao fornecedor, em contas suas: um site institucional roda dentro dos planos gratuitos e custa praticamente só o domínio (por volta de R$ 40 por ano). Sistema com banco, upload de fotos e chatbot é que passa a ter custo mensal de verdade, e a gente dimensiona isso com você antes de fechar.',
+    a: 'Obrigatório não é: o código é seu e o site não sai do ar se você não assinar. Mas recomendamos com convicção, e quase todo cliente fica. Com o plano mensal, o site deixa de ser mais uma coisa na sua cabeça: a gente monitora, faz backup, mantém segurança e dependências em dia, corrige bug sem cobrar à parte, publica as atualizações que você pedir pelo WhatsApp e senta com você meia hora por mês para decidir o próximo passo. Sem o plano, cada ajuste vira orçamento novo e entra na fila — e site largado envelhece rápido, perde posição no Google e vira problema caro lá na frente. Sem fidelidade: cancele quando quiser.',
+  },
+  {
+    q: 'O que exatamente entra no plano mensal?',
+    a: 'Chamada mensal de meia hora, atualizações de conteúdo (preço, serviço, foto, texto), correção de bugs com prioridade e sem custo extra, atualização de segurança e dependências, monitoramento com aviso antes de você perceber que caiu, backup com restauração testada, e gestão da infraestrutura — domínio, hospedagem, banco e storage seguem em contas suas, mas quem cuida da renovação, dos limites e do custo somos nós. O nível do plano acompanha o tamanho do que precisa ser cuidado: um site institucional dá muito menos trabalho que um sistema com banco e upload.',
   },
   {
     q: 'Como funciona o pagamento?',

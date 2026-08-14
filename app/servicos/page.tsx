@@ -5,6 +5,7 @@ import { ArrowRight, Check } from 'lucide-react'
 import { brand, servicos, waLink, waMensagens } from '@/lib/site'
 import { Reveal } from '@/components/ui/Reveal'
 import { Processo } from '@/components/home/Processo'
+import { Manutencao } from '@/components/home/Manutencao'
 import { Faq } from '@/components/home/Faq'
 import { CtaFinal } from '@/components/home/CtaFinal'
 
@@ -137,6 +138,7 @@ export default function ServicosPage() {
       </section>
 
       <Processo />
+      <Manutencao />
       <Faq />
       <CtaFinal />
     </>

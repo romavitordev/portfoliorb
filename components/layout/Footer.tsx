@@ -78,6 +78,14 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link
+                  href="/servicos#plano-mensal"
+                  className="text-creme/70 transition-colors hover:text-clay"
+                >
+                  Plano mensal
+                </Link>
+              </li>
             </ul>
           </nav>
 

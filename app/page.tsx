@@ -4,6 +4,7 @@ import { ProjetosDestaque } from '@/components/home/ProjetosDestaque'
 import { ServicosResumo } from '@/components/home/ServicosResumo'
 import { Numeros } from '@/components/home/Numeros'
 import { Processo } from '@/components/home/Processo'
+import { Manutencao } from '@/components/home/Manutencao'
 import { Socios } from '@/components/home/Socios'
 import { Stack } from '@/components/home/Stack'
 import { Faq } from '@/components/home/Faq'
@@ -18,6 +19,7 @@ export default function Home() {
       <ServicosResumo />
       <Numeros />
       <Processo />
+      <Manutencao />
       <Socios />
       <Stack />
       <Faq />
