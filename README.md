@@ -3,6 +3,14 @@
 Landing page e catálogo de projetos do estúdio (Vitor Roma + Marcelo Buganza).
 Next.js 14 (App Router), TypeScript, Tailwind CSS, GSAP/Lenis e Framer Motion.
 
+**Demonstração:** https://romavitordev.github.io/layout_portfoliorb/
+
+> Este é o repositório **completo**, feito para rodar em servidor (Vercel): imagens
+> otimizadas pelo Next e cartão social gerado em runtime. O espelho estático que
+> alimenta a demonstração vive em
+> [layout_portfoliorb](https://github.com/romavitordev/layout_portfoliorb) —
+> mesmo código, exportado como HTML puro para o GitHub Pages.
+
 ## Rodando
 
 ```bash
