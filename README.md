@@ -17,6 +17,9 @@ Next.js 14 (App Router), TypeScript, Tailwind CSS, GSAP/Lenis e Framer Motion.
 npm install
 ```
 
+Copie `.env.example` para `.env` e preencha (veja [Captação de leads](#captação-de-leads)).
+Sem `.env`, o site sobe normalmente — só o formulário e o painel ficam fora do ar.
+
 ```bash
 npm run dev
 ```
@@ -58,6 +61,49 @@ lib/
   projetos.ts  catálogo de projetos + helpers de rota
   design.ts    tokens de motion (durações, easings, reveal)
 ```
+
+## Captação de leads
+
+O formulário de `/contato` grava em banco, dispara aviso por e-mail e alimenta o painel
+em `/admin`. Três travas protegem a rota pública: **rate limit** (5 envios por IP a cada
+10 min), **honeypot** (campo invisível — quando preenchido a rota responde `200` como se
+tivesse dado certo, para o bot não aprender que foi barrado) e **validação por schema Zod
+compartilhado** entre formulário e API.
+
+O aviso por e-mail é secundário de propósito: se o Resend falhar, o lead já está salvo.
+E se a API inteira falhar, o formulário oferece o WhatsApp — lead perdido por erro de
+servidor é o pior desfecho possível.
+
+### Configurar
+
+1. **Banco** — crie um projeto em [neon.tech](https://neon.tech), copie a connection
+   string para `DATABASE_URL` e rode:
+
+   ```bash
+   npm run db:push
+   ```
+
+2. **Senha do painel** — gere o hash (a senha em texto puro não fica em lugar nenhum):
+
+   ```bash
+   npm run senha "sua-senha-forte"
+   ```
+
+3. **Segredo da sessão** — 32+ caracteres em `ADMIN_JWT_SECRET`:
+
+   ```bash
+   node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))"
+   ```
+
+4. **E-mail** (opcional) — chave do [Resend](https://resend.com) em `RESEND_API_KEY` e os
+   destinatários em `EMAIL_DESTINO`. Sem isso o lead é salvo e o aviso vai só para o log.
+
+### Painel
+
+`/admin` — protegido por `middleware.ts`, que valida o JWT no Edge sem tocar no banco.
+Lista os leads, muda status (novo → em conversa → proposta → fechado), guarda anotação
+interna e responde em um clique (WhatsApp se a pessoa deixou telefone, e-mail se deixou
+e-mail). A anotação nunca sai em rota pública.
 
 ## Editando o conteúdo
 

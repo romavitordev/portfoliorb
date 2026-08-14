@@ -1,0 +1,40 @@
+// Banco do site — hoje só guarda leads. Postgres no Neon, mesmo arranjo
+// usado no Marcelo Imóveis.
+//
+// Sem Postgres em dev? Troque provider para "sqlite" e use
+// DATABASE_URL="file:./dev.db".
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum StatusLead {
+  NOVO
+  EM_CONVERSA
+  PROPOSTA
+  FECHADO
+  DESCARTADO
+}
+
+model Lead {
+  id       String     @id @default(cuid())
+  nome     String
+  contato  String // WhatsApp ou e-mail — como a pessoa quer ser respondida
+  tipo     String // o que precisa (ver `contato.tipos` em lib/site.ts)
+  prazo    String
+  sobre    String     @db.Text
+  status   StatusLead @default(NOVO)
+  /// Anotação interna do estúdio — nunca sai em rota pública.
+  nota     String?    @db.Text
+  /// De qual página veio, para saber o que converte.
+  origem   String?
+  criadoEm DateTime   @default(now())
+
+  @@index([status, criadoEm])
+  @@index([criadoEm])
+}
