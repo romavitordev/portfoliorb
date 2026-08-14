@@ -113,7 +113,7 @@ export default function EstudioPage() {
         <div className="container-page">
           <Reveal>
             <p className="kicker">Como trabalhamos</p>
-            <h2 className="t-h2 measure mt-5 font-display">Quatro combinados que a gente cumpre</h2>
+            <h2 className="t-h2 measure mt-5 font-display">Os combinados que a gente cumpre</h2>
           </Reveal>
 
           <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-linha bg-linha md:grid-cols-2">

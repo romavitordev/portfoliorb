@@ -157,7 +157,7 @@ export const servicos: Servico[] = [
       'Performance, acessibilidade e dados estruturados',
       'Painel simples de edição (opcional)',
     ],
-    prazo: '2 a 5 semanas',
+    prazo: '2 a 4 semanas',
     paraQuem: 'Restaurantes, cafés, estúdios, escritórios, academias, clínicas.',
   },
   {
@@ -175,7 +175,7 @@ export const servicos: Servico[] = [
       'Captura de leads e notificação por WhatsApp/e-mail',
       'Métricas de acesso e qualidade de anúncio',
     ],
-    prazo: '4 a 10 semanas',
+    prazo: '4 a 8 semanas com catálogo e painel simples; 8 a 16 no sistema completo',
     paraQuem: 'Imobiliárias, catálogos de produto, marketplaces, operações internas.',
   },
   {
@@ -192,7 +192,7 @@ export const servicos: Servico[] = [
       'Feed, perfis, mensagens, notificações, moderação',
       'Acompanhamento por ciclos, com entrega toda semana',
     ],
-    prazo: '6 semanas ou mais, por ciclos',
+    prazo: '3 a 6 meses, em ciclos',
     paraQuem: 'Fundadores, times pequenos, produtos internos.',
   },
   {
@@ -245,7 +245,7 @@ export const processo = [
     numero: '02',
     titulo: 'Escopo e proposta',
     texto:
-      'Você recebe por escrito o que será feito, o que não será, o prazo e o preço fechado. Nada de "a combinar" no meio do caminho.',
+      'Você recebe por escrito o que será feito, o que não será, o prazo e o preço — normalmente em três níveis de investimento, para escolher onde entrar. Nada de "a combinar" no meio do caminho.',
     duracao: '2 a 3 dias',
   },
   {
@@ -314,9 +314,14 @@ export const manifesto = {
     'Agência grande te vende um diretor de contas e te entrega um estagiário. Aqui quem atende é quem faz. O Vitor escreve o código; o Marcelo entende o mercado e modela o que precisa ser visto. Você fala com os dois, do orçamento ao deploy.',
   pontos: [
     {
+      titulo: 'Orçamento sob medida',
+      texto:
+        'Não temos tabela fixa. O preço nasce do tamanho do projeto e do momento do seu negócio — um autônomo começando e uma empresa que já investe em anúncios não pagam o mesmo pelo mesmo trabalho.',
+    },
+    {
       titulo: 'Preço fechado, escopo escrito',
       texto:
-        'O valor e o que está incluso saem na proposta e não mudam no meio. Se o escopo crescer, a gente conversa antes — nunca depois da fatura.',
+        'Fechado o valor, ele não muda no meio. O que está e o que não está incluso sai por escrito na proposta. Se o escopo crescer, a gente conversa antes — nunca depois da fatura.',
     },
     {
       titulo: 'O código é seu',
@@ -333,6 +338,11 @@ export const manifesto = {
       texto:
         'Performance e acessibilidade não são extra: entram no orçamento base. Site lento perde venda e some do Google.',
     },
+    {
+      titulo: 'Infra à parte, no seu nome',
+      texto:
+        'Domínio, hospedagem e banco ficam em contas suas, pagas direto ao fornecedor. Você enxerga cada centavo e não paga margem nossa em cima disso — muito projeto começa gastando só o domínio.',
+    },
   ],
 }
 
@@ -343,11 +353,15 @@ export const manifesto = {
 export const faq = [
   {
     q: 'Quanto custa um site de vocês?',
-    a: 'Depende do escopo, mas a faixa é transparente: landing page a partir de R$ 1.800, site de várias páginas a partir de R$ 3.500, sistema com painel e banco a partir de R$ 8.000. O valor exato sai por escrito depois da primeira conversa, e não muda no meio do caminho.',
+    a: 'Não trabalhamos com tabela fixa, e isso é de propósito. O preço parte do tamanho do projeto — uma página de conversão e um sistema com painel e banco são trabalhos de ordens diferentes — e depois se ajusta ao momento do seu negócio. Quem está começando sozinho não paga o mesmo que uma empresa que já investe em anúncios e tem muito mais a ganhar com o resultado. Na prática: diga o que precisa e qual é a sua realidade, que a gente monta uma proposta que caiba. O valor sai por escrito antes de começar e não muda no meio do caminho.',
+  },
+  {
+    q: 'Dá para começar pequeno e crescer depois?',
+    a: 'Essa é a nossa recomendação na maioria dos casos. Começa por uma página que já traga contato, valida se o canal funciona pro seu negócio e só então investe em catálogo, painel ou sistema. Como o código é seu e a base é a mesma, a segunda etapa aproveita a primeira — você não paga duas vezes pelo mesmo alicerce.',
   },
   {
     q: 'Em quanto tempo fica pronto?',
-    a: 'Landing page em 1 a 2 semanas. Site institucional em 2 a 5. Sistema com painel administrativo, de 4 a 10 semanas. Produto novo do zero roda por ciclos, com entrega toda semana.',
+    a: 'Landing page em 1 a 2 semanas. Site institucional de 2 a 4. Site com catálogo e painel simples, de 4 a 8 semanas. Sistema sob medida completo, de 8 a 16. Produto novo do zero roda por ciclos de 3 a 6 meses, com entrega toda semana.',
   },
   {
     q: 'Vocês fazem só o site ou também o texto e as imagens?',
@@ -355,7 +369,11 @@ export const faq = [
   },
   {
     q: 'Preciso pagar mensalidade?',
-    a: 'Não. O site é seu e o código também. Hospedagem em Vercel costuma sair de graça ou muito barata, e o domínio você paga direto no registrador. Manutenção mensal existe, mas é opcional.',
+    a: 'Para nós, não — manutenção mensal existe, mas é opcional, e o site continua no ar sem ela. O que sempre existe é o custo de infraestrutura, que você paga direto ao fornecedor, em contas suas: um site institucional roda dentro dos planos gratuitos e custa praticamente só o domínio (por volta de R$ 40 por ano). Sistema com banco, upload de fotos e chatbot é que passa a ter custo mensal de verdade, e a gente dimensiona isso com você antes de fechar.',
+  },
+  {
+    q: 'Como funciona o pagamento?',
+    a: 'Metade na assinatura da proposta, metade na entrega. Projetos longos são divididos por etapas, cada uma com sua parcela — você paga acompanhando o que já está de pé, não confiando numa promessa. Se o prazo for apertado ou o caixa estiver curto, fale: parcelar é conversa normal aqui.',
   },
   {
     q: 'Consigo editar o conteúdo sozinho depois?',
@@ -382,7 +400,7 @@ export const faq = [
 export const contato = {
   titulo: 'Conta o que você quer construir',
   texto:
-    'Responder leva dois minutos. A gente volta no mesmo dia útil com uma primeira leitura do projeto — e, se fizer sentido, uma chamada de 30 minutos.',
+    'Responder leva dois minutos. A gente volta no mesmo dia útil com uma primeira leitura do projeto — e, se fizer sentido, uma chamada de 30 minutos. Não temos tabela fixa: diga também qual é a sua realidade de orçamento, que a proposta sai desenhada para caber nela.',
   tipos: [
     'Landing page',
     'Site institucional',
