@@ -7,99 +7,61 @@ import { ArrowUpRight } from 'lucide-react'
 
 import { rotulosCategoria, rotulosNatureza, type Projeto } from '@/lib/projetos'
 
-/** Casadas com as classes `w-[22rem]` / `h-[16rem]` do painel. */
-const LARGURA_PAINEL = 352
-const ALTURA_PAINEL = 256
-
 /**
  * ÍNDICE DE PROJETOS — o catálogo como lista, não como grade.
  *
  * A grade de três colunas com card grande obrigava a rolar muito para
  * ver oito projetos e dava o mesmo peso visual a todos. Uma lista
- * tipográfica cabe inteira na tela, é varrida em segundos, e deixa o
- * NOME do projeto ser o protagonista em vez da foto.
+ * tipográfica é varrida em segundos e deixa o NOME do projeto ser o
+ * protagonista em vez da foto.
  *
- * A imagem não sumiu: ela aparece num painel que segue o cursor. Assim o
- * visual continua disponível sem custar altura de página.
+ * A imagem não sumiu: vive numa coluna fixa à direita que troca conforme
+ * o ponteiro percorre a lista.
  *
- * Onde não existe cursor (celular, tablet), o painel flutuante seria
- * inútil — então cada linha ganha uma miniatura embutida. A decisão é
- * por `hover: hover`, não por largura de tela: existe notebook com tela
- * pequena e existe tablet grande com caneta.
+ * Por que a coluna fixa e não um painel seguindo o cursor: o painel
+ * flutuante cobria justamente os nomes que a pessoa estava lendo. Um
+ * preview que esconde o conteúdo que ele ilustra é pior que nenhum.
+ *
+ * Onde não existe cursor (celular, tablet) a coluna não faz sentido, e
+ * cada linha ganha uma miniatura embutida. A decisão é por `hover: hover`
+ * e não por largura de tela: existe notebook com tela pequena e tablet
+ * grande com caneta.
  */
 export function IndiceProjetos({ projetos }: { projetos: Projeto[] }) {
   const [ativo, setAtivo] = useState<number | null>(null)
   const [temCursor, setTemCursor] = useState(false)
-  const painelRef = useRef<HTMLDivElement>(null)
   const listaRef = useRef<HTMLUListElement>(null)
 
   useEffect(() => {
     const mq = window.matchMedia('(hover: hover) and (pointer: fine)')
-    const semMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    setTemCursor(mq.matches && !semMovimento)
-
-    const aoMudar = (e: MediaQueryListEvent) => setTemCursor(e.matches && !semMovimento)
+    setTemCursor(mq.matches)
+    const aoMudar = (e: MediaQueryListEvent) => setTemCursor(e.matches)
     mq.addEventListener('change', aoMudar)
     return () => mq.removeEventListener('change', aoMudar)
   }, [])
 
   /*
-    Um único `mousemove` resolve as duas coisas: onde o painel fica e
-    QUAL projeto ele mostra.
-
-    A linha ativa sai daqui em vez de `onMouseEnter` por linha porque o
-    `mouseenter` do React depende do estado de :hover do navegador, que
+    A linha ativa sai do `mousemove`, não de um `onMouseEnter` por linha.
+    O `mouseenter` do React deriva do estado de :hover do navegador, que
     se perde em movimento rápido entre linhas vizinhas — passando o mouse
-    depressa, dava pra ver o painel segurando o projeto errado. Lendo do
+    depressa, dava pra ver o preview segurando o projeto errado. Lendo do
     ponteiro, a linha certa é sempre a que está debaixo dele.
 
-    A posição vai direto no `style`, sem estado: um `setState` por
-    mousemove re-renderizaria a lista dezenas de vezes por segundo. Já o
-    índice só entra no estado quando MUDA de linha.
+    O índice só entra no estado quando MUDA de linha, então não há
+    re-render por quadro.
   */
   useEffect(() => {
     const lista = listaRef.current
     if (!lista || !temCursor) return
 
-    let raf = 0
-    let x = 0
-    let y = 0
     let ultimo = -1
 
     const mover = (e: MouseEvent) => {
-      x = e.clientX
-      y = e.clientY
-
       const linha = (e.target as HTMLElement).closest<HTMLElement>('li[data-indice]')
       const indice = linha ? Number(linha.dataset.indice) : -1
       if (indice !== ultimo) {
         ultimo = indice
         setAtivo(indice >= 0 ? indice : null)
-      }
-
-      if (!raf) {
-        raf = requestAnimationFrame(() => {
-          const p = painelRef.current
-          if (!p) {
-            raf = 0
-            return
-          }
-
-          /*
-            Preso dentro da viewport. Sem isso o painel vaza pela direita
-            e por baixo quando o cursor chega perto da borda — com 352x256
-            e o deslocamento do cursor, as últimas linhas da lista jogavam
-            metade dele pra fora da tela.
-          */
-          const margem = 16
-          const limite = (v: number, max: number) => Math.max(margem, Math.min(v, max - margem))
-
-          const px = limite(x + 24, window.innerWidth - LARGURA_PAINEL)
-          const py = limite(y - LARGURA_PAINEL / 2.75, window.innerHeight - ALTURA_PAINEL)
-
-          p.style.transform = `translate3d(${px}px, ${py}px, 0)`
-          raf = 0
-        })
       }
     }
 
@@ -113,102 +75,92 @@ export function IndiceProjetos({ projetos }: { projetos: Projeto[] }) {
     return () => {
       lista.removeEventListener('mousemove', mover)
       lista.removeEventListener('mouseleave', sair)
-      if (raf) cancelAnimationFrame(raf)
     }
   }, [temCursor])
 
+  const emDestaque = ativo === null ? null : projetos[ativo]
+
   return (
-    <div className="relative">
+    <div className="grid gap-10 lg:grid-cols-[1fr_20rem] lg:gap-14">
       <ul ref={listaRef} className="border-t border-linha">
         {projetos.map((projeto, i) => (
           // `data-indice` é o que o mousemove lê pra saber a linha ativa
           <li key={projeto.slug} data-indice={i}>
             <Link
               href={`/projetos/${projeto.slug}`}
-              // Teclado: quem navega por Tab também vê o painel
               onFocus={() => setAtivo(i)}
               onBlur={() => setAtivo(null)}
-              className="group grid grid-cols-[auto_1fr_auto] items-center gap-x-5 gap-y-2 border-b border-linha px-2 py-5 transition-colors duration-500 hover:bg-nevoa/50 md:grid-cols-[3.5rem_auto_1fr_auto] md:gap-x-8 md:px-4 md:py-6"
+              className="group flex items-center gap-4 border-b border-linha px-2 py-5 transition-colors duration-500 hover:bg-nevoa/50 md:gap-6 md:px-3"
             >
-              {/* Ano */}
-              <span className="font-mono text-[0.66rem] tracking-[0.16em] text-luz/35">
+              <span className="w-10 shrink-0 font-mono text-[0.66rem] tracking-[0.16em] text-luz/35">
                 {projeto.ano}
               </span>
 
-              {/* Miniatura — só onde não há cursor */}
+              {/* Miniatura embutida — só onde não há cursor pra guiar */}
               {!temCursor && (
-                <span className="relative col-start-2 row-span-2 hidden h-12 w-16 shrink-0 overflow-hidden rounded md:block">
-                  <Image
-                    src={projeto.imagem}
-                    alt=""
-                    fill
-                    sizes="64px"
-                    className="object-cover"
-                  />
+                <span className="relative hidden h-11 w-16 shrink-0 overflow-hidden rounded sm:block">
+                  <Image src={projeto.imagem} alt="" fill sizes="64px" className="object-cover" />
                 </span>
               )}
 
-              {/* Nome */}
-              <span
-                className={`font-display text-xl leading-tight tracking-tight transition-colors duration-300 group-hover:text-ciano md:text-3xl ${
-                  temCursor ? 'md:col-start-2' : ''
-                }`}
-              >
-                {projeto.nome}
-              </span>
-
-              {/* Etiquetas */}
-              <span className="col-span-2 flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-luz/40 md:col-span-1 md:col-start-3 md:justify-end">
-                <span className="text-ciano/70">{rotulosCategoria[projeto.categoria]}</span>
-                <span aria-hidden className="text-luz/20">
-                  /
+              <span className="min-w-0 flex-1">
+                <span className="block truncate font-display text-xl leading-tight tracking-tight transition-colors duration-300 group-hover:text-ciano md:text-2xl">
+                  {projeto.nome}
                 </span>
-                <span>{rotulosNatureza[projeto.natureza]}</span>
+                <span className="mt-1 flex flex-wrap items-center gap-x-2 font-mono text-[0.58rem] uppercase tracking-[0.14em] text-luz/40">
+                  <span className="text-ciano/70">{rotulosCategoria[projeto.categoria]}</span>
+                  <span aria-hidden className="text-luz/20">
+                    /
+                  </span>
+                  <span>{rotulosNatureza[projeto.natureza]}</span>
+                </span>
               </span>
 
               <span
                 aria-hidden
-                className="justify-self-end text-luz/25 transition-all duration-300 group-hover:translate-x-1 group-hover:text-ciano"
+                className="shrink-0 text-luz/25 transition-all duration-300 group-hover:translate-x-1 group-hover:text-ciano"
               >
-                <ArrowUpRight size={20} strokeWidth={1.6} />
+                <ArrowUpRight size={19} strokeWidth={1.6} />
               </span>
             </Link>
           </li>
         ))}
       </ul>
 
-      {/* Painel que segue o cursor */}
+      {/* Coluna do preview — acompanha a rolagem sem cobrir a lista */}
       {temCursor && (
-        <div
-          ref={painelRef}
-          aria-hidden
-          className="pointer-events-none fixed left-0 top-0 z-40 hidden md:block"
-        >
-          <div
-            className={`relative h-[16rem] w-[22rem] overflow-hidden rounded-xl border border-linha shadow-elev-2 transition-all duration-500 ease-saida ${
-              ativo === null ? 'scale-95 opacity-0' : 'scale-100 opacity-100'
-            }`}
-          >
-            {projetos.map((projeto, i) => (
-              <Image
-                key={projeto.slug}
-                src={projeto.imagem}
-                alt=""
-                fill
-                sizes="352px"
-                className={`object-cover transition-opacity duration-300 ${
-                  ativo === i ? 'opacity-100' : 'opacity-0'
+        <div aria-hidden className="hidden lg:block">
+          <div className="sticky top-28">
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl border border-linha bg-nevoa">
+              {projetos.map((projeto, i) => (
+                <Image
+                  key={projeto.slug}
+                  src={projeto.imagem}
+                  alt=""
+                  fill
+                  sizes="320px"
+                  className={`object-cover transition-opacity duration-500 ease-saida ${
+                    ativo === i ? 'opacity-100' : 'opacity-0'
+                  }`}
+                />
+              ))}
+
+              {/* Repouso: sem nada sob o ponteiro, a moldura fica vazia
+                  com o campo do espectro, em vez de piscar uma foto. */}
+              <div
+                className={`absolute inset-0 transition-opacity duration-500 ${
+                  emDestaque ? 'opacity-0' : 'opacity-100'
                 }`}
+                style={{
+                  backgroundImage:
+                    'linear-gradient(150deg, rgba(109,74,255,0.30), rgba(0,212,200,0.12) 55%, rgba(20,18,30,1))',
+                }}
               />
-            ))}
-            <div
-              aria-hidden
-              className="absolute inset-0"
-              style={{
-                backgroundImage:
-                  'linear-gradient(150deg, rgba(109,74,255,0.30), transparent 55%)',
-              }}
-            />
+            </div>
+
+            <p className="mt-4 min-h-[2.5rem] font-mono text-[0.62rem] uppercase leading-relaxed tracking-[0.16em] text-luz/45">
+              {emDestaque ? emDestaque.cliente : 'passe o mouse na lista'}
+            </p>
           </div>
         </div>
       )}

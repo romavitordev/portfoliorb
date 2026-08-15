@@ -51,7 +51,7 @@ export default function ProjetosPage() {
             </h1>
             <p className="t-lead measure mt-7 text-luz/65">
               Sistemas de cliente rodando em produção, produtos próprios em construção e projetos
-              conceituais onde a direção de arte anda solta. Cada card marca o que é o quê — e
+              conceituais onde a direção de arte anda solta. Cada linha marca o que é o quê — e
               todos têm código aberto e demonstração no ar.
             </p>
           </Reveal>
