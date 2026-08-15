@@ -22,8 +22,12 @@ const linhas = [
 export function Hero() {
   const reduzir = useReducedMotion()
 
+  // `100svh` (small viewport height) em vez de `vh`: no mobile o `vh`
+  // conta a barra do navegador que some ao rolar, e o hero nascia mais
+  // alto que a tela. O padding superior livra a navbar fixa; o inferior,
+  // a dica de rolagem.
   return (
-    <section className="relative flex min-h-[92svh] items-center overflow-hidden pt-24 md:pt-28">
+    <section className="relative flex min-h-[100svh] items-center overflow-hidden pb-[clamp(2rem,5vh,4rem)] pt-20 md:pt-24">
       <div className="malha absolute inset-0 opacity-60" aria-hidden />
       <div
         className="halo-clay -left-32 top-16 h-[34rem] w-[34rem] animate-respirar md:left-[-10rem]"
@@ -34,7 +38,7 @@ export function Hero() {
         className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-carvao to-transparent"
       />
 
-      <div className="container-page relative grid items-center gap-14 lg:grid-cols-[1.15fr_0.85fr]">
+      <div className="container-page relative grid w-full items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
         {/* Coluna do título */}
         <div>
           <motion.p
@@ -46,7 +50,7 @@ export function Hero() {
             {brand.sufixo} · desde {brand.fundacao}
           </motion.p>
 
-          <h1 className="t-display mt-6 font-display">
+          <h1 className="t-display mt-[clamp(1rem,2.5vh,1.5rem)] font-display">
             <span className="block">
               <SplitWords texto="Software que sai" delay={0.12} />
             </span>
@@ -59,7 +63,7 @@ export function Hero() {
           </h1>
 
           <motion.p
-            className="t-lead measure mt-8 text-creme/65"
+            className="t-lead measure mt-[clamp(1.25rem,3vh,2rem)] text-creme/65"
             initial={reduzir ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6, ease: ease.outExpo }}
@@ -68,7 +72,7 @@ export function Hero() {
           </motion.p>
 
           <motion.div
-            className="mt-10 flex flex-wrap items-center gap-3"
+            className="mt-[clamp(1.5rem,4vh,2.5rem)] flex flex-wrap items-center gap-3"
             initial={reduzir ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.72, ease: ease.outExpo }}

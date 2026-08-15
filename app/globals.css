@@ -77,9 +77,23 @@
   /* ---------------------------------------------------------------- */
   /* Escala tipográfica fluida única                                  */
   /* ---------------------------------------------------------------- */
+  /**
+   * Título do hero.
+   *
+   * Dimensionar só por `vw` estourava: no desktop o hero é uma grade de
+   * duas colunas, e o título mora numa coluna de ~584px enquanto o `vw`
+   * media a tela inteira (1920). O texto quebrava em linhas extras e
+   * empurrava os botões para fora da tela.
+   *
+   * Agora o tamanho é o MENOR entre a fração da largura e a fração da
+   * altura — assim uma tela larga e baixa (o caso de zoom alto) encolhe
+   * a tipografia em vez de transbordar. O teto em rem existe porque o
+   * container trava em 72rem: passando disso a coluna não cresce mais,
+   * então a fonte também não deve crescer.
+   */
   .t-display {
-    font-size: clamp(3rem, 11vw, 9rem);
-    line-height: 0.92;
+    font-size: clamp(2.6rem, min(8.5vw, 12vh), 6.5rem);
+    line-height: 0.94;
     letter-spacing: -0.02em;
   }
 
