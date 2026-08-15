@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
 import { z } from 'zod'
 
 import { prisma } from '@/lib/prisma'
 import { STATUS_LEAD } from '@/lib/lead-status'
+import { COOKIE_SESSAO, lerSessao } from '@/lib/session'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -32,10 +34,17 @@ export async function PATCH(req: Request, { params }: Params) {
     return NextResponse.json({ erro: 'Dados inválidos.' }, { status: 422 })
   }
 
+  // Marca quem mexeu, para os dois sócios não ligarem para o mesmo lead.
+  const sessao = await lerSessao(cookies().get(COOKIE_SESSAO)?.value)
+
   try {
     const lead = await prisma.lead.update({
       where: { id: params.id },
-      data: v.data,
+      data: {
+        ...v.data,
+        tratadoPor: sessao?.nome ?? null,
+        tratadoEm: new Date(),
+      },
     })
     return NextResponse.json({ ok: true, lead })
   } catch {

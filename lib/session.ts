@@ -1,14 +1,21 @@
 import { SignJWT, jwtVerify } from 'jose'
 
 /**
- * Sessão do admin: JWT assinado dentro de cookie httpOnly, 8h de validade
- * — mesmo arranjo do painel do Marcelo Imóveis.
+ * Sessão do painel: JWT assinado dentro de cookie httpOnly, 8h de
+ * validade — mesmo arranjo do painel do Marcelo Imóveis.
  *
- * `jose` funciona no runtime Edge, então o middleware consegue validar a
- * sessão sem tocar no banco.
+ * `jose` roda no Edge, então o middleware valida a sessão sem tocar no
+ * banco. Por isso o nome do sócio viaja dentro do token: assim o painel
+ * mostra quem está logado sem uma consulta a cada request.
  */
 export const COOKIE_SESSAO = 'rb_admin'
 const VALIDADE = '8h'
+
+export type Sessao = {
+  id: string
+  nome: string
+  email: string
+}
 
 function segredo() {
   const s = process.env.ADMIN_JWT_SECRET
@@ -18,22 +25,32 @@ function segredo() {
   return new TextEncoder().encode(s)
 }
 
-export async function criarSessao() {
-  return new SignJWT({ papel: 'admin' })
+export async function criarSessao(usuario: Sessao) {
+  return new SignJWT({ ...usuario, papel: 'admin' })
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime(VALIDADE)
     .sign(segredo())
 }
 
-export async function sessaoValida(token: string | undefined) {
-  if (!token) return false
+/** Devolve a sessão, ou null quando o token é inválido/expirado. */
+export async function lerSessao(token: string | undefined): Promise<Sessao | null> {
+  if (!token) return null
   try {
     const { payload } = await jwtVerify(token, segredo())
-    return payload.papel === 'admin'
+    if (payload.papel !== 'admin') return null
+    return {
+      id: String(payload.id),
+      nome: String(payload.nome),
+      email: String(payload.email),
+    }
   } catch {
-    return false
+    return null
   }
+}
+
+export async function sessaoValida(token: string | undefined) {
+  return (await lerSessao(token)) !== null
 }
 
 /** Opções do cookie — `secure` só em produção, senão quebra em localhost. */

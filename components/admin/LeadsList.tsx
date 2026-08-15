@@ -22,6 +22,7 @@ export type LeadSerializado = {
   nota: string | null
   origem: string | null
   criadoEm: string
+  tratadoPor: string | null
 }
 
 const ordem = STATUS_LEAD
@@ -36,7 +37,14 @@ function linkResposta(contato: string) {
   return null
 }
 
-export function LeadsList({ inicial }: { inicial: LeadSerializado[] }) {
+export function LeadsList({
+  inicial,
+  quemSou,
+}: {
+  inicial: LeadSerializado[]
+  /** Nome do sócio logado — usado no otimismo do "último toque". */
+  quemSou: string
+}) {
   const router = useRouter()
   const [leads, setLeads] = useState(inicial)
   const [filtro, setFiltro] = useState<Status | 'todos'>('todos')
@@ -50,7 +58,9 @@ export function LeadsList({ inicial }: { inicial: LeadSerializado[] }) {
   async function mudarStatus(id: string, status: Status) {
     setSalvando(id)
     const anterior = leads
-    setLeads((atual) => atual.map((l) => (l.id === id ? { ...l, status } : l)))
+    setLeads((atual) =>
+      atual.map((l) => (l.id === id ? { ...l, status, tratadoPor: quemSou } : l)),
+    )
 
     const res = await fetch(`/api/admin/leads/${id}`, {
       method: 'PATCH',
@@ -139,6 +149,11 @@ export function LeadsList({ inicial }: { inicial: LeadSerializado[] }) {
                     })}
                     {lead.origem ? ` · veio de ${lead.origem}` : ''}
                   </p>
+                  {lead.tratadoPor && (
+                    <p className="mt-1 font-mono text-[0.68rem] text-clay/80">
+                      último toque: {lead.tratadoPor}
+                    </p>
+                  )}
                 </div>
 
                 <div className="flex items-center gap-2">

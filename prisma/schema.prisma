@@ -22,6 +22,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+/// Sócios com acesso ao painel. Criados por `npm run usuario`.
+model Usuario {
+  id    String @id @default(cuid())
+  email String @unique
+  nome  String
+
+  /// scrypt, formato "sal:hash" (lib/senha.ts). Nunca em texto puro.
+  senhaHash String
+
+  /// Segredo do TOTP CIFRADO em AES-256-GCM (lib/totp.ts).
+  /// Não pode ser hash: o servidor precisa dele em claro para calcular o
+  /// código esperado. Cifrado com chave derivada do ADMIN_JWT_SECRET,
+  /// que mora fora do banco — um dump sozinho não gera códigos válidos.
+  totpSegredo String?
+  /// Só quando o usuário confirma o primeiro código é que a 2FA passa a
+  /// ser exigida. Evita trancar alguém que escaneou o QR e desistiu.
+  totpAtivoEm DateTime?
+
+  ultimoLogin DateTime?
+  criadoEm    DateTime  @default(now())
+}
+
 model Lead {
   id       String   @id @default(cuid())
   nome     String
@@ -36,6 +58,11 @@ model Lead {
   /// De qual página veio, para saber o que converte.
   origem   String?
   criadoEm DateTime @default(now())
+
+  /// Quem mexeu por último — nome do sócio, para saber quem já falou com
+  /// o lead sem precisar de join.
+  tratadoPor String?
+  tratadoEm  DateTime?
 
   @@index([status, criadoEm])
   @@index([criadoEm])

@@ -83,17 +83,23 @@ servidor é o pior desfecho possível.
    npm run db:push
    ```
 
-2. **Senha do painel** — gere o hash (a senha em texto puro não fica em lugar nenhum):
-
-   ```bash
-   npm run senha "sua-senha-forte"
-   ```
-
-3. **Segredo da sessão** — 32+ caracteres em `ADMIN_JWT_SECRET`:
+2. **Segredo da sessão** — 32+ caracteres em `ADMIN_JWT_SECRET`:
 
    ```bash
    node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))"
    ```
+
+   > Este mesmo segredo cifra o segredo da 2FA no banco. Trocá-lo depois que alguém
+   > ativou a verificação em dois passos torna os códigos indecifráveis, e a pessoa
+   > precisa reativar.
+
+3. **Contas dos sócios** — não há senha em variável de ambiente; cada um tem a própria:
+
+   ```bash
+   npm run usuario -- "vitor@romabuganza.com.br" "Vitor Roma" "senha-forte"
+   ```
+
+   Rodar de novo com o mesmo e-mail troca a senha — é assim que se recupera acesso.
 
 4. **E-mail** (opcional) — chave do [Resend](https://resend.com) em `RESEND_API_KEY` e os
    destinatários em `EMAIL_DESTINO`. Sem isso o lead é salvo e o aviso vai só para o log.
@@ -103,7 +109,23 @@ servidor é o pior desfecho possível.
 `/admin` — protegido por `middleware.ts`, que valida o JWT no Edge sem tocar no banco.
 Lista os leads, muda status (novo → em conversa → proposta → fechado), guarda anotação
 interna e responde em um clique (WhatsApp se a pessoa deixou telefone, e-mail se deixou
-e-mail). A anotação nunca sai em rota pública.
+e-mail). A anotação nunca sai em rota pública, e cada mudança registra qual sócio a fez.
+
+### Login e 2FA
+
+Login em duas etapas: e-mail e senha e, para quem ativou, seis dígitos do app
+autenticador. A senha é conferida **nas duas etapas** — o código sozinho nunca autentica.
+E-mail inexistente e senha errada devolvem a mesma mensagem, para não revelar quais
+e-mails têm conta.
+
+Cada sócio ativa a 2FA em `/admin/conta`. A exigência só passa a valer depois que o
+primeiro código é confirmado — quem escaneia o QR e desiste não fica trancado para fora.
+Desativar exige a senha de novo, mesmo com sessão aberta.
+
+O segredo do TOTP é o único dado que **não pode** ser hasheado: o servidor precisa dele em
+claro para calcular o código esperado. Por isso vai para o banco cifrado em AES-256-GCM,
+com chave derivada do `ADMIN_JWT_SECRET`, que mora fora do banco — um dump vazado sozinho
+não gera códigos válidos.
 
 ## Editando o conteúdo
 
