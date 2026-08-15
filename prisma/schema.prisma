@@ -1,8 +1,17 @@
-// Banco do site — hoje só guarda leads. Postgres no Neon, mesmo arranjo
-// usado no Marcelo Imóveis.
+// Banco do site — hoje só guarda leads.
 //
-// Sem Postgres em dev? Troque provider para "sqlite" e use
-// DATABASE_URL="file:./dev.db".
+// Produção: Postgres (Neon), como no Marcelo Imóveis.
+// Desenvolvimento: SQLite, sem instalar nada — `npm run db:dev` deriva
+// deste arquivo um schema.dev.prisma trocando só o provider. Fonte única
+// de verdade continua sendo ESTE arquivo.
+//
+// Duas escolhas que mantêm os dois bancos compatíveis:
+//
+// 1. `status` é String, não enum. Enum do Postgres exige ALTER TYPE para
+//    cada valor novo e não existe no SQLite. Os valores válidos vivem em
+//    lib/lead-status.ts e são impostos pelo Zod na fronteira da API.
+// 2. Sem `@db.Text`: no Postgres o Prisma já mapeia String para `text`
+//    por padrão, então o atributo era redundante.
 
 generator client {
   provider = "prisma-client-js"
@@ -13,27 +22,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum StatusLead {
-  NOVO
-  EM_CONVERSA
-  PROPOSTA
-  FECHADO
-  DESCARTADO
-}
-
 model Lead {
-  id       String     @id @default(cuid())
+  id       String   @id @default(cuid())
   nome     String
   contato  String // WhatsApp ou e-mail — como a pessoa quer ser respondida
   tipo     String // o que precisa (ver `contato.tipos` em lib/site.ts)
   prazo    String
-  sobre    String     @db.Text
-  status   StatusLead @default(NOVO)
+  sobre    String
+  /// Um de STATUS_LEAD (lib/lead-status.ts). Validado pelo Zod na API.
+  status   String   @default("NOVO")
   /// Anotação interna do estúdio — nunca sai em rota pública.
-  nota     String?    @db.Text
+  nota     String?
   /// De qual página veio, para saber o que converte.
   origem   String?
-  criadoEm DateTime   @default(now())
+  criadoEm DateTime @default(now())
 
   @@index([status, criadoEm])
   @@index([criadoEm])

@@ -11,6 +11,7 @@
     "postinstall": "prisma generate",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
+    "db:dev": "node scripts/schema-dev.mjs && prisma db push --schema prisma/schema.dev.prisma --skip-generate && prisma generate --schema prisma/schema.dev.prisma",
     "senha": "node scripts/gerar-hash.mjs"
   },
   "dependencies": {

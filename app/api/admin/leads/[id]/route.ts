@@ -2,12 +2,17 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
 import { prisma } from '@/lib/prisma'
+import { STATUS_LEAD } from '@/lib/lead-status'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
+/**
+ * `status` é String no banco, então a integridade vem daqui: o Zod só
+ * aceita os valores de STATUS_LEAD.
+ */
 const patchSchema = z.object({
-  status: z.enum(['NOVO', 'EM_CONVERSA', 'PROPOSTA', 'FECHADO', 'DESCARTADO']).optional(),
+  status: z.enum(STATUS_LEAD).optional(),
   nota: z.string().max(4000).nullable().optional(),
 })
 

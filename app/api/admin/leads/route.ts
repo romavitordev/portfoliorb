@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 
 import { prisma } from '@/lib/prisma'
+import { ehStatusValido } from '@/lib/lead-status'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -14,7 +15,7 @@ export async function GET(req: Request) {
   const status = searchParams.get('status')
 
   const leads = await prisma.lead.findMany({
-    where: status && status !== 'todos' ? { status: status as never } : undefined,
+    where: status && status !== 'todos' && ehStatusValido(status) ? { status } : undefined,
     orderBy: { criadoEm: 'desc' },
     take: 200,
   })

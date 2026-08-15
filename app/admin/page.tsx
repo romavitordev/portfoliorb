@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 
 import { prisma } from '@/lib/prisma'
+import { ehStatusValido } from '@/lib/lead-status'
 import { LeadsList } from '@/components/admin/LeadsList'
 
 export const dynamic = 'force-dynamic'
@@ -33,9 +34,16 @@ export default async function AdminPage() {
         </dl>
 
         <div className="mt-14">
-          {/* Serializa as datas: Date não atravessa a fronteira server → client. */}
+          {/*
+            Serializa as datas (Date não atravessa a fronteira server → client)
+            e estreita `status`, que vem do banco como String.
+          */}
           <LeadsList
-            inicial={leads.map((l) => ({ ...l, criadoEm: l.criadoEm.toISOString() }))}
+            inicial={leads.map((l) => ({
+              ...l,
+              criadoEm: l.criadoEm.toISOString(),
+              status: ehStatusValido(l.status) ? l.status : 'NOVO',
+            }))}
           />
         </div>
       </div>

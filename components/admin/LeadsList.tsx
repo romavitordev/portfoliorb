@@ -4,7 +4,12 @@ import { useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { LogOut, Mail, MessageCircle, Trash2 } from 'lucide-react'
 
-type Status = 'NOVO' | 'EM_CONVERSA' | 'PROPOSTA' | 'FECHADO' | 'DESCARTADO'
+import {
+  STATUS_LEAD,
+  coresStatus as cores,
+  rotulosStatus as rotulos,
+  type StatusLead as Status,
+} from '@/lib/lead-status'
 
 export type LeadSerializado = {
   id: string
@@ -19,23 +24,7 @@ export type LeadSerializado = {
   criadoEm: string
 }
 
-const rotulos: Record<Status, string> = {
-  NOVO: 'Novo',
-  EM_CONVERSA: 'Em conversa',
-  PROPOSTA: 'Proposta enviada',
-  FECHADO: 'Fechado',
-  DESCARTADO: 'Descartado',
-}
-
-const cores: Record<Status, string> = {
-  NOVO: 'border-clay text-clay',
-  EM_CONVERSA: 'border-creme/40 text-creme/80',
-  PROPOSTA: 'border-creme/40 text-creme/80',
-  FECHADO: 'border-emerald-500/50 text-emerald-400',
-  DESCARTADO: 'border-creme/15 text-creme/40',
-}
-
-const ordem: Status[] = ['NOVO', 'EM_CONVERSA', 'PROPOSTA', 'FECHADO', 'DESCARTADO']
+const ordem = STATUS_LEAD
 
 /** Monta o link de resposta a partir do que a pessoa deixou. */
 function linkResposta(contato: string) {
