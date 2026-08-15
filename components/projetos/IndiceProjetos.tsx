@@ -7,6 +7,10 @@ import { ArrowUpRight } from 'lucide-react'
 
 import { rotulosCategoria, rotulosNatureza, type Projeto } from '@/lib/projetos'
 
+/** Casadas com as classes `w-[22rem]` / `h-[16rem]` do painel. */
+const LARGURA_PAINEL = 352
+const ALTURA_PAINEL = 256
+
 /**
  * ÍNDICE DE PROJETOS — o catálogo como lista, não como grade.
  *
@@ -40,9 +44,18 @@ export function IndiceProjetos({ projetos }: { projetos: Projeto[] }) {
   }, [])
 
   /*
-    A posição do painel é escrita DIRETO no style, sem passar por estado.
-    Um `setState` por mousemove re-renderizaria a lista dezenas de vezes
-    por segundo à toa — aqui só o transform de um elemento muda.
+    Um único `mousemove` resolve as duas coisas: onde o painel fica e
+    QUAL projeto ele mostra.
+
+    A linha ativa sai daqui em vez de `onMouseEnter` por linha porque o
+    `mouseenter` do React depende do estado de :hover do navegador, que
+    se perde em movimento rápido entre linhas vizinhas — passando o mouse
+    depressa, dava pra ver o painel segurando o projeto errado. Lendo do
+    ponteiro, a linha certa é sempre a que está debaixo dele.
+
+    A posição vai direto no `style`, sem estado: um `setState` por
+    mousemove re-renderizaria a lista dezenas de vezes por segundo. Já o
+    índice só entra no estado quando MUDA de linha.
   */
   useEffect(() => {
     const lista = listaRef.current
@@ -51,35 +64,70 @@ export function IndiceProjetos({ projetos }: { projetos: Projeto[] }) {
     let raf = 0
     let x = 0
     let y = 0
+    let ultimo = -1
 
     const mover = (e: MouseEvent) => {
       x = e.clientX
       y = e.clientY
+
+      const linha = (e.target as HTMLElement).closest<HTMLElement>('li[data-indice]')
+      const indice = linha ? Number(linha.dataset.indice) : -1
+      if (indice !== ultimo) {
+        ultimo = indice
+        setAtivo(indice >= 0 ? indice : null)
+      }
+
       if (!raf) {
         raf = requestAnimationFrame(() => {
           const p = painelRef.current
-          if (p) p.style.transform = `translate3d(${x + 24}px, ${y - 130}px, 0)`
+          if (!p) {
+            raf = 0
+            return
+          }
+
+          /*
+            Preso dentro da viewport. Sem isso o painel vaza pela direita
+            e por baixo quando o cursor chega perto da borda — com 352x256
+            e o deslocamento do cursor, as últimas linhas da lista jogavam
+            metade dele pra fora da tela.
+          */
+          const margem = 16
+          const limite = (v: number, max: number) => Math.max(margem, Math.min(v, max - margem))
+
+          const px = limite(x + 24, window.innerWidth - LARGURA_PAINEL)
+          const py = limite(y - LARGURA_PAINEL / 2.75, window.innerHeight - ALTURA_PAINEL)
+
+          p.style.transform = `translate3d(${px}px, ${py}px, 0)`
           raf = 0
         })
       }
     }
 
+    const sair = () => {
+      ultimo = -1
+      setAtivo(null)
+    }
+
     lista.addEventListener('mousemove', mover)
+    lista.addEventListener('mouseleave', sair)
     return () => {
       lista.removeEventListener('mousemove', mover)
+      lista.removeEventListener('mouseleave', sair)
       if (raf) cancelAnimationFrame(raf)
     }
   }, [temCursor])
 
   return (
     <div className="relative">
-      <ul ref={listaRef} className="border-t border-linha" onMouseLeave={() => setAtivo(null)}>
+      <ul ref={listaRef} className="border-t border-linha">
         {projetos.map((projeto, i) => (
-          <li key={projeto.slug}>
+          // `data-indice` é o que o mousemove lê pra saber a linha ativa
+          <li key={projeto.slug} data-indice={i}>
             <Link
               href={`/projetos/${projeto.slug}`}
-              onMouseEnter={() => setAtivo(i)}
+              // Teclado: quem navega por Tab também vê o painel
               onFocus={() => setAtivo(i)}
+              onBlur={() => setAtivo(null)}
               className="group grid grid-cols-[auto_1fr_auto] items-center gap-x-5 gap-y-2 border-b border-linha px-2 py-5 transition-colors duration-500 hover:bg-nevoa/50 md:grid-cols-[3.5rem_auto_1fr_auto] md:gap-x-8 md:px-4 md:py-6"
             >
               {/* Ano */}
