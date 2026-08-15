@@ -19,7 +19,7 @@ export function MobileBottomNav() {
   return (
     <nav
       aria-label="Navegação rápida"
-      className="fixed inset-x-0 bottom-0 z-[90] border-t border-linha bg-carvao/95 backdrop-blur-md md:hidden"
+      className="fixed inset-x-0 bottom-0 z-[90] border-t border-linha bg-abismo/95 backdrop-blur-md md:hidden"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
       <ul className="grid grid-cols-5">
@@ -31,7 +31,7 @@ export function MobileBottomNav() {
                 href={href}
                 aria-current={ativo ? 'page' : undefined}
                 className={`flex h-16 flex-col items-center justify-center gap-1 text-[0.6rem] tracking-wide transition-colors ${
-                  ativo ? 'text-clay' : 'text-creme/55'
+                  ativo ? 'text-ciano' : 'text-luz/55'
                 }`}
               >
                 <Icone size={19} strokeWidth={1.6} />

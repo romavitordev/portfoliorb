@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 import { brand } from '@/lib/site'
 import { projetos } from '@/lib/projetos'
+import { CampoDeLuz } from '@/components/fx/CampoDeLuz'
 import { Reveal } from '@/components/ui/Reveal'
 import { CatalogoProjetos } from '@/components/projetos/CatalogoProjetos'
 import { CtaFinal } from '@/components/home/CtaFinal'
@@ -40,16 +41,15 @@ export default function ProjetosPage() {
       />
 
       <section className="relative overflow-hidden pb-4 pt-32 md:pt-40">
-        <div className="malha absolute inset-0 opacity-50" aria-hidden />
-        <div className="halo-clay -left-24 top-0 h-[26rem] w-[26rem]" aria-hidden />
+        <CampoDeLuz variante="topo-esquerda" />
 
         <div className="container-page relative">
           <Reveal>
             <p className="prancha">Catálogo</p>
             <h1 className="t-h1 mt-6 font-display">
-              {projetos.length} projetos, <span className="texto-clay">nenhum maquiado</span>
+              {projetos.length} projetos, <span className="texto-espectro">nenhum maquiado</span>
             </h1>
-            <p className="t-lead measure mt-7 text-creme/65">
+            <p className="t-lead measure mt-7 text-luz/65">
               Sistemas de cliente rodando em produção, produtos próprios em construção e projetos
               conceituais onde a direção de arte anda solta. Cada card marca o que é o quê — e
               todos têm código aberto e demonstração no ar.

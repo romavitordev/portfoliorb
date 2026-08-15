@@ -87,9 +87,9 @@ export function FormOrcamento() {
   if (estado === 'enviado') {
     return (
       <div className="surface p-8 text-center md:p-12">
-        <CheckCircle2 size={40} strokeWidth={1.4} className="mx-auto text-clay" aria-hidden />
+        <CheckCircle2 size={40} strokeWidth={1.4} className="mx-auto text-ciano" aria-hidden />
         <h2 className="t-h3 mt-6 font-display">Recebido, {nome.split(' ')[0]}.</h2>
-        <p className="measure mx-auto mt-4 text-sm leading-relaxed text-creme/65">
+        <p className="measure mx-auto mt-4 text-sm leading-relaxed text-luz/65">
           {contato.sucesso}
         </p>
         <a
@@ -136,7 +136,7 @@ export function FormOrcamento() {
             id="tipo"
             value={tipo}
             onChange={(e) => setTipo(e.target.value)}
-            className="campo mt-3"
+            className="campo-form mt-3"
           >
             {contato.tipos.map((t) => (
               <option key={t} value={t}>
@@ -154,7 +154,7 @@ export function FormOrcamento() {
             id="prazo"
             value={prazo}
             onChange={(e) => setPrazo(e.target.value)}
-            className="campo mt-3"
+            className="campo-form mt-3"
           >
             {contato.prazos.map((p) => (
               <option key={p} value={p}>
@@ -175,12 +175,12 @@ export function FormOrcamento() {
           value={sobre}
           onChange={(e) => setSobre(e.target.value)}
           placeholder="Ex.: tenho uma loja de peças e quero um catálogo online que o meu vendedor consiga atualizar sozinho."
-          className="campo mt-3 resize-y"
+          className="campo-form mt-3 resize-y"
           aria-invalid={!!erros.sobre}
           aria-describedby={erros.sobre ? 'sobre-erro' : undefined}
         />
         {erros.sobre && (
-          <p id="sobre-erro" className="mt-2 text-[0.76rem] text-clay">
+          <p id="sobre-erro" className="mt-2 text-[0.76rem] text-ciano">
             {erros.sobre}
           </p>
         )}
@@ -201,13 +201,13 @@ export function FormOrcamento() {
       </div>
 
       {erroGeral && (
-        <div className="mt-6 rounded-xl border border-clay/40 bg-clay/10 p-4">
-          <p className="text-sm text-creme/85">{erroGeral}</p>
+        <div className="mt-6 rounded-xl border border-violeta/40 bg-violeta/10 p-4">
+          <p className="text-sm text-luz/85">{erroGeral}</p>
           <a
             href={waLink(mensagemWa)}
             target="_blank"
             rel="noreferrer noopener"
-            className="btn-link mt-2 !text-clay"
+            className="btn-link mt-2 !text-ciano"
           >
             <MessageCircle size={15} /> Enviar pelo WhatsApp
           </a>
@@ -234,7 +234,7 @@ export function FormOrcamento() {
         )}
       </button>
 
-      <p className="mt-5 text-[0.72rem] leading-relaxed text-creme/40">
+      <p className="mt-5 text-[0.72rem] leading-relaxed text-luz/40">
         {CAPTURA_ATIVA
           ? `Seus dados ficam só com a gente, usados para responder este pedido — nada de lista de disparo. Prefere conversar direto? Chame no WhatsApp ou escreva para ${brand.email}.`
           : 'Esta é a versão de demonstração do site: o botão abre o WhatsApp com a mensagem pronta e você revisa antes de mandar.'}
@@ -268,12 +268,12 @@ function Campo({ id, rotulo, valor, onChange, erro, placeholder, autoComplete }:
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         autoComplete={autoComplete}
-        className="campo mt-3"
+        className="campo-form mt-3"
         aria-invalid={!!erro}
         aria-describedby={erro ? `${id}-erro` : undefined}
       />
       {erro && (
-        <p id={`${id}-erro`} className="mt-2 text-[0.76rem] text-clay">
+        <p id={`${id}-erro`} className="mt-2 text-[0.76rem] text-ciano">
           {erro}
         </p>
       )}

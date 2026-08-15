@@ -1,6 +1,7 @@
 import { Check, X } from 'lucide-react'
 
 import { manutencao, waLink, waMensagens } from '@/lib/site'
+import { CampoDeLuz } from '@/components/fx/CampoDeLuz'
 import { Reveal } from '@/components/ui/Reveal'
 
 /**
@@ -10,26 +11,26 @@ import { Reveal } from '@/components/ui/Reveal'
  */
 export function Manutencao() {
   return (
-    <section id="plano-mensal" className="relative section-y bg-grafite/30">
+    <section id="plano-mensal" className="relative section-y bg-nevoa/30">
       <div className="seam absolute inset-x-0 top-0" aria-hidden />
-      <div className="halo-clay -right-32 top-24 h-[26rem] w-[26rem]" aria-hidden />
+      <CampoDeLuz forca="discreta" variante="topo-direita" />
 
       <div className="container-page relative">
         <Reveal>
           <p className="prancha">{manutencao.kicker}</p>
           <h2 className="t-h2 measure mt-5 font-display">{manutencao.titulo}</h2>
-          <p className="t-lead measure mt-7 text-creme/65">{manutencao.texto}</p>
+          <p className="t-lead measure mt-7 text-luz/65">{manutencao.texto}</p>
         </Reveal>
 
         {/* Comparativo ------------------------------------------------ */}
         <div className="mt-14 grid gap-6 md:grid-cols-2">
           <Reveal>
-            <div className="h-full rounded-2xl border border-linha bg-carvao/40 p-8">
-              <p className="label-mono text-creme/40">Sem plano</p>
+            <div className="h-full rounded-2xl border border-linha bg-abismo/40 p-8">
+              <p className="label-mono text-luz/40">Sem plano</p>
               <ul className="mt-6 space-y-4">
                 {manutencao.semPlano.map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-sm text-creme/55">
-                    <X size={16} strokeWidth={2} className="mt-0.5 shrink-0 text-creme/30" aria-hidden />
+                  <li key={item} className="flex items-start gap-3 text-sm text-luz/55">
+                    <X size={16} strokeWidth={2} className="mt-0.5 shrink-0 text-luz/30" aria-hidden />
                     {item}
                   </li>
                 ))}
@@ -38,12 +39,12 @@ export function Manutencao() {
           </Reveal>
 
           <Reveal delay={0.08}>
-            <div className="surface h-full border-clay/30 p-8 shadow-clay">
-              <p className="label-mono text-clay">Com plano mensal</p>
+            <div className="surface h-full border-violeta/30 p-8 shadow-violeta">
+              <p className="label-mono text-ciano">Com plano mensal</p>
               <ul className="mt-6 space-y-4">
                 {manutencao.comPlano.map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-sm text-creme/80">
-                    <Check size={16} strokeWidth={2} className="mt-0.5 shrink-0 text-clay" aria-hidden />
+                  <li key={item} className="flex items-start gap-3 text-sm text-luz/80">
+                    <Check size={16} strokeWidth={2} className="mt-0.5 shrink-0 text-ciano" aria-hidden />
                     {item}
                   </li>
                 ))}
@@ -65,7 +66,7 @@ export function Manutencao() {
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <h3 className="relative font-display text-xl tracking-tight">{item.titulo}</h3>
-                <p className="relative mt-3 text-sm leading-relaxed text-creme/60">{item.texto}</p>
+                <p className="relative mt-3 text-sm leading-relaxed text-luz/60">{item.texto}</p>
               </div>
             </Reveal>
           ))}
@@ -81,13 +82,13 @@ export function Manutencao() {
             <Reveal key={nivel.nome} delay={i * 0.07}>
               <article className="surface h-full p-8">
                 <h3 className="t-h3 font-display">{nivel.nome}</h3>
-                <p className="mt-2 font-mono text-[0.66rem] uppercase tracking-[0.18em] text-clay">
+                <p className="mt-2 font-mono text-[0.66rem] uppercase tracking-[0.18em] text-ciano">
                   {nivel.para}
                 </p>
                 <ul className="mt-6 space-y-3">
                   {nivel.itens.map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-sm text-creme/70">
-                      <span aria-hidden className="mt-2 h-1 w-1 shrink-0 rounded-full bg-clay" />
+                    <li key={item} className="flex items-start gap-3 text-sm text-luz/70">
+                      <span aria-hidden className="mt-2 h-1 w-1 shrink-0 rounded-full bg-violeta" />
                       {item}
                     </li>
                   ))}
@@ -99,7 +100,7 @@ export function Manutencao() {
 
         <Reveal>
           <div className="mt-12 flex flex-col gap-6 border-t border-linha pt-9 sm:flex-row sm:items-center sm:justify-between">
-            <p className="measure text-sm leading-relaxed text-creme/55">{manutencao.argumento}</p>
+            <p className="measure text-sm leading-relaxed text-luz/55">{manutencao.argumento}</p>
             <a
               href={waLink(waMensagens.servico('o plano mensal de manutenção'))}
               target="_blank"
@@ -109,7 +110,7 @@ export function Manutencao() {
               Falar sobre o plano
             </a>
           </div>
-          <p className="mt-6 text-[0.78rem] leading-relaxed text-creme/40">{manutencao.nota}</p>
+          <p className="mt-6 text-[0.78rem] leading-relaxed text-luz/40">{manutencao.nota}</p>
         </Reveal>
       </div>
     </section>

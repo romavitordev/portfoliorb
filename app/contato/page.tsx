@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Github, Instagram, Linkedin, Mail, MessageCircle } from 'lucide-react'
 
 import { brand, contato, processo, waLink, waMensagens } from '@/lib/site'
+import { CampoDeLuz } from '@/components/fx/CampoDeLuz'
 import { Reveal } from '@/components/ui/Reveal'
 import { FormOrcamento } from '@/components/contato/FormOrcamento'
 import { Faq } from '@/components/home/Faq'
@@ -31,14 +32,13 @@ export default function ContatoPage() {
   return (
     <>
       <section className="relative overflow-hidden pb-4 pt-32 md:pt-40">
-        <div className="malha absolute inset-0 opacity-50" aria-hidden />
-        <div className="halo-clay -right-16 top-0 h-[26rem] w-[26rem] animate-respirar" aria-hidden />
+        <CampoDeLuz variante="topo-direita" />
 
         <div className="container-page relative">
           <Reveal>
             <p className="prancha">Contato</p>
             <h1 className="t-h1 mt-6 font-display">{contato.titulo}</h1>
-            <p className="t-lead measure mt-7 text-creme/65">{contato.texto}</p>
+            <p className="t-lead measure mt-7 text-luz/65">{contato.texto}</p>
           </Reveal>
         </div>
       </section>
@@ -65,17 +65,17 @@ export default function ContatoPage() {
                         <span
                           className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border transition-colors ${
                             destaque
-                              ? 'border-clay/50 text-clay'
-                              : 'border-creme/15 text-creme/60 group-hover:border-clay group-hover:text-clay'
+                              ? 'border-violeta/50 text-ciano'
+                              : 'border-luz/15 text-luz/60 group-hover:border-violeta group-hover:text-ciano'
                           }`}
                         >
                           <Icone size={17} strokeWidth={1.6} />
                         </span>
                         <span>
-                          <span className="block text-sm text-creme transition-colors group-hover:text-clay">
+                          <span className="block text-sm text-luz transition-colors group-hover:text-ciano">
                             {label}
                           </span>
-                          <span className="block text-[0.75rem] text-creme/45">{valor}</span>
+                          <span className="block text-[0.75rem] text-luz/45">{valor}</span>
                         </span>
                       </a>
                     </li>
@@ -90,12 +90,12 @@ export default function ContatoPage() {
                 <ol className="mt-6 space-y-5">
                   {processo.slice(0, 3).map((etapa) => (
                     <li key={etapa.numero} className="flex gap-4">
-                      <span className="font-mono text-[0.7rem] tracking-[0.2em] text-clay">
+                      <span className="font-mono text-[0.7rem] tracking-[0.2em] text-ciano">
                         {etapa.numero}
                       </span>
                       <span>
                         <span className="block text-sm font-medium">{etapa.titulo}</span>
-                        <span className="mt-1 block text-[0.8rem] leading-relaxed text-creme/55">
+                        <span className="mt-1 block text-[0.8rem] leading-relaxed text-luz/55">
                           {etapa.texto}
                         </span>
                       </span>
@@ -106,7 +106,7 @@ export default function ContatoPage() {
             </Reveal>
 
             <Reveal delay={0.2}>
-              <p className="px-2 text-[0.78rem] leading-relaxed text-creme/40">
+              <p className="px-2 text-[0.78rem] leading-relaxed text-luz/40">
                 {brand.base}. Reunião presencial na região de Sorocaba, o resto por chamada de
                 vídeo.
               </p>

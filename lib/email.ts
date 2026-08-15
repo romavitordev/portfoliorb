@@ -48,8 +48,8 @@ export async function avisarLeadNovo(lead: LeadInput & { id: string }) {
   const responder = linkResposta(lead.contato)
 
   const html = `
-    <div style="font-family:system-ui,-apple-system,Segoe UI,sans-serif;max-width:560px;color:#141311">
-      <p style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#B85C38;margin:0 0 4px">
+    <div style="font-family:system-ui,-apple-system,Segoe UI,sans-serif;max-width:560px;color:#0B0A12">
+      <p style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#5638E0;margin:0 0 4px">
         Lead novo pelo site
       </p>
       <h1 style="font-size:22px;margin:0 0 20px">${esc(lead.nome)}</h1>
@@ -62,11 +62,11 @@ export async function avisarLeadNovo(lead: LeadInput & { id: string }) {
       </table>
 
       <p style="margin:20px 0 6px;color:#6b6459;font-size:14px">Mensagem</p>
-      <blockquote style="margin:0;padding:14px 16px;background:#F0EEE6;border-left:3px solid #D97757;white-space:pre-wrap;font-size:14px">${esc(lead.sobre)}</blockquote>
+      <blockquote style="margin:0;padding:14px 16px;background:#ECEAF5;border-left:3px solid #6D4AFF;white-space:pre-wrap;font-size:14px">${esc(lead.sobre)}</blockquote>
 
       ${
         responder
-          ? `<p style="margin:24px 0"><a href="${responder}" style="background:#D97757;color:#141311;text-decoration:none;padding:11px 22px;border-radius:999px;font-weight:600;font-size:14px;display:inline-block">Responder agora</a></p>`
+          ? `<p style="margin:24px 0"><a href="${responder}" style="background:#6D4AFF;color:#FFFFFF;text-decoration:none;padding:11px 22px;border-radius:999px;font-weight:600;font-size:14px;display:inline-block">Responder agora</a></p>`
           : ''
       }
 

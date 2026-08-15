@@ -14,7 +14,7 @@ export function Footer() {
   const ano = new Date().getFullYear()
 
   return (
-    <footer className="relative border-t border-linha bg-grafite/40">
+    <footer className="relative border-t border-linha bg-nevoa/40">
       <div className="seam absolute inset-x-0 top-0" aria-hidden />
 
       <div className="container-page section-y-tight">
@@ -22,10 +22,10 @@ export function Footer() {
           {/* Marca */}
           <div>
             <p className="font-display text-2xl tracking-tight">
-              Roma <span className="text-clay">&amp;</span> Buganza
+              Roma <span className="text-ciano">&amp;</span> Buganza
             </p>
-            <p className="mt-3 measure-sm text-sm leading-relaxed text-creme/60">{brand.promessa}</p>
-            <p className="mt-5 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-creme/45">
+            <p className="mt-3 measure-sm text-sm leading-relaxed text-luz/60">{brand.promessa}</p>
+            <p className="mt-5 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-luz/45">
               {brand.base}
             </p>
 
@@ -37,7 +37,7 @@ export function Footer() {
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label={label}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-creme/15 text-creme/70 transition-colors hover:border-clay hover:text-clay"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-luz/15 text-luz/70 transition-colors hover:border-violeta hover:text-ciano"
                 >
                   <Icone size={17} strokeWidth={1.6} />
                 </a>
@@ -50,13 +50,13 @@ export function Footer() {
             <p className="kicker-poeira">Navegar</p>
             <ul className="mt-4 space-y-2.5 text-sm">
               <li>
-                <Link href="/" className="text-creme/70 transition-colors hover:text-clay">
+                <Link href="/" className="text-luz/70 transition-colors hover:text-ciano">
                   Início
                 </Link>
               </li>
               {nav.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="text-creme/70 transition-colors hover:text-clay">
+                  <Link href={item.href} className="text-luz/70 transition-colors hover:text-ciano">
                     {item.label}
                   </Link>
                 </li>
@@ -72,7 +72,7 @@ export function Footer() {
                 <li key={s.id}>
                   <Link
                     href={`/servicos#${s.id}`}
-                    className="text-creme/70 transition-colors hover:text-clay"
+                    className="text-luz/70 transition-colors hover:text-ciano"
                   >
                     {s.nome}
                   </Link>
@@ -81,7 +81,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/servicos#plano-mensal"
-                  className="text-creme/70 transition-colors hover:text-clay"
+                  className="text-luz/70 transition-colors hover:text-ciano"
                 >
                   Plano mensal
                 </Link>
@@ -97,7 +97,7 @@ export function Footer() {
                 <li key={p.slug}>
                   <Link
                     href={`/projetos/${p.slug}`}
-                    className="text-creme/70 transition-colors hover:text-clay"
+                    className="text-luz/70 transition-colors hover:text-ciano"
                   >
                     {p.nome}
                   </Link>
@@ -112,7 +112,7 @@ export function Footer() {
                   href={waLink(waMensagens.geral)}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="inline-flex items-center gap-2 text-creme/70 transition-colors hover:text-clay"
+                  className="inline-flex items-center gap-2 text-luz/70 transition-colors hover:text-ciano"
                 >
                   <MessageCircle size={15} strokeWidth={1.6} /> WhatsApp
                 </a>
@@ -120,7 +120,7 @@ export function Footer() {
               <li>
                 <a
                   href={`mailto:${brand.email}`}
-                  className="inline-flex items-center gap-2 text-creme/70 transition-colors hover:text-clay"
+                  className="inline-flex items-center gap-2 text-luz/70 transition-colors hover:text-ciano"
                 >
                   <Mail size={15} strokeWidth={1.6} /> {brand.email}
                 </a>
@@ -129,7 +129,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-3 border-t border-linha pt-7 text-[0.72rem] text-creme/45 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-14 flex flex-col gap-3 border-t border-linha pt-7 text-[0.72rem] text-luz/45 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {ano} {brand.nome}. Feito em Sorocaba, no braço.
           </p>

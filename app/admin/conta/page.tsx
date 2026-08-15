@@ -32,7 +32,7 @@ export default async function ContaPage() {
 
         <p className="kicker mt-8">Conta</p>
         <h1 className="t-h2 mt-4 font-display">{usuario.nome}</h1>
-        <p className="mt-3 font-mono text-[0.74rem] text-creme/50">{usuario.email}</p>
+        <p className="mt-3 font-mono text-[0.74rem] text-luz/50">{usuario.email}</p>
 
         <div className="mt-12 grid gap-6 lg:grid-cols-2">
           <ContaCard

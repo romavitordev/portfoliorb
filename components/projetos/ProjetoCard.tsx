@@ -14,9 +14,9 @@ type Props = {
 
 /** Cor do selo de natureza — conceito não pode se passar por cliente. */
 const corNatureza: Record<Projeto['natureza'], string> = {
-  cliente: 'border-clay/50 text-clay',
-  proprio: 'border-creme/35 text-creme/75',
-  conceito: 'border-creme/20 text-creme/50',
+  cliente: 'border-violeta/50 text-ciano',
+  proprio: 'border-luz/35 text-luz/75',
+  conceito: 'border-luz/20 text-luz/50',
 }
 
 export function ProjetoCard({ projeto, grande = false, prioridade = false }: Props) {
@@ -27,11 +27,18 @@ export function ProjetoCard({ projeto, grande = false, prioridade = false }: Pro
     >
       <div className={`relative overflow-hidden ${grande ? 'aspect-[16/9]' : 'aspect-[4/3]'}`}>
         {/*
-          A grade de construção mora ATRÁS da imagem e aparece quando a
-          foto recua no hover: o card também vai do pronto ao rascunho e
-          de volta, como o resto do site.
+          Atrás da imagem mora um campo do espectro. No hover a foto
+          recua e a cor aparece — o card também transita entre os dois
+          registros, como o resto do site.
         */}
-        <div className="malha absolute inset-0 opacity-70" aria-hidden />
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              'linear-gradient(150deg, rgba(109,74,255,0.35), rgba(0,212,200,0.18) 55%, rgba(20,18,30,1))',
+          }}
+        />
 
         <Image
           src={projeto.imagem}
@@ -43,14 +50,14 @@ export function ProjetoCard({ projeto, grande = false, prioridade = false }: Pro
         />
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-t from-grafite via-grafite/25 to-transparent"
+          className="absolute inset-0 bg-gradient-to-t from-nevoa via-nevoa/25 to-transparent"
         />
 
         <div className="absolute left-4 top-4 flex flex-wrap gap-2">
-          <span className="chip border-creme/25 bg-carvao/70 text-creme/80 backdrop-blur-sm">
+          <span className="chip border-luz/25 bg-abismo/70 text-luz/80 backdrop-blur-sm">
             {rotulosCategoria[projeto.categoria]}
           </span>
-          <span className={`chip bg-carvao/70 backdrop-blur-sm ${corNatureza[projeto.natureza]}`}>
+          <span className={`chip bg-abismo/70 backdrop-blur-sm ${corNatureza[projeto.natureza]}`}>
             {rotulosNatureza[projeto.natureza]}
           </span>
         </div>
@@ -63,15 +70,15 @@ export function ProjetoCard({ projeto, grande = false, prioridade = false }: Pro
           </h3>
           <span
             aria-hidden
-            className="mt-1 shrink-0 text-creme/40 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-clay"
+            className="mt-1 shrink-0 text-luz/40 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ciano"
           >
             <ArrowUpRight size={20} strokeWidth={1.6} />
           </span>
         </div>
 
-        <p className="mt-3 flex-1 text-sm leading-relaxed text-creme/60">{projeto.resumo}</p>
+        <p className="mt-3 flex-1 text-sm leading-relaxed text-luz/60">{projeto.resumo}</p>
 
-        <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[0.64rem] uppercase tracking-[0.16em] text-creme/40">
+        <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[0.64rem] uppercase tracking-[0.16em] text-luz/40">
           <span>{projeto.ano}</span>
           <span aria-hidden>·</span>
           {projeto.stack.slice(0, grande ? 4 : 3).map((t) => (

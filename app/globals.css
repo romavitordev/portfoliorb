@@ -8,7 +8,7 @@
   }
 
   body {
-    @apply bg-carvao font-sans text-creme antialiased;
+    @apply bg-abismo font-sans text-luz antialiased;
   }
 
   /* Respiro pra navbar inferior do mobile não cobrir o conteúdo final */
@@ -19,11 +19,11 @@
   }
 
   ::selection {
-    @apply bg-clay text-carvao;
+    @apply bg-violeta text-luz;
   }
 
   :focus-visible {
-    @apply outline-none ring-2 ring-clay ring-offset-2 ring-offset-carvao;
+    @apply outline-none ring-2 ring-ciano ring-offset-2 ring-offset-abismo;
   }
 
   section {
@@ -43,7 +43,6 @@
     @apply mx-auto w-full max-w-wide px-6 md:px-10;
   }
 
-  /* Ritmo vertical único de seção */
   .section-y {
     padding-block: clamp(4.5rem, 9vw, 8.5rem);
   }
@@ -51,7 +50,6 @@
     padding-block: clamp(3.5rem, 7vw, 6rem);
   }
 
-  /* Largura de leitura confortável (~60–66ch) */
   .measure {
     max-width: 64ch;
   }
@@ -60,36 +58,76 @@
   }
 
   /* ---------------------------------------------------------------- */
-  /* Rótulos (mono) — a assinatura editorial                          */
+  /* CAMPO DE LUZ — o fundo                                           */
   /* ---------------------------------------------------------------- */
+  /**
+   * Não há padrão nenhum no fundo: nem grade, nem pontos, nem textura.
+   * A profundidade vem de campos de luz amplos e desfocados, em duas
+   * cores do espectro, derivando devagar em contratempo.
+   *
+   * Duas cores e não uma: um único glow radial é o gradiente-padrão que
+   * todo template usa. Dois campos de matizes diferentes se sobrepondo
+   * criam uma terceira cor na interseção, e é isso que dá a sensação de
+   * profundidade em vez de "papel de parede".
+   */
+  .campo {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 9999px;
+    filter: blur(80px);
+  }
+  .campo-violeta {
+    background: radial-gradient(closest-side, rgba(109, 74, 255, 0.28), transparent 70%);
+  }
+  .campo-ciano {
+    background: radial-gradient(closest-side, rgba(0, 212, 200, 0.2), transparent 70%);
+  }
+  .campo-lima {
+    background: radial-gradient(closest-side, rgba(166, 255, 77, 0.16), transparent 70%);
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* Rótulos                                                          */
+  /* ---------------------------------------------------------------- */
+  /* Ciano e não violeta: em texto pequeno o violeta dá 3.1:1 e reprova. */
   .kicker {
-    @apply font-mono text-[0.7rem] font-medium uppercase tracking-[0.28em] text-clay;
+    @apply font-mono text-[0.7rem] font-medium uppercase tracking-[0.28em] text-ciano;
   }
 
   .kicker-poeira {
-    @apply font-mono text-[0.7rem] font-medium uppercase tracking-[0.28em] text-creme/60;
+    @apply font-mono text-[0.7rem] font-medium uppercase tracking-[0.28em] text-luz/60;
   }
 
   .label-mono {
     @apply font-mono text-[0.7rem] uppercase tracking-[0.28em];
   }
 
+  /**
+   * Cabeçalho de seção: rótulo + régua que se estende e some.
+   * A régua usa o espectro, não uma cor só.
+   */
+  .prancha {
+    @apply flex items-center gap-4 font-mono text-[0.7rem] uppercase tracking-[0.28em] text-ciano;
+  }
+  .prancha::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-image: linear-gradient(
+      90deg,
+      rgba(0, 212, 200, 0.5),
+      rgba(109, 74, 255, 0.35) 45%,
+      transparent
+    );
+  }
+
   /* ---------------------------------------------------------------- */
-  /* Escala tipográfica fluida única                                  */
+  /* Escala tipográfica fluida                                        */
   /* ---------------------------------------------------------------- */
   /**
-   * Título do hero.
-   *
-   * Dimensionar só por `vw` estourava: no desktop o hero é uma grade de
-   * duas colunas, e o título mora numa coluna de ~584px enquanto o `vw`
-   * media a tela inteira (1920). O texto quebrava em linhas extras e
-   * empurrava os botões para fora da tela.
-   *
-   * Agora o tamanho é o MENOR entre a fração da largura e a fração da
-   * altura — assim uma tela larga e baixa (o caso de zoom alto) encolhe
-   * a tipografia em vez de transbordar. O teto em rem existe porque o
-   * container trava em 72rem: passando disso a coluna não cresce mais,
-   * então a fonte também não deve crescer.
+   * O termo de altura existe porque no desktop o título vive numa coluna
+   * de ~584px enquanto o `vw` mede a tela inteira: sem ele, tela larga e
+   * baixa quebra o título em linhas extras e empurra o CTA para fora.
    */
   .t-display {
     font-size: clamp(2.6rem, min(8.5vw, 12vh), 6.5rem);
@@ -127,7 +165,7 @@
   }
 
   /* ---------------------------------------------------------------- */
-  /* Botões — com hover, active, focus e disabled                     */
+  /* Botões                                                           */
   /* ---------------------------------------------------------------- */
   .btn {
     @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium tracking-wide transition-all duration-300 ease-out;
@@ -135,16 +173,20 @@
   }
 
   .btn-primary {
-    @apply btn bg-clay font-semibold text-carvao hover:-translate-y-0.5 hover:bg-argila hover:shadow-clay active:translate-y-0;
+    @apply btn bg-violeta font-semibold text-luz hover:-translate-y-0.5 hover:shadow-violeta active:translate-y-0;
+  }
+
+  /* CTA de resultado — usa a ponta "crescimento" do espectro */
+  .btn-crescer {
+    @apply btn bg-lima font-semibold text-abismo hover:-translate-y-0.5 hover:shadow-lima active:translate-y-0;
   }
 
   .btn-ghost {
-    @apply btn border border-creme/20 text-creme hover:-translate-y-0.5 hover:border-creme/60 active:translate-y-0;
+    @apply btn border border-luz/20 text-luz hover:-translate-y-0.5 hover:border-ciano/70 hover:text-ciano active:translate-y-0;
   }
 
-  /* Link de ação (com seta etc.) */
   .btn-link {
-    @apply inline-flex items-center gap-2 text-sm tracking-wide text-creme/70 transition-colors hover:text-clay;
+    @apply inline-flex items-center gap-2 text-sm tracking-wide text-luz/70 transition-colors hover:text-ciano;
   }
 
   .chip {
@@ -152,26 +194,23 @@
   }
 
   /* ---------------------------------------------------------------- */
-  /* Superfícies / cartões (elevação pra tema escuro)                 */
+  /* Superfícies                                                      */
   /* ---------------------------------------------------------------- */
   .surface {
-    @apply rounded-2xl border border-linha bg-grafite shadow-elev-1;
+    @apply rounded-2xl border border-linha bg-nevoa shadow-elev-1;
   }
 
   .card-hover {
-    @apply transition-all duration-500 ease-out hover:-translate-y-1.5 hover:border-clay/40 hover:shadow-clay-lg;
+    @apply transition-all duration-500 ease-out hover:-translate-y-1.5 hover:border-violeta/50 hover:shadow-violeta;
   }
 
   /* ---------------------------------------------------------------- */
-  /* Grade emoldurada (gap-px sobre bg-linha)                         */
+  /* Grade emoldurada                                                 */
   /* ---------------------------------------------------------------- */
   /**
-   * Nessas grades a "célula vazia" da última linha aparece como um bloco
-   * chapado, porque o fundo é a própria moldura. Quando a contagem é
-   * ímpar, o último item ocupa a linha inteira — some o buraco e a peça
-   * final ganha destaque, como se fosse de propósito.
-   *
-   * `:nth-child(odd)` no último filho = contagem ímpar.
+   * Nessas grades a célula vazia da última linha aparece como bloco
+   * chapado, porque o fundo é a própria moldura. Contagem ímpar → o
+   * último item ocupa a linha inteira.
    */
   .grade-moldura {
     @apply grid gap-px overflow-hidden rounded-2xl border border-linha bg-linha;
@@ -183,93 +222,51 @@
     }
   }
 
-  /* Variante de 3 colunas: quando sobra exatamente 1 na última linha,
-     ele ocupa a largura toda. (Sobrando 2, a linha já fica equilibrada
-     o suficiente — não vale forçar meia coluna.) */
   @media (min-width: 1024px) {
     .grade-moldura-3 > *:last-child:nth-child(3n + 1) {
       grid-column: 1 / -1;
     }
   }
 
-  /* Célula de grade emoldurada, com o número-fantasma da marca */
   .celula {
-    @apply relative h-full bg-grafite p-7 transition-colors duration-500 md:p-8;
+    @apply relative h-full bg-nevoa p-7 transition-colors duration-500 md:p-8;
   }
   .celula:hover {
-    background-color: rgba(29, 27, 24, 0.55);
+    background-color: rgba(28, 25, 44, 0.9);
   }
   .celula-num {
-    @apply pointer-events-none absolute right-5 top-3 font-display text-6xl text-creme/[0.05] transition-colors duration-500;
+    @apply pointer-events-none absolute right-5 top-3 font-display text-6xl text-luz/[0.05] transition-colors duration-500;
   }
   .celula:hover .celula-num {
-    color: rgba(217, 119, 87, 0.14);
+    color: rgba(0, 212, 200, 0.16);
   }
 
   /* ---------------------------------------------------------------- */
-  /* Efeitos de marca                                                 */
+  /* Os dois registros: rascunho → pronto                             */
   /* ---------------------------------------------------------------- */
-  /* Halo clay — glow radial atrás de títulos/heros */
-  .halo-clay {
-    position: absolute;
-    pointer-events: none;
-    border-radius: 9999px;
-    background: radial-gradient(
-      closest-side,
-      rgba(217, 119, 87, 0.26),
-      rgba(233, 164, 138, 0.09) 45%,
-      transparent 72%
-    );
-    filter: blur(12px);
-  }
-
-  /* MOTIVO DE MARCA: malha técnica — o "papel milimetrado" do estúdio */
-  .malha {
-    background-image: linear-gradient(to right, rgba(240, 238, 230, 0.045) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(240, 238, 230, 0.045) 1px, transparent 1px);
-    background-size: 64px 64px;
-  }
-
-  /* ---------------------------------------------------------------- */
-  /* OS DOIS REGISTROS                                                */
-  /* ---------------------------------------------------------------- */
-  /**
-   * O conceito do site é uma coisa saindo do rascunho e virando produto.
-   * Para isso existirem dois "registros" visuais que se alternam:
-   *
-   *   .rascunho — mono, tracejado, sem cor. O estado de papel.
-   *   .pronto   — serifa, sólido, com clay. O estado publicado.
-   *
-   * Toda seção usa os dois: o conteúdo entra como rascunho e assenta em
-   * pronto. É a assinatura da marca, e não um efeito solto.
-   */
   .rascunho {
-    @apply border border-dashed border-creme/20 bg-transparent;
+    @apply border border-dashed border-luz/20 bg-transparent;
   }
 
   .rascunho-texto {
-    @apply font-mono text-creme/35;
+    @apply font-mono text-luz/40;
   }
 
-  /* Bloco cinza que representa "conteúdo ainda não escrito" */
   .rascunho-bloco {
-    @apply rounded bg-creme/[0.07];
+    @apply rounded bg-luz/[0.07];
   }
 
-  .pronto {
-    @apply border border-linha bg-grafite;
-  }
-
-  /* Marcas de cota do desenho técnico — cantos de recorte */
+  /* Marcas de cota — cantos de recorte do desenho técnico */
   .cotas::before,
   .cotas::after {
     content: '';
     position: absolute;
     width: 10px;
     height: 10px;
-    border-color: rgba(217, 119, 87, 0.5);
+    border-color: rgba(0, 212, 200, 0.55);
     border-style: solid;
     pointer-events: none;
+    z-index: 1;
   }
   .cotas::before {
     top: -1px;
@@ -282,56 +279,45 @@
     border-width: 0 1px 1px 0;
   }
 
-  /**
-   * Cabeçalho de seção no formato de prancha técnica:
-   *   01 — CATÁLOGO ————————————————————
-   * A régua se estende até o fim da linha, como numa planta.
-   */
-  .prancha {
-    @apply flex items-center gap-4 font-mono text-[0.7rem] uppercase tracking-[0.28em] text-clay;
-  }
-  .prancha::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background-image: linear-gradient(
-      90deg,
-      rgba(217, 119, 87, 0.45),
-      rgba(217, 119, 87, 0.06) 60%,
-      transparent
-    );
-  }
-
-  /* Palavra em destaque — texto com gradiente clay */
-  .texto-clay {
-    background-image: linear-gradient(92deg, #e9a48a, #d97757 55%, #e9a48a);
+  /* ---------------------------------------------------------------- */
+  /* Marca do espectro                                                */
+  /* ---------------------------------------------------------------- */
+  /* Texto que percorre a escala inteira — usado em uma palavra por página */
+  .texto-espectro {
+    background-image: linear-gradient(100deg, #6d4aff, #2d8bff 30%, #00d4c8 62%, #a6ff4d);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
-  /* Costura entre seções — fio clay sutil */
+  /* Costura entre seções */
   .seam {
     height: 1px;
-    background-image: linear-gradient(90deg, transparent, rgba(217, 119, 87, 0.4), transparent);
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      rgba(109, 74, 255, 0.45),
+      rgba(0, 212, 200, 0.45),
+      transparent
+    );
   }
 
   /* ---------------------------------------------------------------- */
-  /* Formulários (tema escuro) — com estados                          */
+  /* Formulários                                                      */
   /* ---------------------------------------------------------------- */
-  .campo {
-    @apply w-full rounded-xl border border-creme/15 bg-carvao px-4 py-3 text-sm text-creme transition-colors;
-    @apply placeholder:text-creme/35 focus:border-clay focus:outline-none focus:ring-1 focus:ring-clay;
+  .campo-form {
+    @apply w-full rounded-xl border border-luz/15 bg-abismo px-4 py-3 text-sm text-luz transition-colors;
+    @apply placeholder:text-luz/35 focus:border-ciano focus:outline-none focus:ring-1 focus:ring-ciano;
     @apply disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .skeleton {
-    @apply relative overflow-hidden bg-[#211E1A];
+    @apply relative overflow-hidden bg-[#1A1728];
   }
   .skeleton::after {
     content: '';
     @apply absolute inset-0 -translate-x-full animate-shimmer;
-    background: linear-gradient(90deg, transparent, rgba(240, 238, 230, 0.06), transparent);
+    background: linear-gradient(90deg, transparent, rgba(236, 234, 245, 0.06), transparent);
   }
 }
 

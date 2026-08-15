@@ -28,22 +28,22 @@ export function Socios() {
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <h3 className="t-h3 font-display">{socio.nome}</h3>
-                    <p className="mt-2 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-clay">
+                    <p className="mt-2 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-ciano">
                       {socio.papel}
                     </p>
                   </div>
                   <span
                     aria-hidden
-                    className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-clay"
+                    className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-violeta"
                   />
                 </div>
 
-                <p className="mt-6 text-lg leading-relaxed text-creme/80">{socio.resumo}</p>
-                <p className="mt-4 text-sm leading-relaxed text-creme/60">{socio.bio}</p>
+                <p className="mt-6 text-lg leading-relaxed text-luz/80">{socio.resumo}</p>
+                <p className="mt-4 text-sm leading-relaxed text-luz/60">{socio.bio}</p>
 
                 <ul className="mt-7 flex flex-wrap gap-2">
                   {socio.faz.slice(0, 4).map((item) => (
-                    <li key={item} className="chip border-creme/15 text-creme/55">
+                    <li key={item} className="chip border-luz/15 text-luz/55">
                       {item}
                     </li>
                   ))}

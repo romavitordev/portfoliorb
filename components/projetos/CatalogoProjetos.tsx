@@ -66,7 +66,7 @@ export function CatalogoProjetos() {
         />
       </div>
 
-      <p aria-live="polite" className="mt-8 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-creme/40">
+      <p aria-live="polite" className="mt-8 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-luz/40">
         {visiveis.length} {visiveis.length === 1 ? 'projeto' : 'projetos'}
       </p>
 
@@ -88,7 +88,7 @@ export function CatalogoProjetos() {
       </div>
 
       {visiveis.length === 0 && (
-        <p className="measure py-16 text-creme/55">
+        <p className="measure py-16 text-luz/55">
           Nenhum projeto com essa combinação de filtros. Limpe um dos dois para ver o catálogo
           inteiro.
         </p>
@@ -109,7 +109,7 @@ type GrupoProps = {
 function Grupo({ rotulo, valor, onChange, opcoes }: GrupoProps) {
   return (
     <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
-      <span className="font-mono text-[0.64rem] uppercase tracking-[0.24em] text-creme/35">
+      <span className="font-mono text-[0.64rem] uppercase tracking-[0.24em] text-luz/35">
         {rotulo}
       </span>
 
@@ -124,8 +124,8 @@ function Grupo({ rotulo, valor, onChange, opcoes }: GrupoProps) {
               onClick={() => onChange(opcao.valor)}
               className={`rounded-full border px-4 py-1.5 text-[0.76rem] transition-all duration-300 ${
                 ativo
-                  ? 'border-clay bg-clay text-carvao'
-                  : 'border-linha text-creme/60 hover:border-creme/40 hover:text-creme'
+                  ? 'border-violeta bg-violeta text-abismo'
+                  : 'border-linha text-luz/60 hover:border-luz/40 hover:text-luz'
               }`}
             >
               {opcao.label}

@@ -60,8 +60,8 @@ export function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-[80] border-b text-creme backdrop-blur-md transition-colors duration-500 ${
-        scrolled ? 'border-linha bg-carvao/90 shadow-elev-2' : 'border-transparent bg-carvao/30'
+      className={`fixed inset-x-0 top-0 z-[80] border-b text-luz backdrop-blur-md transition-colors duration-500 ${
+        scrolled ? 'border-linha bg-abismo/90 shadow-elev-2' : 'border-transparent bg-abismo/30'
       }`}
     >
       <div className="container-page flex h-16 items-center justify-between md:h-20">
@@ -71,9 +71,9 @@ export function Header() {
           aria-label={`${brand.nome} — página inicial`}
         >
           <span className="font-display text-[1.35rem] tracking-tight md:text-2xl">
-            Roma <span className="text-clay">&amp;</span> Buganza
+            Roma <span className="text-ciano">&amp;</span> Buganza
           </span>
-          <span className="hidden font-mono text-[0.56rem] uppercase tracking-[0.28em] text-creme/50 transition-colors group-hover:text-clay lg:inline">
+          <span className="hidden font-mono text-[0.56rem] uppercase tracking-[0.28em] text-luz/50 transition-colors group-hover:text-ciano lg:inline">
             estúdio
           </span>
         </Link>
@@ -97,7 +97,7 @@ export function Header() {
                 {item.label}
                 <span
                   aria-hidden
-                  className={`absolute -bottom-1.5 left-0 h-px bg-clay transition-all duration-500 ease-saida ${
+                  className={`absolute -bottom-1.5 left-0 h-px bg-violeta transition-all duration-500 ease-saida ${
                     destaca ? 'w-full' : 'w-0'
                   }`}
                 />

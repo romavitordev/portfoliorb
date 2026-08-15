@@ -47,12 +47,12 @@ export default async function AdminPage() {
         {!usuario?.totpAtivoEm && (
           <Link
             href="/admin/conta"
-            className="surface mt-8 flex items-start gap-4 border-clay/40 p-6 transition-colors hover:border-clay"
+            className="surface mt-8 flex items-start gap-4 border-violeta/40 p-6 transition-colors hover:border-violeta"
           >
-            <ShieldAlert size={20} strokeWidth={1.6} className="mt-0.5 shrink-0 text-clay" />
+            <ShieldAlert size={20} strokeWidth={1.6} className="mt-0.5 shrink-0 text-ciano" />
             <span>
               <span className="block text-sm font-medium">Ative a verificação em dois passos</span>
-              <span className="mt-1 block text-[0.82rem] leading-relaxed text-creme/60">
+              <span className="mt-1 block text-[0.82rem] leading-relaxed text-luz/60">
                 Hoje sua senha é a única coisa entre o painel e quem descobrir ela. Leva um minuto.
               </span>
             </span>
@@ -86,11 +86,11 @@ export default async function AdminPage() {
 
 function Metrica({ rotulo, valor, destaque }: { rotulo: string; valor: number; destaque?: boolean }) {
   return (
-    <div className={`surface p-7 ${destaque && valor > 0 ? 'border-clay/40' : ''}`}>
-      <dd className={`font-display text-5xl ${destaque && valor > 0 ? 'text-clay' : 'text-creme'}`}>
+    <div className={`surface p-7 ${destaque && valor > 0 ? 'border-violeta/40' : ''}`}>
+      <dd className={`font-display text-5xl ${destaque && valor > 0 ? 'text-ciano' : 'text-luz'}`}>
         {valor}
       </dd>
-      <dt className="mt-2 text-sm text-creme/55">{rotulo}</dt>
+      <dt className="mt-2 text-sm text-luz/55">{rotulo}</dt>
     </div>
   )
 }

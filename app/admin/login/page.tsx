@@ -60,15 +60,14 @@ export default function LoginPage() {
 
   return (
     <section className="relative flex min-h-[80vh] items-center">
-      <div className="malha absolute inset-0 opacity-40" aria-hidden />
 
       <div className="container-page relative">
         <form onSubmit={entrar} className="surface mx-auto max-w-md p-8 md:p-10">
           {etapa === 'credenciais' ? (
             <>
-              <Lock size={22} strokeWidth={1.5} className="text-clay" aria-hidden />
+              <Lock size={22} strokeWidth={1.5} className="text-ciano" aria-hidden />
               <h1 className="t-h3 mt-5 font-display">Painel do estúdio</h1>
-              <p className="mt-3 text-sm leading-relaxed text-creme/55">
+              <p className="mt-3 text-sm leading-relaxed text-luz/55">
                 Área restrita. É aqui que os leads do site chegam.
               </p>
 
@@ -82,7 +81,7 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 autoComplete="username"
                 autoFocus
-                className="campo mt-3"
+                className="campo-form mt-3"
               />
 
               <label htmlFor="senha" className="kicker-poeira mt-6 block">
@@ -94,16 +93,16 @@ export default function LoginPage() {
                 value={senha}
                 onChange={(e) => setSenha(e.target.value)}
                 autoComplete="current-password"
-                className="campo mt-3"
+                className="campo-form mt-3"
               />
             </>
           ) : (
             <>
-              <ShieldCheck size={22} strokeWidth={1.5} className="text-clay" aria-hidden />
+              <ShieldCheck size={22} strokeWidth={1.5} className="text-ciano" aria-hidden />
               <h1 className="t-h3 mt-5 font-display">Verificação em dois passos</h1>
-              <p className="mt-3 text-sm leading-relaxed text-creme/55">
+              <p className="mt-3 text-sm leading-relaxed text-luz/55">
                 Digite os seis dígitos que aparecem no seu app autenticador para{' '}
-                <strong className="text-creme/80">{email}</strong>.
+                <strong className="text-luz/80">{email}</strong>.
               </p>
 
               <label htmlFor="codigo" className="kicker-poeira mt-8 block">
@@ -118,7 +117,7 @@ export default function LoginPage() {
                 value={codigo}
                 onChange={(e) => setCodigo(e.target.value.replace(/\D/g, ''))}
                 autoFocus
-                className="campo mt-3 text-center font-mono text-2xl tracking-[0.5em]"
+                className="campo-form mt-3 text-center font-mono text-2xl tracking-[0.5em]"
               />
 
               <button
@@ -135,7 +134,7 @@ export default function LoginPage() {
             </>
           )}
 
-          {erro && <p className="mt-4 text-[0.8rem] text-clay">{erro}</p>}
+          {erro && <p className="mt-4 text-[0.8rem] text-ciano">{erro}</p>}
 
           <button
             type="submit"

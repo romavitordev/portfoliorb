@@ -39,18 +39,17 @@ export function Preloader() {
       {mostrar && (
         <motion.div
           aria-hidden
-          className="fixed inset-0 z-[200] flex items-center justify-center bg-carvao"
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-abismo"
           exit={{ y: '-100%' }}
           transition={{ duration: 0.75, ease: ease.cortina }}
         >
-          <div className="malha absolute inset-0 opacity-40" />
           <motion.span
-            className="relative font-display text-4xl tracking-tight text-creme md:text-6xl"
+            className="relative font-display text-4xl tracking-tight text-luz md:text-6xl"
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: ease.outExpo }}
           >
-            {brand.nome.split(' & ')[0]} <span className="text-clay">&amp;</span>{' '}
+            {brand.nome.split(' & ')[0]} <span className="text-ciano">&amp;</span>{' '}
             {brand.nome.split(' & ')[1]}
           </motion.span>
         </motion.div>

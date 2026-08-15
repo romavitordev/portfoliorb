@@ -22,7 +22,7 @@ export function ProjetosDestaque() {
             <div>
               <p className="prancha">Catálogo</p>
               <h2 className="t-h2 mt-5 font-display">O que já construímos</h2>
-              <p className="t-lead measure mt-6 text-creme/65">
+              <p className="t-lead measure mt-6 text-luz/65">
                 Sistemas de cliente no ar, produtos próprios em construção e projetos conceituais
                 onde a gente solta a mão. Cada card diz qual é qual.
               </p>

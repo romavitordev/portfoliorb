@@ -75,7 +75,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#141311',
+  themeColor: '#0B0A12',
   colorScheme: 'dark',
 }
 
@@ -124,7 +124,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <a
           href="#conteudo"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-clay focus:px-5 focus:py-2 focus:text-sm focus:text-carvao"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-violeta focus:px-5 focus:py-2 focus:text-sm focus:text-abismo"
         >
           Pular para o conteúdo
         </a>

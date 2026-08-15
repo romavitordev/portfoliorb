@@ -119,7 +119,7 @@ export function LeadsList({
       </div>
 
       {visiveis.length === 0 && (
-        <p className="measure py-16 text-creme/55">
+        <p className="measure py-16 text-luz/55">
           {leads.length === 0
             ? 'Nenhum lead ainda. Quando alguém preencher o formulário de contato, aparece aqui — e chega um e-mail avisando.'
             : 'Nenhum lead com esse status.'}
@@ -138,7 +138,7 @@ export function LeadsList({
                     <h3 className="font-display text-xl tracking-tight">{lead.nome}</h3>
                     <span className={`chip ${cores[lead.status]}`}>{rotulos[lead.status]}</span>
                   </div>
-                  <p className="mt-1.5 font-mono text-[0.72rem] text-creme/50">
+                  <p className="mt-1.5 font-mono text-[0.72rem] text-luz/50">
                     {lead.tipo} · {lead.prazo} ·{' '}
                     {new Date(lead.criadoEm).toLocaleString('pt-BR', {
                       day: '2-digit',
@@ -150,7 +150,7 @@ export function LeadsList({
                     {lead.origem ? ` · veio de ${lead.origem}` : ''}
                   </p>
                   {lead.tratadoPor && (
-                    <p className="mt-1 font-mono text-[0.68rem] text-clay/80">
+                    <p className="mt-1 font-mono text-[0.68rem] text-ciano/80">
                       último toque: {lead.tratadoPor}
                     </p>
                   )}
@@ -172,21 +172,21 @@ export function LeadsList({
                     type="button"
                     onClick={() => apagar(lead.id, lead.nome)}
                     aria-label={`Apagar lead de ${lead.nome}`}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-creme/15 text-creme/45 transition-colors hover:border-clay hover:text-clay"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-luz/15 text-luz/45 transition-colors hover:border-violeta hover:text-ciano"
                   >
                     <Trash2 size={15} />
                   </button>
                 </div>
               </div>
 
-              <p className="mt-4 whitespace-pre-wrap rounded-xl border border-linha bg-carvao/50 p-4 text-sm leading-relaxed text-creme/75">
+              <p className="mt-4 whitespace-pre-wrap rounded-xl border border-linha bg-abismo/50 p-4 text-sm leading-relaxed text-luz/75">
                 {lead.sobre}
               </p>
 
-              <p className="mt-3 font-mono text-[0.74rem] text-creme/60">{lead.contato}</p>
+              <p className="mt-3 font-mono text-[0.74rem] text-luz/60">{lead.contato}</p>
 
               <div className="mt-5 flex flex-wrap items-center gap-2">
-                <span className="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-creme/35">
+                <span className="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-luz/35">
                   Mover para
                 </span>
                 {ordem
@@ -196,7 +196,7 @@ export function LeadsList({
                       key={s}
                       type="button"
                       onClick={() => mudarStatus(lead.id, s)}
-                      className="rounded-full border border-linha px-3 py-1 text-[0.72rem] text-creme/60 transition-colors hover:border-clay hover:text-clay"
+                      className="rounded-full border border-linha px-3 py-1 text-[0.72rem] text-luz/60 transition-colors hover:border-violeta hover:text-ciano"
                     >
                       {rotulos[s]}
                     </button>
@@ -204,7 +204,7 @@ export function LeadsList({
               </div>
 
               <details className="mt-4">
-                <summary className="cursor-pointer list-none font-mono text-[0.66rem] uppercase tracking-[0.2em] text-creme/40 hover:text-clay [&::-webkit-details-marker]:hidden">
+                <summary className="cursor-pointer list-none font-mono text-[0.66rem] uppercase tracking-[0.2em] text-luz/40 hover:text-ciano [&::-webkit-details-marker]:hidden">
                   Anotação interna {lead.nota ? '•' : ''}
                 </summary>
                 <textarea
@@ -212,7 +212,7 @@ export function LeadsList({
                   onBlur={(e) => salvarNota(lead.id, e.target.value.trim())}
                   rows={3}
                   placeholder="Só o estúdio vê. Salva ao sair do campo."
-                  className="campo mt-3 resize-y text-sm"
+                  className="campo-form mt-3 resize-y text-sm"
                 />
               </details>
             </li>
@@ -238,7 +238,7 @@ function Filtro({
       onClick={onClick}
       aria-pressed={ativo}
       className={`rounded-full border px-4 py-1.5 text-[0.76rem] transition-all ${
-        ativo ? 'border-clay bg-clay text-carvao' : 'border-linha text-creme/60 hover:border-creme/40'
+        ativo ? 'border-violeta bg-violeta text-abismo' : 'border-linha text-luz/60 hover:border-luz/40'
       }`}
     >
       {children}

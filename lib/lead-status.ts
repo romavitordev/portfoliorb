@@ -26,11 +26,11 @@ export const rotulosStatus: Record<StatusLead, string> = {
 
 /** Classe de cor do selo, por status. */
 export const coresStatus: Record<StatusLead, string> = {
-  NOVO: 'border-clay text-clay',
-  EM_CONVERSA: 'border-creme/40 text-creme/80',
-  PROPOSTA: 'border-creme/40 text-creme/80',
+  NOVO: 'border-violeta text-ciano',
+  EM_CONVERSA: 'border-luz/40 text-luz/80',
+  PROPOSTA: 'border-luz/40 text-luz/80',
   FECHADO: 'border-emerald-500/50 text-emerald-400',
-  DESCARTADO: 'border-creme/15 text-creme/40',
+  DESCARTADO: 'border-luz/15 text-luz/40',
 }
 
 export function ehStatusValido(v: unknown): v is StatusLead {

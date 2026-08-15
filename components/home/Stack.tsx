@@ -10,7 +10,7 @@ export function Stack() {
   const fita = [...stackFlat, ...stackFlat]
 
   return (
-    <section className="relative section-y-tight overflow-hidden border-y border-linha bg-grafite/20">
+    <section className="relative section-y-tight overflow-hidden border-y border-linha bg-nevoa/20">
       <div className="container-page">
         <Reveal>
           <p className="kicker-poeira text-center">Ferramentas de trabalho</p>
@@ -22,10 +22,10 @@ export function Stack() {
           {fita.map((item, i) => (
             <span
               key={`${item.nome}-${i}`}
-              className="inline-flex shrink-0 items-baseline gap-3 rounded-full border border-linha bg-grafite px-6 py-3"
+              className="inline-flex shrink-0 items-baseline gap-3 rounded-full border border-linha bg-nevoa px-6 py-3"
             >
               <span className="font-display text-lg tracking-tight">{item.nome}</span>
-              <span className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-creme/40">
+              <span className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-luz/40">
                 {item.nota}
               </span>
             </span>
@@ -33,13 +33,13 @@ export function Stack() {
         </div>
 
         {/* Máscaras nas pontas, pra fita "entrar e sair" do nada */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-carvao to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-carvao to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-abismo to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-abismo to-transparent" />
       </div>
 
       <div className="container-page">
         <Reveal>
-          <p className="measure mx-auto mt-10 text-center text-sm leading-relaxed text-creme/50">
+          <p className="measure mx-auto mt-10 text-center text-sm leading-relaxed text-luz/50">
             {stackNota}
           </p>
         </Reveal>

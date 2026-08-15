@@ -2,8 +2,27 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { useReducedMotion } from 'framer-motion'
+import { Search, TrendingUp } from 'lucide-react'
 
 import { processo } from '@/lib/site'
+import { CampoDeLuz } from '@/components/fx/CampoDeLuz'
+
+/** O catálogo que a janela mostra quando o site fica pronto. */
+const catalogo = [
+  { nome: 'Pastilha de freio', preco: 'R$ 189' },
+  { nome: 'Amortecedor', preco: 'R$ 340' },
+  { nome: 'Correia dentada', preco: 'R$ 96' },
+]
+
+/** As barras percorrem a escala: o gráfico é a própria evolução. */
+const barrasVenda = [
+  { h: '32%', cor: 'bg-violeta' },
+  { h: '46%', cor: 'bg-violeta' },
+  { h: '40%', cor: 'bg-azul' },
+  { h: '64%', cor: 'bg-azul' },
+  { h: '82%', cor: 'bg-ciano' },
+  { h: '100%', cor: 'bg-lima' },
+]
 
 /**
  * A OFICINA — a seção que dá nome ao conceito do site.
@@ -23,12 +42,23 @@ import { processo } from '@/lib/site'
  * hostil e um estágio por vez em 100vh vira uma eternidade.
  */
 /**
- * Progresso da seção pinada, calculado à mão.
+ * Progresso da seção pinada, medido quadro a quadro.
  *
- * O `useScroll` do Framer não atualizava aqui — a medição dele não
- * acompanhou o scroll suave do Lenis e o progresso ficava preso em zero.
- * Uma conta direta com `getBoundingClientRect` é transparente, não
- * depende de medição interna de biblioteca e cabe em dez linhas.
+ * Duas tentativas anteriores falharam e vale registrar por quê:
+ *
+ *  1. `useScroll` do Framer com `target` ficava preso em zero.
+ *  2. Um listener de `scroll` no window também ficava preso — e a
+ *     medição mostrou o motivo: o Lenis move a página SEM emitir evento
+ *     de scroll nativo. Zero eventos capturados com o `scrollY` mudando
+ *     de 9775 para 8905.
+ *
+ * Então aqui não se escuta evento nenhum. Um `requestAnimationFrame` lê
+ * a posição direto do layout, o que funciona com qualquer implementação
+ * de scroll — nativa, Lenis, ou transform. O laço só roda enquanto a
+ * seção está na tela, então não custa nada no resto da página.
+ *
+ * `setProgresso` com valor idêntico não re-renderiza: o React descarta
+ * pelo Object.is, e parado o valor não muda.
  */
 function useProgressoDaSecao(ref: React.RefObject<HTMLElement>, ativo: boolean) {
   const [progresso, setProgresso] = useState(0)
@@ -38,23 +68,45 @@ function useProgressoDaSecao(ref: React.RefObject<HTMLElement>, ativo: boolean) 
     if (!el || !ativo) return
 
     let raf = 0
-    const calcular = () => {
+    let naTela = false
+
+    const ler = () => {
       const r = el.getBoundingClientRect()
       const percorrivel = r.height - window.innerHeight
       const p = percorrivel > 0 ? -r.top / percorrivel : 0
       setProgresso(Math.min(Math.max(p, 0), 1))
-      raf = 0
-    }
-    const aoRolar = () => {
-      if (!raf) raf = requestAnimationFrame(calcular)
     }
 
-    calcular()
-    window.addEventListener('scroll', aoRolar, { passive: true })
-    window.addEventListener('resize', aoRolar, { passive: true })
+    const laco = () => {
+      ler()
+      raf = naTela ? requestAnimationFrame(laco) : 0
+    }
+
+    const obs = new IntersectionObserver(([entrada]) => {
+      naTela = entrada.isIntersecting
+      if (naTela && !raf) raf = requestAnimationFrame(laco)
+      if (!naTela && raf) {
+        cancelAnimationFrame(raf)
+        raf = 0
+      }
+    })
+
+    obs.observe(el)
+
+    /*
+      Cinto e suspensório: o rAF cobre scroll por transform (Lenis) mas
+      congela quando a aba perde visibilidade; o listener de scroll cobre
+      o caso nativo e continua vivo com a aba oculta. Os dois chamam a
+      mesma leitura, e valor repetido não re-renderiza.
+    */
+    window.addEventListener('scroll', ler, { passive: true })
+    window.addEventListener('resize', ler, { passive: true })
+
+    ler()
     return () => {
-      window.removeEventListener('scroll', aoRolar)
-      window.removeEventListener('resize', aoRolar)
+      obs.disconnect()
+      window.removeEventListener('scroll', ler)
+      window.removeEventListener('resize', ler)
       if (raf) cancelAnimationFrame(raf)
     }
   }, [ref, ativo])
@@ -97,16 +149,16 @@ export function Oficina() {
         style={{ height: `${processo.length * 100}vh` }}
       >
         <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-          <div className="malha absolute inset-0 opacity-40" aria-hidden />
+          <CampoDeLuz forca="media" variante="topo-direita" />
 
           <div className="container-page relative grid w-full items-center gap-16 lg:grid-cols-[0.85fr_1.15fr]">
             {/* Coluna das etapas */}
             <div>
               <p className="prancha">Oficina</p>
               <h2 className="t-h2 mt-6 font-display">
-                Você vê o site <span className="texto-clay">nascendo</span>
+                Você vê o site <span className="texto-espectro">nascendo</span>
               </h2>
-              <p className="t-lead measure-sm mt-6 text-creme/60">
+              <p className="t-lead measure-sm mt-6 text-luz/60">
                 Do primeiro rabisco ao endereço no ar. Sem caixa-preta, sem sumiço de duas
                 semanas.
               </p>
@@ -154,12 +206,12 @@ function ItemEtapa({ etapa, ativa }: { etapa: (typeof processo)[number]; ativa: 
       <span
         aria-hidden
         className={`mt-2 h-px shrink-0 transition-all duration-500 ease-saida ${
-          ativa ? 'w-10 bg-clay' : 'w-3 bg-creme/20'
+          ativa ? 'w-10 bg-violeta' : 'w-3 bg-luz/20'
         }`}
       />
       <span
         className={`font-mono text-[0.68rem] tracking-[0.2em] transition-colors duration-500 ${
-          ativa ? 'text-clay' : 'text-creme/30'
+          ativa ? 'text-ciano' : 'text-luz/30'
         }`}
       >
         {etapa.numero}
@@ -172,7 +224,7 @@ function ItemEtapa({ etapa, ativa }: { etapa: (typeof processo)[number]; ativa: 
         >
           {etapa.titulo}
           <span
-            className={`font-mono text-[0.6rem] uppercase tracking-[0.18em] text-creme/40 transition-opacity duration-500 ${
+            className={`font-mono text-[0.6rem] uppercase tracking-[0.18em] text-luz/40 transition-opacity duration-500 ${
               ativa ? 'opacity-100' : 'opacity-0'
             }`}
           >
@@ -186,7 +238,7 @@ function ItemEtapa({ etapa, ativa }: { etapa: (typeof processo)[number]; ativa: 
           }`}
         >
           <span className="overflow-hidden">
-            <span className="mt-1.5 block max-w-sm text-[0.84rem] leading-relaxed text-creme/60">
+            <span className="mt-1.5 block max-w-sm text-[0.84rem] leading-relaxed text-luz/60">
               {etapa.texto}
             </span>
           </span>
@@ -218,17 +270,17 @@ function JanelaMontando({ estagio }: { estagio: number }) {
 
   return (
     <div
-      className={`cotas relative aspect-[16/11] w-full overflow-hidden rounded-xl border bg-carvao/60 shadow-elev-2 transition-colors duration-700 ${
-        publicada ? 'border-solid border-linha' : 'border-dashed border-creme/20'
+      className={`cotas relative aspect-[16/11] w-full overflow-hidden rounded-xl border bg-abismo/60 shadow-elev-2 transition-colors duration-700 ${
+        publicada ? 'border-solid border-linha' : 'border-dashed border-luz/20'
       }`}
     >
       {/* Barra da janela */}
       <div className="flex items-center gap-2 border-b border-linha/60 px-4 py-3">
-        <span className="h-2 w-2 rounded-full bg-creme/15" />
-        <span className="h-2 w-2 rounded-full bg-creme/15" />
-        <span style={{ opacity: publicado }} className="h-2 w-2 rounded-full bg-clay/70" />
+        <span className="h-2 w-2 rounded-full bg-luz/15" />
+        <span className="h-2 w-2 rounded-full bg-luz/15" />
+        <span style={{ opacity: publicado }} className="h-2 w-2 rounded-full bg-violeta/70" />
         <span style={{ opacity: publicado }}
-          className="ml-3 font-mono text-[0.6rem] tracking-wide text-creme/40"
+          className="ml-3 font-mono text-[0.6rem] tracking-wide text-luz/40"
         >
           seucliente.com.br
         </span>
@@ -239,7 +291,7 @@ function JanelaMontando({ estagio }: { estagio: number }) {
         <div data-camada="conversa" style={{ opacity: conversa }} className="absolute inset-5 flex items-center">
           <p className="rascunho-texto text-sm">
             o que você precisa?
-            <span className="ml-1 inline-block h-4 w-[6px] translate-y-0.5 animate-caret bg-clay" />
+            <span className="ml-1 inline-block h-4 w-[6px] translate-y-0.5 animate-caret bg-violeta" />
           </p>
         </div>
 
@@ -248,7 +300,7 @@ function JanelaMontando({ estagio }: { estagio: number }) {
           {['catálogo com filtros', 'painel do vendedor', 'contato no WhatsApp', 'domínio e deploy'].map(
             (item) => (
               <p key={item} className="rascunho-texto flex items-center gap-2 text-[0.72rem]">
-                <span className="text-clay">✓</span> {item}
+                <span className="text-ciano">✓</span> {item}
               </p>
             ),
           )}
@@ -267,7 +319,7 @@ function JanelaMontando({ estagio }: { estagio: number }) {
 
         {/* 04 — construção: os blocos ganham conteúdo cinza */}
         <div data-camada="construcao" style={{ opacity: construcao }} className="absolute inset-5 flex flex-col gap-2">
-          <div className="flex items-center justify-between rounded bg-grafite px-3 py-2">
+          <div className="flex items-center justify-between rounded bg-nevoa px-3 py-2">
             <div className="rascunho-bloco h-2.5 w-20" />
             <div className="flex gap-1.5">
               <div className="rascunho-bloco h-2 w-8" />
@@ -275,13 +327,13 @@ function JanelaMontando({ estagio }: { estagio: number }) {
               <div className="rascunho-bloco h-2 w-8" />
             </div>
           </div>
-          <div className="flex flex-col justify-center gap-2 rounded bg-grafite px-3 py-4">
+          <div className="flex flex-col justify-center gap-2 rounded bg-nevoa px-3 py-4">
             <div className="rascunho-bloco h-3 w-3/5" />
             <div className="rascunho-bloco h-2 w-4/5" />
           </div>
           <div className="grid flex-1 grid-cols-3 gap-2">
             {[0, 1, 2].map((i) => (
-              <div key={i} className="flex flex-col gap-1.5 rounded bg-grafite p-2">
+              <div key={i} className="flex flex-col gap-1.5 rounded bg-nevoa p-2">
                 <div className="rascunho-bloco flex-1" />
                 <div className="rascunho-bloco h-1.5 w-3/4" />
               </div>
@@ -289,38 +341,53 @@ function JanelaMontando({ estagio }: { estagio: number }) {
           </div>
         </div>
 
-        {/* 05 — no ar: tipografia e cor de verdade */}
-        <div data-camada="publicado" style={{ opacity: publicado }}
+        {/*
+          05 — no ar. Nada de bloco cinza aqui: é uma loja com nome,
+          busca, preço e um painel de vendas. As barras do gráfico
+          percorrem o espectro, então o dado e o conceito são a mesma
+          coisa.
+        */}
+        <div
+          data-camada="publicado"
+          style={{ opacity: publicado }}
           className="absolute inset-5 flex flex-col gap-2"
         >
-          <div className="flex items-center justify-between rounded bg-grafite px-3 py-2">
-            <span className="font-display text-[0.8rem] tracking-tight">Peças Menezes</span>
-            <span className="flex gap-2 font-mono text-[0.52rem] uppercase tracking-[0.14em] text-creme/45">
+          <div className="flex items-center justify-between rounded-lg bg-nevoa px-3 py-2.5">
+            <span className="font-display text-[0.85rem] tracking-tight">Peças Menezes</span>
+            <span className="flex items-center gap-3 font-mono text-[0.52rem] uppercase tracking-[0.14em] text-luz/45">
               <span>catálogo</span>
-              <span>sobre</span>
-              <span className="text-clay">orçamento</span>
+              <Search size={10} className="text-luz/40" />
+              <span className="rounded-full bg-violeta px-2.5 py-1 font-semibold text-luz">
+                orçamento
+              </span>
             </span>
           </div>
 
-          <div className="relative flex flex-col justify-center overflow-hidden rounded bg-grafite px-4 py-5">
-            <div className="halo-clay -left-6 top-0 h-28 w-28" aria-hidden />
-            <p className="relative font-display text-lg leading-tight tracking-tight">
-              Peça hoje,
-              <br />
-              <span className="texto-clay">chega amanhã.</span>
-            </p>
+          <div className="flex items-end justify-between gap-4 rounded-lg bg-nevoa px-3 py-3">
+            <span>
+              <span className="flex items-center gap-1.5 font-mono text-[0.5rem] uppercase tracking-[0.14em] text-luz/45">
+                <TrendingUp size={9} className="text-lima" /> pedidos no mês
+              </span>
+              <span className="mt-1 block font-display text-2xl leading-none text-lima">+38%</span>
+            </span>
+            <span className="flex h-10 flex-1 items-end gap-[3px]">
+              {barrasVenda.map((b, i) => (
+                <span key={i} className={`flex-1 rounded-[2px] ${b.cor}`} style={{ height: b.h }} />
+              ))}
+            </span>
           </div>
 
           <div className="grid flex-1 grid-cols-3 gap-2">
-            {['Freios', 'Suspensão', 'Motor'].map((nome, i) => (
-              <div key={nome} className="flex flex-col gap-1.5 rounded bg-grafite p-2">
-                <div
-                  className="flex-1 rounded"
-                  style={{
-                    background: `linear-gradient(${140 + i * 40}deg, rgba(217,119,87,0.35), rgba(240,238,230,0.05))`,
-                  }}
-                />
-                <span className="text-[0.6rem] text-creme/70">{nome}</span>
+            {catalogo.map((item, i) => (
+              <div
+                key={item.nome}
+                className="flex flex-col justify-end gap-1 rounded-lg p-2"
+                style={{
+                  backgroundImage: `linear-gradient(${160 + i * 30}deg, rgba(109,74,255,0.24), rgba(0,212,200,0.10) 60%, rgba(20,18,30,0.9))`,
+                }}
+              >
+                <span className="text-[0.58rem] leading-tight text-luz/80">{item.nome}</span>
+                <span className="font-mono text-[0.6rem] text-ciano">{item.preco}</span>
               </div>
             ))}
           </div>
@@ -328,13 +395,13 @@ function JanelaMontando({ estagio }: { estagio: number }) {
 
         {/* 06 — depois: o selo de cuidado contínuo */}
         <div data-camada="manutencao" style={{ opacity: manutencao }}
-          className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full border border-clay/40 bg-carvao/90 px-3 py-1.5 backdrop-blur-sm"
+          className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full border border-violeta/40 bg-abismo/90 px-3 py-1.5 backdrop-blur-sm"
         >
           <span className="relative flex h-1.5 w-1.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-clay opacity-70" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-clay" />
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-violeta opacity-70" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-violeta" />
           </span>
-          <span className="font-mono text-[0.58rem] uppercase tracking-[0.16em] text-creme/70">
+          <span className="font-mono text-[0.58rem] uppercase tracking-[0.16em] text-luz/70">
             no ar e cuidado
           </span>
         </div>
@@ -350,30 +417,29 @@ function JanelaMontando({ estagio }: { estagio: number }) {
 function OficinaEmLista() {
   return (
     <section className="relative section-y">
-      <div className="malha absolute inset-0 opacity-40" aria-hidden />
 
       <div className="container-page relative">
         <p className="prancha">Oficina</p>
         <h2 className="t-h2 measure mt-6 font-display">
-          Você vê o site <span className="texto-clay">nascendo</span>
+          Você vê o site <span className="texto-espectro">nascendo</span>
         </h2>
-        <p className="t-lead measure mt-6 text-creme/60">
+        <p className="t-lead measure mt-6 text-luz/60">
           Do primeiro rabisco ao endereço no ar. Sem caixa-preta, sem sumiço de duas semanas.
         </p>
 
         <ol className="mt-12 space-y-px overflow-hidden rounded-2xl border border-linha bg-linha">
           {processo.map((etapa) => (
-            <li key={etapa.numero} className="bg-grafite p-7">
+            <li key={etapa.numero} className="bg-nevoa p-7">
               <div className="flex items-baseline gap-4">
-                <span className="font-mono text-[0.68rem] tracking-[0.2em] text-clay">
+                <span className="font-mono text-[0.68rem] tracking-[0.2em] text-ciano">
                   {etapa.numero}
                 </span>
-                <span className="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-creme/40">
+                <span className="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-luz/40">
                   {etapa.duracao}
                 </span>
               </div>
               <h3 className="mt-3 font-display text-2xl tracking-tight">{etapa.titulo}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-creme/60">{etapa.texto}</p>
+              <p className="mt-2 text-sm leading-relaxed text-luz/60">{etapa.texto}</p>
             </li>
           ))}
         </ol>

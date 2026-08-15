@@ -35,9 +35,9 @@ export function SenhaCard() {
 
   return (
     <form onSubmit={trocar} className="surface p-8">
-      <KeyRound size={22} strokeWidth={1.5} className="text-clay" aria-hidden />
+      <KeyRound size={22} strokeWidth={1.5} className="text-ciano" aria-hidden />
       <h2 className="mt-4 font-display text-xl tracking-tight">Trocar senha</h2>
-      <p className="mt-2 text-sm leading-relaxed text-creme/60">
+      <p className="mt-2 text-sm leading-relaxed text-luz/60">
         A senha atual é sempre exigida, mesmo com a sessão aberta.
       </p>
 
@@ -50,7 +50,7 @@ export function SenhaCard() {
         value={atual}
         onChange={(e) => setAtual(e.target.value)}
         autoComplete="current-password"
-        className="campo mt-3 max-w-sm"
+        className="campo-form mt-3 max-w-sm"
       />
 
       <label htmlFor="nova" className="kicker-poeira mt-6 block">
@@ -62,11 +62,11 @@ export function SenhaCard() {
         value={nova}
         onChange={(e) => setNova(e.target.value)}
         autoComplete="new-password"
-        className="campo mt-3 max-w-sm"
+        className="campo-form mt-3 max-w-sm"
       />
-      <p className="mt-2 text-[0.72rem] text-creme/40">Pelo menos 10 caracteres.</p>
+      <p className="mt-2 text-[0.72rem] text-luz/40">Pelo menos 10 caracteres.</p>
 
-      {erro && <p className="mt-4 text-[0.8rem] text-clay">{erro}</p>}
+      {erro && <p className="mt-4 text-[0.8rem] text-ciano">{erro}</p>}
       {ok && (
         <p className="mt-4 inline-flex items-center gap-2 text-[0.8rem] text-emerald-400">
           <Check size={14} /> Senha trocada.

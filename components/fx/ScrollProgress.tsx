@@ -40,7 +40,7 @@ export function ScrollProgress() {
           className="h-full origin-left"
           style={{
             transform: `scaleX(${prog})`,
-            backgroundImage: 'linear-gradient(90deg, #e9a48a, #d97757)',
+            backgroundImage: 'linear-gradient(90deg, #00D4C8, #6D4AFF)',
           }}
         />
       </div>
@@ -49,7 +49,7 @@ export function ScrollProgress() {
         type="button"
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         aria-label="Voltar ao topo"
-        className={`fixed bottom-[5.5rem] right-5 z-[120] inline-flex h-11 w-11 items-center justify-center rounded-full border border-creme/20 bg-grafite/80 text-creme backdrop-blur-sm transition-all duration-300 hover:border-clay hover:text-clay md:bottom-5 ${
+        className={`fixed bottom-[5.5rem] right-5 z-[120] inline-flex h-11 w-11 items-center justify-center rounded-full border border-luz/20 bg-nevoa/80 text-luz backdrop-blur-sm transition-all duration-300 hover:border-violeta hover:text-ciano md:bottom-5 ${
           mostraTopo ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-4 opacity-0'
         }`}
       >

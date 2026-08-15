@@ -2,31 +2,40 @@
 
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
-import { ArrowRight, ArrowDown } from 'lucide-react'
+import { ArrowRight, ArrowDown, Search, TrendingUp } from 'lucide-react'
 
 import { brand } from '@/lib/site'
 import { projetos } from '@/lib/projetos'
 import { ease } from '@/lib/design'
+import { CampoDeLuz } from '@/components/fx/CampoDeLuz'
 import { SplitWords } from '@/components/ui/SplitWords'
 
 /**
- * O painel ao lado do título é a promessa do site em miniatura: um
- * bloco que sai do rascunho e vira interface. Cada camada entra numa
- * batida, e a última acende em clay.
+ * A miniatura ao lado do título é a tese do site em pequeno: um bloco
+ * que sai do rascunho e vira PRODUTO.
+ *
+ * A versão anterior mostrava retângulos cinzas, e retângulo cinza não
+ * convence ninguém — parece placeholder de template. Aqui a última
+ * camada é uma interface de verdade, com nome de produto, preço, métrica
+ * e um gráfico cujas barras percorrem o espectro. Um mock só funciona
+ * quando parece uma tela que alguém usaria.
  */
-const camadas = [
-  { rotulo: '01 rabisco', ms: 900 },
-  { rotulo: '02 grade', ms: 1250 },
-  { rotulo: '03 conteúdo', ms: 1600 },
-  { rotulo: '04 no ar', ms: 1950 },
+const produtos = [
+  { nome: 'Pastilha de freio', preco: 'R$ 189' },
+  { nome: 'Amortecedor', preco: 'R$ 340' },
+  { nome: 'Correia dentada', preco: 'R$ 96' },
 ]
 
-/**
- * Uma camada da miniatura. Entra por cima da anterior no tempo marcado,
- * então o bloco parece ganhar fidelidade em vez de trocar de conteúdo.
- * Em reduced-motion todas já nascem visíveis — o resultado final é o
- * mesmo, sem a encenação.
- */
+/** As barras usam a escala inteira: o gráfico É a evolução. */
+const barras = [
+  { h: '34%', cor: 'bg-violeta' },
+  { h: '48%', cor: 'bg-violeta' },
+  { h: '42%', cor: 'bg-azul' },
+  { h: '66%', cor: 'bg-azul' },
+  { h: '80%', cor: 'bg-ciano' },
+  { h: '100%', cor: 'bg-lima' },
+]
+
 function Camada({
   children,
   ms,
@@ -38,10 +47,10 @@ function Camada({
 }) {
   return (
     <motion.div
-      className="absolute inset-5"
+      className="absolute inset-4"
       initial={reduzir ? false : { opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.45, delay: ms / 1000, ease: ease.outExpo }}
+      transition={{ duration: 0.5, delay: ms / 1000, ease: ease.outExpo }}
     >
       {children}
     </motion.div>
@@ -51,20 +60,14 @@ function Camada({
 export function Hero() {
   const reduzir = useReducedMotion()
 
-  // `100svh` (small viewport height) em vez de `vh`: no mobile o `vh`
-  // conta a barra do navegador que some ao rolar, e o hero nascia mais
-  // alto que a tela. O padding superior livra a navbar fixa; o inferior,
-  // a dica de rolagem.
+  // `100svh` em vez de `vh`: no mobile o `vh` conta a barra do navegador
+  // que some ao rolar, e o hero nascia mais alto que a tela.
   return (
     <section className="relative flex min-h-[100svh] items-center overflow-hidden pb-[clamp(2rem,5vh,4rem)] pt-20 md:pt-24">
-      <div className="malha absolute inset-0 opacity-60" aria-hidden />
-      <div
-        className="halo-clay -left-32 top-16 h-[34rem] w-[34rem] animate-respirar md:left-[-10rem]"
-        aria-hidden
-      />
+      <CampoDeLuz forca="cheia" variante="topo-esquerda" />
       <div
         aria-hidden
-        className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-carvao to-transparent"
+        className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-abismo to-transparent"
       />
 
       <div className="container-page relative grid w-full items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
@@ -86,13 +89,13 @@ export function Hero() {
             <span className="block">
               <SplitWords texto="do ar de ideia" delay={0.3} />
             </span>
-            <span className="texto-clay block">
+            <span className="texto-espectro block">
               <SplitWords texto="e entra no ar" delay={0.46} />
             </span>
           </h1>
 
           <motion.p
-            className="t-lead measure mt-[clamp(1.25rem,3vh,2rem)] text-creme/65"
+            className="t-lead measure mt-[clamp(1.25rem,3vh,2rem)] text-luz/65"
             initial={reduzir ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6, ease: ease.outExpo }}
@@ -115,51 +118,42 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* Coluna que se monta — a tese do site em miniatura */}
+        {/* A miniatura que se monta */}
         <motion.div
-          className="cotas relative hidden aspect-[4/3] overflow-hidden rounded-xl border border-linha bg-carvao/60 shadow-elev-2 lg:block"
+          className="cotas relative hidden aspect-[4/3] overflow-hidden rounded-2xl border border-linha bg-nevoa/80 shadow-elev-2 backdrop-blur-sm lg:block"
           initial={reduzir ? false : { opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.45, ease: ease.outExpo }}
           aria-hidden
         >
-          <div className="flex items-center gap-2 border-b border-linha/60 px-4 py-3">
-            <span className="h-2 w-2 rounded-full bg-creme/15" />
-            <span className="h-2 w-2 rounded-full bg-creme/15" />
-            <span className="h-2 w-2 rounded-full bg-clay/70" />
-          </div>
-
-          <div className="relative h-full p-5">
-            {/* rabisco */}
-            <Camada reduzir={reduzir} ms={camadas[0].ms}>
-              <div className="flex h-full flex-col gap-2">
-                <div className="rascunho h-8 rounded" />
-                <div className="rascunho h-16 rounded" />
-                <div className="grid flex-1 grid-cols-3 gap-2">
-                  <div className="rascunho rounded" />
-                  <div className="rascunho rounded" />
-                  <div className="rascunho rounded" />
+          <div className="relative h-full">
+            {/* 01 — rascunho */}
+            <Camada reduzir={reduzir} ms={800}>
+              <div className="flex h-full flex-col gap-2.5">
+                <div className="rascunho h-9 rounded-lg" />
+                <div className="rascunho h-[4.5rem] rounded-lg" />
+                <div className="grid flex-1 grid-cols-3 gap-2.5">
+                  <div className="rascunho rounded-lg" />
+                  <div className="rascunho rounded-lg" />
+                  <div className="rascunho rounded-lg" />
                 </div>
               </div>
             </Camada>
 
-            {/* conteúdo cinza */}
-            <Camada reduzir={reduzir} ms={camadas[2].ms}>
-              <div className="flex h-full flex-col gap-2">
-                <div className="flex items-center justify-between rounded bg-grafite px-3 py-2">
-                  <div className="rascunho-bloco h-2.5 w-16" />
-                  <div className="flex gap-1.5">
-                    <div className="rascunho-bloco h-2 w-7" />
-                    <div className="rascunho-bloco h-2 w-7" />
-                  </div>
+            {/* 02 — estrutura ganha corpo */}
+            <Camada reduzir={reduzir} ms={1350}>
+              <div className="flex h-full flex-col gap-2.5">
+                <div className="flex items-center justify-between rounded-lg bg-abismo/70 px-3 py-2.5">
+                  <div className="rascunho-bloco h-2.5 w-20" />
+                  <div className="rascunho-bloco h-2.5 w-14" />
                 </div>
-                <div className="flex flex-col justify-center gap-2 rounded bg-grafite px-3 py-3">
-                  <div className="rascunho-bloco h-3 w-3/5" />
-                  <div className="rascunho-bloco h-2 w-4/5" />
+                <div className="flex flex-col justify-center gap-2 rounded-lg bg-abismo/70 px-3 py-4">
+                  <div className="rascunho-bloco h-3 w-2/5" />
+                  <div className="rascunho-bloco h-2 w-3/5" />
                 </div>
-                <div className="grid flex-1 grid-cols-3 gap-2">
+                <div className="grid flex-1 grid-cols-3 gap-2.5">
                   {[0, 1, 2].map((i) => (
-                    <div key={i} className="rounded bg-grafite p-2">
+                    <div key={i} className="rounded-lg bg-abismo/70 p-2">
                       <div className="rascunho-bloco h-full" />
                     </div>
                   ))}
@@ -167,46 +161,61 @@ export function Hero() {
               </div>
             </Camada>
 
-            {/* no ar */}
-            <Camada reduzir={reduzir} ms={camadas[3].ms}>
-              <div className="flex h-full flex-col gap-2">
-                <div className="flex items-center justify-between rounded bg-grafite px-3 py-2">
-                  <span className="font-display text-[0.78rem] tracking-tight">Seu negócio</span>
-                  <span className="font-mono text-[0.52rem] uppercase tracking-[0.14em] text-clay">
-                    orçamento
+            {/* 03 — no ar: produto de verdade */}
+            <Camada reduzir={reduzir} ms={1900}>
+              <div className="flex h-full flex-col gap-2.5">
+                {/* barra de navegação */}
+                <div className="flex items-center justify-between rounded-lg bg-abismo/80 px-3 py-2.5">
+                  <span className="font-display text-[0.82rem] tracking-tight text-luz">
+                    Peças Menezes
+                  </span>
+                  <span className="flex items-center gap-2.5">
+                    <Search size={11} className="text-luz/40" />
+                    <span className="rounded-full bg-violeta px-2.5 py-1 text-[0.5rem] font-semibold uppercase tracking-[0.1em] text-luz">
+                      Orçamento
+                    </span>
                   </span>
                 </div>
-                <div className="relative flex flex-col justify-center overflow-hidden rounded bg-grafite px-4 py-4">
-                  <div className="halo-clay -left-4 top-0 h-24 w-24" />
-                  <p className="relative font-display text-base leading-tight tracking-tight">
-                    Sua ideia,
-                    <br />
-                    <span className="texto-clay">no ar.</span>
-                  </p>
+
+                {/* métrica + gráfico */}
+                <div className="flex items-end justify-between gap-3 rounded-lg bg-abismo/80 px-3 py-3">
+                  <span>
+                    <span className="flex items-center gap-1.5 font-mono text-[0.5rem] uppercase tracking-[0.14em] text-luz/45">
+                      <TrendingUp size={9} className="text-lima" /> pedidos no mês
+                    </span>
+                    <span className="mt-1 block font-display text-2xl leading-none text-lima">
+                      +38%
+                    </span>
+                  </span>
+
+                  <span className="flex h-9 flex-1 items-end gap-[3px]">
+                    {barras.map((b, i) => (
+                      <span
+                        key={i}
+                        className={`flex-1 rounded-[2px] ${b.cor}`}
+                        style={{ height: b.h }}
+                      />
+                    ))}
+                  </span>
                 </div>
-                <div className="grid flex-1 grid-cols-3 gap-2">
-                  {[0, 1, 2].map((i) => (
+
+                {/* catálogo com preço */}
+                <div className="grid flex-1 grid-cols-3 gap-2.5">
+                  {produtos.map((p, i) => (
                     <div
-                      key={i}
-                      className="rounded"
+                      key={p.nome}
+                      className="flex flex-col justify-end gap-1 rounded-lg bg-abismo/80 p-2"
                       style={{
-                        background: `linear-gradient(${140 + i * 40}deg, rgba(217,119,87,0.32), rgba(240,238,230,0.05))`,
+                        backgroundImage: `linear-gradient(${160 + i * 30}deg, rgba(109,74,255,0.22), rgba(0,212,200,0.10) 60%, transparent)`,
                       }}
-                    />
+                    >
+                      <span className="text-[0.55rem] leading-tight text-luz/75">{p.nome}</span>
+                      <span className="font-mono text-[0.58rem] text-ciano">{p.preco}</span>
+                    </div>
                   ))}
                 </div>
               </div>
             </Camada>
-
-            {/* etiqueta do estágio, canto inferior */}
-            <motion.span
-              className="absolute bottom-3 right-4 font-mono text-[0.56rem] uppercase tracking-[0.2em] text-creme/30"
-              initial={reduzir ? false : { opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 2.3, duration: 0.5 }}
-            >
-              no ar
-            </motion.span>
           </div>
         </motion.div>
       </div>
@@ -218,7 +227,7 @@ export function Hero() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 1.4 }}
       >
-        <span className="inline-flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.28em] text-creme/35">
+        <span className="inline-flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.28em] text-luz/35">
           <ArrowDown size={13} /> role
         </span>
       </motion.div>
