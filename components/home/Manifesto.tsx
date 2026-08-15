@@ -7,7 +7,7 @@ export function Manifesto() {
       <div className="container-page">
         <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr]">
           <Reveal>
-            <p className="kicker">Por que a gente</p>
+            <p className="prancha">Por que a gente</p>
             <h2 className="t-h2 mt-5 font-display">{manifesto.titulo}</h2>
             <p className="t-lead measure mt-7 text-creme/65">{manifesto.texto}</p>
           </Reveal>

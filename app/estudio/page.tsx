@@ -11,7 +11,7 @@ import { CtaFinal } from '@/components/home/CtaFinal'
 export const metadata: Metadata = {
   title: 'Estúdio',
   description:
-    'Roma & Buganza é um estúdio de desenvolvimento de dois sócios em Sorocaba/SP: Vitor Roma no código e no produto, Marcelo Buganza no negócio e no 3D.',
+    'Roma & Buganza é um estúdio de desenvolvimento de Sorocaba/SP: Vitor Roma e Marcelo Buganza, dois desenvolvedores construindo sites, sistemas e produtos digitais lado a lado.',
   alternates: { canonical: '/estudio' },
 }
 
@@ -24,7 +24,7 @@ export default function EstudioPage() {
 
         <div className="container-page relative">
           <Reveal>
-            <p className="kicker">O estúdio</p>
+            <p className="prancha">O estúdio</p>
             <h1 className="t-h1 mt-6 font-display">
               Duas pessoas, <span className="texto-clay">{projetos.length} projetos</span> e nenhuma
               camada de gerência
@@ -112,7 +112,7 @@ export default function EstudioPage() {
       <section className="section-y">
         <div className="container-page">
           <Reveal>
-            <p className="kicker">Como trabalhamos</p>
+            <p className="prancha">Como trabalhamos</p>
             <h2 className="t-h2 measure mt-5 font-display">Os combinados que a gente cumpre</h2>
           </Reveal>
 
@@ -144,7 +144,7 @@ export default function EstudioPage() {
         <div className="seam absolute inset-x-0 top-0" aria-hidden />
         <div className="container-page">
           <Reveal>
-            <p className="kicker">Stack</p>
+            <p className="prancha">Stack</p>
             <h2 className="t-h3 mt-5 font-display">O que roda debaixo do capô</h2>
           </Reveal>
 

@@ -45,7 +45,7 @@ export default function ProjetosPage() {
 
         <div className="container-page relative">
           <Reveal>
-            <p className="kicker">Catálogo</p>
+            <p className="prancha">Catálogo</p>
             <h1 className="t-h1 mt-6 font-display">
               {projetos.length} projetos, <span className="texto-clay">nenhum maquiado</span>
             </h1>

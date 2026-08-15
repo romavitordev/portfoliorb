@@ -16,7 +16,7 @@ export function Manutencao() {
 
       <div className="container-page relative">
         <Reveal>
-          <p className="kicker">{manutencao.kicker}</p>
+          <p className="prancha">{manutencao.kicker}</p>
           <h2 className="t-h2 measure mt-5 font-display">{manutencao.titulo}</h2>
           <p className="t-lead measure mt-7 text-creme/65">{manutencao.texto}</p>
         </Reveal>

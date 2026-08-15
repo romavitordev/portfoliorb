@@ -147,12 +147,12 @@ export default function ProjetoPage({ params }: Params) {
       <section className="section-y-tight">
         <div className="container-page grid gap-12 lg:grid-cols-2">
           <Reveal>
-            <p className="kicker">O desafio</p>
+            <p className="prancha">O desafio</p>
             <p className="t-lead mt-5 leading-relaxed text-creme/70">{projeto.desafio}</p>
           </Reveal>
 
           <Reveal delay={0.08}>
-            <p className="kicker">A solução</p>
+            <p className="prancha">A solução</p>
             <p className="t-lead mt-5 leading-relaxed text-creme/70">{projeto.solucao}</p>
           </Reveal>
         </div>
@@ -164,7 +164,7 @@ export default function ProjetoPage({ params }: Params) {
           <div className="seam absolute inset-x-0 top-0" aria-hidden />
           <div className="container-page">
             <Reveal>
-              <p className="kicker">Detalhes que importam</p>
+              <p className="prancha">Detalhes que importam</p>
             </Reveal>
             <ul className="mt-8 grid gap-5 md:grid-cols-3">
               {projeto.resultados.map((r, i) => (
@@ -183,7 +183,7 @@ export default function ProjetoPage({ params }: Params) {
       <section className="section-y">
         <div className="container-page">
           <Reveal>
-            <p className="kicker">O que tem dentro</p>
+            <p className="prancha">O que tem dentro</p>
             <h2 className="t-h2 mt-5 font-display">Funcionalidades</h2>
           </Reveal>
 
@@ -213,7 +213,7 @@ export default function ProjetoPage({ params }: Params) {
         <div className="seam absolute inset-x-0 top-0" aria-hidden />
         <div className="container-page grid gap-12 md:grid-cols-2">
           <Reveal>
-            <p className="kicker">Stack</p>
+            <p className="prancha">Stack</p>
             <ul className="mt-6 flex flex-wrap gap-2">
               {projeto.stack.map((t) => (
                 <li key={t} className="chip border-creme/20 text-creme/70">
@@ -224,7 +224,7 @@ export default function ProjetoPage({ params }: Params) {
           </Reveal>
 
           <Reveal delay={0.08}>
-            <p className="kicker">Nosso papel</p>
+            <p className="prancha">Nosso papel</p>
             <ul className="mt-6 space-y-2.5">
               {projeto.papel.map((p) => (
                 <li key={p} className="flex items-baseline gap-3 text-sm text-creme/70">

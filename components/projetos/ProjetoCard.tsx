@@ -26,13 +26,20 @@ export function ProjetoCard({ projeto, grande = false, prioridade = false }: Pro
       className="surface card-hover group relative flex flex-col overflow-hidden"
     >
       <div className={`relative overflow-hidden ${grande ? 'aspect-[16/9]' : 'aspect-[4/3]'}`}>
+        {/*
+          A grade de construção mora ATRÁS da imagem e aparece quando a
+          foto recua no hover: o card também vai do pronto ao rascunho e
+          de volta, como o resto do site.
+        */}
+        <div className="malha absolute inset-0 opacity-70" aria-hidden />
+
         <Image
           src={projeto.imagem}
           alt={projeto.imagemAlt}
           fill
           sizes={grande ? '(max-width: 768px) 100vw, 66vw' : '(max-width: 768px) 100vw, 33vw'}
           priority={prioridade}
-          className="object-cover transition-transform duration-[900ms] ease-saida group-hover:scale-[1.04]"
+          className="object-cover transition-all duration-[900ms] ease-saida group-hover:scale-[1.04] group-hover:opacity-70"
         />
         <div
           aria-hidden

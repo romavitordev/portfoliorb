@@ -36,7 +36,7 @@ export default function ContatoPage() {
 
         <div className="container-page relative">
           <Reveal>
-            <p className="kicker">Contato</p>
+            <p className="prancha">Contato</p>
             <h1 className="t-h1 mt-6 font-display">{contato.titulo}</h1>
             <p className="t-lead measure mt-7 text-creme/65">{contato.texto}</p>
           </Reveal>

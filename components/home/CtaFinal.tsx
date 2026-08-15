@@ -15,7 +15,7 @@ export function CtaFinal() {
 
       <div className="container-page relative text-center">
         <Reveal>
-          <p className="kicker">Próximo passo</p>
+          <p className="prancha">Próximo passo</p>
           <h2 className="t-h1 measure mx-auto mt-6 font-display">
             Sua ideia merece sair da <span className="texto-clay">aba de rascunhos</span>
           </h2>

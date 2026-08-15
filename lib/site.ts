@@ -82,7 +82,7 @@ export const socios: Socio[] = [
   {
     id: 'vitor',
     nome: 'Vitor Roma',
-    papel: 'Desenvolvimento & produto',
+    papel: 'Desenvolvimento',
     resumo: 'Escreve o código que vai pro ar.',
     bio:
       'Analista de Sistemas em formação (ADS/UNIP) e desenvolvedor web. Constrói do front ao banco: interfaces em Next.js e TypeScript, APIs, painéis administrativos com autenticação e 2FA, integrações de WhatsApp e automações em Python. Também é fotógrafo — o que explica por que os sites daqui saem enquadrados antes de saírem codados.',
@@ -101,15 +101,15 @@ export const socios: Socio[] = [
   {
     id: 'marcelo',
     nome: 'Marcelo Buganza',
-    papel: 'Negócio & 3D',
-    resumo: 'Traduz mercado em produto — e produto em imagem.',
+    papel: 'Desenvolvimento',
+    resumo: 'Constrói o produto e enxerga onde ele vende.',
     bio:
-      'Modelador 3D e a cabeça de mercado do estúdio. Entra antes do código: entende o negócio do cliente, onde está o dinheiro e o que precisa aparecer primeiro na tela. Depois entra de novo na parte visual, modelando produtos, ambientes e peças 3D para os sites e materiais de venda.',
+      'Desenvolvedor do estúdio, mão a mão com o Vitor no código que vai pro ar. Soma a isso uma leitura afiada de mercado — entende o negócio do cliente e o que precisa aparecer primeiro na tela — e modela em 3D quando o projeto pede produto renderizado.',
     faz: [
-      'Modelagem e visualização 3D de produtos e ambientes',
+      'Desenvolvimento web (Next.js, React, TypeScript)',
+      'Back-end, banco e integrações',
       'Diagnóstico de negócio e posicionamento',
-      'Estratégia de oferta e funil de conversão',
-      'Relacionamento com o cliente e acompanhamento',
+      'Modelagem e visualização 3D de produtos',
     ],
     links: [
       // PLACEHOLDER — adicione os perfis do Marcelo quando tiver.
@@ -475,7 +475,7 @@ export const stackNota =
 export const manifesto = {
   titulo: 'Dois sócios, nenhuma camada no meio',
   texto:
-    'Agência grande te vende um diretor de contas e te entrega um estagiário. Aqui quem atende é quem faz. O Vitor escreve o código; o Marcelo entende o mercado e modela o que precisa ser visto. Você fala com os dois, do orçamento ao deploy.',
+    'Agência grande te vende um diretor de contas e te entrega um estagiário. Aqui quem atende é quem faz: dois desenvolvedores, os dois com a mão no código do seu projeto. Você fala com quem está construindo, do orçamento ao deploy.',
   pontos: [
     {
       titulo: 'Orçamento sob medida',

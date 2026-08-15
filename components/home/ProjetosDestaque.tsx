@@ -20,7 +20,7 @@ export function ProjetosDestaque() {
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
-              <p className="kicker">Catálogo</p>
+              <p className="prancha">Catálogo</p>
               <h2 className="t-h2 mt-5 font-display">O que já construímos</h2>
               <p className="t-lead measure mt-6 text-creme/65">
                 Sistemas de cliente no ar, produtos próprios em construção e projetos conceituais

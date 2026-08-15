@@ -4,7 +4,7 @@ import { ArrowRight, Check } from 'lucide-react'
 
 import { brand, servicos, waLink, waMensagens } from '@/lib/site'
 import { Reveal } from '@/components/ui/Reveal'
-import { Processo } from '@/components/home/Processo'
+import { Oficina } from '@/components/home/Oficina'
 import { Manutencao } from '@/components/home/Manutencao'
 import { Faq } from '@/components/home/Faq'
 import { CtaFinal } from '@/components/home/CtaFinal'
@@ -47,7 +47,7 @@ export default function ServicosPage() {
 
         <div className="container-page relative">
           <Reveal>
-            <p className="kicker">Serviços</p>
+            <p className="prancha">Serviços</p>
             <h1 className="t-h1 mt-6 font-display">
               Seis frentes, <span className="texto-clay">um escopo escrito</span>
             </h1>
@@ -137,7 +137,7 @@ export default function ServicosPage() {
         </div>
       </section>
 
-      <Processo />
+      <Oficina />
       <Manutencao />
       <Faq />
       <CtaFinal />

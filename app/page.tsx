@@ -3,7 +3,7 @@ import { Manifesto } from '@/components/home/Manifesto'
 import { ProjetosDestaque } from '@/components/home/ProjetosDestaque'
 import { ServicosResumo } from '@/components/home/ServicosResumo'
 import { Numeros } from '@/components/home/Numeros'
-import { Processo } from '@/components/home/Processo'
+import { Oficina } from '@/components/home/Oficina'
 import { Manutencao } from '@/components/home/Manutencao'
 import { Socios } from '@/components/home/Socios'
 import { Stack } from '@/components/home/Stack'
@@ -18,7 +18,7 @@ export default function Home() {
       <ProjetosDestaque />
       <ServicosResumo />
       <Numeros />
-      <Processo />
+      <Oficina />
       <Manutencao />
       <Socios />
       <Stack />

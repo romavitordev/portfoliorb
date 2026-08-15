@@ -9,15 +9,44 @@ import { projetos } from '@/lib/projetos'
 import { ease } from '@/lib/design'
 import { SplitWords } from '@/components/ui/SplitWords'
 
-/** Linhas do "arquivo" que roda ao lado do título — assinatura de estúdio de código. */
-const linhas = [
-  { texto: 'const estudio = {', cor: 'text-creme/45' },
-  { texto: "  socios: ['Vitor Roma', 'Marcelo Buganza'],", cor: 'text-creme/80' },
-  { texto: "  faz: ['sites', 'sistemas', 'produtos'],", cor: 'text-creme/80' },
-  { texto: '  base: "Sorocaba/SP",', cor: 'text-creme/80' },
-  { texto: '  aceitandoProjetos: true,', cor: 'text-clay' },
-  { texto: '}', cor: 'text-creme/45' },
+/**
+ * O painel ao lado do título é a promessa do site em miniatura: um
+ * bloco que sai do rascunho e vira interface. Cada camada entra numa
+ * batida, e a última acende em clay.
+ */
+const camadas = [
+  { rotulo: '01 rabisco', ms: 900 },
+  { rotulo: '02 grade', ms: 1250 },
+  { rotulo: '03 conteúdo', ms: 1600 },
+  { rotulo: '04 no ar', ms: 1950 },
 ]
+
+/**
+ * Uma camada da miniatura. Entra por cima da anterior no tempo marcado,
+ * então o bloco parece ganhar fidelidade em vez de trocar de conteúdo.
+ * Em reduced-motion todas já nascem visíveis — o resultado final é o
+ * mesmo, sem a encenação.
+ */
+function Camada({
+  children,
+  ms,
+  reduzir,
+}: {
+  children: React.ReactNode
+  ms: number
+  reduzir: boolean | null
+}) {
+  return (
+    <motion.div
+      className="absolute inset-5"
+      initial={reduzir ? false : { opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.45, delay: ms / 1000, ease: ease.outExpo }}
+    >
+      {children}
+    </motion.div>
+  )
+}
 
 export function Hero() {
   const reduzir = useReducedMotion()
@@ -86,39 +115,99 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* Coluna do "arquivo" */}
+        {/* Coluna que se monta — a tese do site em miniatura */}
         <motion.div
-          className="surface hidden overflow-hidden lg:block"
+          className="cotas relative hidden aspect-[4/3] overflow-hidden rounded-xl border border-linha bg-carvao/60 shadow-elev-2 lg:block"
           initial={reduzir ? false : { opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5, ease: ease.outExpo }}
+          transition={{ duration: 1, delay: 0.45, ease: ease.outExpo }}
           aria-hidden
         >
-          <div className="flex items-center gap-2 border-b border-linha px-5 py-3">
-            <span className="h-2.5 w-2.5 rounded-full bg-creme/15" />
-            <span className="h-2.5 w-2.5 rounded-full bg-creme/15" />
-            <span className="h-2.5 w-2.5 rounded-full bg-clay/70" />
-            <span className="ml-3 font-mono text-[0.66rem] tracking-wide text-creme/40">
-              estudio.ts
-            </span>
+          <div className="flex items-center gap-2 border-b border-linha/60 px-4 py-3">
+            <span className="h-2 w-2 rounded-full bg-creme/15" />
+            <span className="h-2 w-2 rounded-full bg-creme/15" />
+            <span className="h-2 w-2 rounded-full bg-clay/70" />
           </div>
 
-          <pre className="overflow-x-auto px-5 py-6 font-mono text-[0.78rem] leading-[1.9]">
-            {linhas.map((linha, i) => (
-              <motion.div
-                key={linha.texto}
-                className={linha.cor}
-                initial={reduzir ? false : { opacity: 0, x: -8 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.9 + i * 0.09, ease: ease.outExpo }}
-              >
-                {linha.texto}
-                {i === linhas.length - 1 && (
-                  <span className="ml-1 inline-block h-4 w-[7px] translate-y-0.5 animate-caret bg-clay" />
-                )}
-              </motion.div>
-            ))}
-          </pre>
+          <div className="relative h-full p-5">
+            {/* rabisco */}
+            <Camada reduzir={reduzir} ms={camadas[0].ms}>
+              <div className="flex h-full flex-col gap-2">
+                <div className="rascunho h-8 rounded" />
+                <div className="rascunho h-16 rounded" />
+                <div className="grid flex-1 grid-cols-3 gap-2">
+                  <div className="rascunho rounded" />
+                  <div className="rascunho rounded" />
+                  <div className="rascunho rounded" />
+                </div>
+              </div>
+            </Camada>
+
+            {/* conteúdo cinza */}
+            <Camada reduzir={reduzir} ms={camadas[2].ms}>
+              <div className="flex h-full flex-col gap-2">
+                <div className="flex items-center justify-between rounded bg-grafite px-3 py-2">
+                  <div className="rascunho-bloco h-2.5 w-16" />
+                  <div className="flex gap-1.5">
+                    <div className="rascunho-bloco h-2 w-7" />
+                    <div className="rascunho-bloco h-2 w-7" />
+                  </div>
+                </div>
+                <div className="flex flex-col justify-center gap-2 rounded bg-grafite px-3 py-3">
+                  <div className="rascunho-bloco h-3 w-3/5" />
+                  <div className="rascunho-bloco h-2 w-4/5" />
+                </div>
+                <div className="grid flex-1 grid-cols-3 gap-2">
+                  {[0, 1, 2].map((i) => (
+                    <div key={i} className="rounded bg-grafite p-2">
+                      <div className="rascunho-bloco h-full" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Camada>
+
+            {/* no ar */}
+            <Camada reduzir={reduzir} ms={camadas[3].ms}>
+              <div className="flex h-full flex-col gap-2">
+                <div className="flex items-center justify-between rounded bg-grafite px-3 py-2">
+                  <span className="font-display text-[0.78rem] tracking-tight">Seu negócio</span>
+                  <span className="font-mono text-[0.52rem] uppercase tracking-[0.14em] text-clay">
+                    orçamento
+                  </span>
+                </div>
+                <div className="relative flex flex-col justify-center overflow-hidden rounded bg-grafite px-4 py-4">
+                  <div className="halo-clay -left-4 top-0 h-24 w-24" />
+                  <p className="relative font-display text-base leading-tight tracking-tight">
+                    Sua ideia,
+                    <br />
+                    <span className="texto-clay">no ar.</span>
+                  </p>
+                </div>
+                <div className="grid flex-1 grid-cols-3 gap-2">
+                  {[0, 1, 2].map((i) => (
+                    <div
+                      key={i}
+                      className="rounded"
+                      style={{
+                        background: `linear-gradient(${140 + i * 40}deg, rgba(217,119,87,0.32), rgba(240,238,230,0.05))`,
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </Camada>
+
+            {/* etiqueta do estágio, canto inferior */}
+            <motion.span
+              className="absolute bottom-3 right-4 font-mono text-[0.56rem] uppercase tracking-[0.2em] text-creme/30"
+              initial={reduzir ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 2.3, duration: 0.5 }}
+            >
+              no ar
+            </motion.span>
+          </div>
         </motion.div>
       </div>
 

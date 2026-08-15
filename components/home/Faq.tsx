@@ -10,7 +10,7 @@ export function Faq() {
     <section id="faq" className="relative section-y">
       <div className="container-page grid gap-14 lg:grid-cols-[0.8fr_1.2fr]">
         <Reveal>
-          <p className="kicker">Perguntas</p>
+          <p className="prancha">Perguntas</p>
           <h2 className="t-h2 mt-5 font-display">O que sempre perguntam</h2>
           <p className="t-lead measure-sm mt-6 text-creme/65">
             Preço, prazo e propriedade do código — respondidos aqui, antes de você precisar

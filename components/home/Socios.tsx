@@ -12,7 +12,7 @@ export function Socios() {
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
-              <p className="kicker">Quem faz</p>
+              <p className="prancha">Quem faz</p>
               <h2 className="t-h2 mt-5 font-display">Dois nomes na porta</h2>
             </div>
             <Link href="/estudio" className="btn-link">

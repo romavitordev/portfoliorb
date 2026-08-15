@@ -12,7 +12,7 @@ export function ServicosResumo() {
 
       <div className="container-page">
         <Reveal>
-          <p className="kicker">O que fazemos</p>
+          <p className="prancha">O que fazemos</p>
           <h2 className="t-h2 measure mt-5 font-display">
             Do site de uma página ao sistema com banco de dados
           </h2>
