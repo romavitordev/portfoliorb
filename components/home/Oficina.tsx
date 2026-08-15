@@ -9,9 +9,9 @@ import { CampoDeLuz } from '@/components/fx/CampoDeLuz'
 
 /** O catálogo que a janela mostra quando o site fica pronto. */
 const catalogo = [
-  { nome: 'Pastilha de freio', preco: 'R$ 189' },
-  { nome: 'Amortecedor', preco: 'R$ 340' },
-  { nome: 'Correia dentada', preco: 'R$ 96' },
+  { nome: 'Pastilha de freio', preco: 'R$ 189', estoque: 12, selo: '-15%' },
+  { nome: 'Amortecedor', preco: 'R$ 340', estoque: 4, selo: null },
+  { nome: 'Correia dentada', preco: 'R$ 96', estoque: 27, selo: null },
 ]
 
 /** As barras percorrem a escala: o gráfico é a própria evolução. */
@@ -387,15 +387,37 @@ function JanelaMontando({ estagio }: { estagio: number }) {
 
           <div className="grid flex-1 grid-cols-3 gap-2">
             {catalogo.map((item, i) => (
-              <div
-                key={item.nome}
-                className="flex flex-col justify-end gap-1 rounded-lg p-2"
-                style={{
-                  backgroundImage: `linear-gradient(${160 + i * 30}deg, rgba(109,74,255,0.24), rgba(0,212,200,0.10) 60%, rgba(20,18,30,0.9))`,
-                }}
-              >
-                <span className="text-[0.58rem] leading-tight text-luz/80">{item.nome}</span>
-                <span className="font-mono text-[0.6rem] text-ciano">{item.preco}</span>
+              <div key={item.nome} className="flex flex-col overflow-hidden rounded-lg bg-nevoa">
+                <div
+                  className="relative flex-1"
+                  style={{
+                    backgroundImage: `linear-gradient(${160 + i * 30}deg, rgba(109,74,255,0.32), rgba(0,212,200,0.14) 60%, rgba(11,10,18,0.9))`,
+                  }}
+                >
+                  {item.selo && (
+                    <span className="absolute left-1.5 top-1.5 rounded bg-lima px-1 py-px font-mono text-[0.45rem] font-bold tracking-wide text-abismo">
+                      {item.selo}
+                    </span>
+                  )}
+                </div>
+
+                <div className="space-y-1 p-1.5">
+                  <span className="block truncate text-[0.58rem] leading-tight text-luz/80">
+                    {item.nome}
+                  </span>
+                  <div className="flex items-center justify-between gap-1">
+                    <span className="font-mono text-[0.6rem] font-semibold text-luz">
+                      {item.preco}
+                    </span>
+                    <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-violeta font-mono text-[0.55rem] leading-none text-luz">
+                      +
+                    </span>
+                  </div>
+                  <span className="flex items-center gap-1 font-mono text-[0.45rem] uppercase tracking-wide text-luz/40">
+                    <span className="h-1 w-1 rounded-full bg-lima" />
+                    {item.estoque} em estoque
+                  </span>
+                </div>
               </div>
             ))}
           </div>

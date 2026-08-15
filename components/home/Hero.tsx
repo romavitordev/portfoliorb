@@ -21,9 +21,9 @@ import { SplitWords } from '@/components/ui/SplitWords'
  * quando parece uma tela que alguém usaria.
  */
 const produtos = [
-  { nome: 'Pastilha de freio', preco: 'R$ 189' },
-  { nome: 'Amortecedor', preco: 'R$ 340' },
-  { nome: 'Correia dentada', preco: 'R$ 96' },
+  { nome: 'Pastilha de freio', preco: 'R$ 189', estoque: 12, selo: '-15%' },
+  { nome: 'Amortecedor', preco: 'R$ 340', estoque: 4, selo: null },
+  { nome: 'Correia dentada', preco: 'R$ 96', estoque: 27, selo: null },
 ]
 
 /** As barras usam a escala inteira: o gráfico É a evolução. */
@@ -199,18 +199,51 @@ export function Hero() {
                   </span>
                 </div>
 
-                {/* catálogo com preço */}
+                {/*
+                  Catálogo. Antes cada card era um retângulo com degradê e
+                  duas palavras no rodapé — voltava a parecer placeholder.
+                  Agora carrega o que um card de loja carrega de verdade:
+                  selo na foto, nome, preço, estoque e o botão de somar ao
+                  carrinho. Densidade é o que faz um mock parecer usável.
+                */}
                 <div className="grid flex-1 grid-cols-3 gap-2.5">
                   {produtos.map((p, i) => (
                     <div
                       key={p.nome}
-                      className="flex flex-col justify-end gap-1 rounded-lg bg-abismo/80 p-2"
-                      style={{
-                        backgroundImage: `linear-gradient(${160 + i * 30}deg, rgba(109,74,255,0.22), rgba(0,212,200,0.10) 60%, transparent)`,
-                      }}
+                      className="flex flex-col overflow-hidden rounded-lg bg-abismo/80"
                     >
-                      <span className="text-[0.55rem] leading-tight text-luz/75">{p.nome}</span>
-                      <span className="font-mono text-[0.58rem] text-ciano">{p.preco}</span>
+                      {/* área da foto */}
+                      <div
+                        className="relative flex-1"
+                        style={{
+                          backgroundImage: `linear-gradient(${160 + i * 30}deg, rgba(109,74,255,0.32), rgba(0,212,200,0.14) 60%, rgba(11,10,18,0.9))`,
+                        }}
+                      >
+                        {p.selo && (
+                          <span className="absolute left-1.5 top-1.5 rounded bg-lima px-1 py-px font-mono text-[0.42rem] font-bold tracking-wide text-abismo">
+                            {p.selo}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* informação */}
+                      <div className="space-y-1 p-1.5">
+                        <span className="block truncate text-[0.55rem] leading-tight text-luz/80">
+                          {p.nome}
+                        </span>
+                        <div className="flex items-center justify-between gap-1">
+                          <span className="font-mono text-[0.58rem] font-semibold text-luz">
+                            {p.preco}
+                          </span>
+                          <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-violeta font-mono text-[0.5rem] leading-none text-luz">
+                            +
+                          </span>
+                        </div>
+                        <span className="flex items-center gap-1 font-mono text-[0.42rem] uppercase tracking-wide text-luz/40">
+                          <span className="h-1 w-1 rounded-full bg-lima" />
+                          {p.estoque} em estoque
+                        </span>
+                      </div>
                     </div>
                   ))}
                 </div>
