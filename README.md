@@ -17,8 +17,25 @@ Next.js 14 (App Router), TypeScript, Tailwind CSS, GSAP/Lenis e Framer Motion.
 npm install
 ```
 
-Copie `.env.example` para `.env` e preencha (veja [Captação de leads](#captação-de-leads)).
-Sem `.env`, o site sobe normalmente — só o formulário e o painel ficam fora do ar.
+```bash
+npm run up
+```
+
+`up` é o comando único de desenvolvimento. Ele cria o `.env` na primeira execução (com
+segredo gerado na hora), sincroniza o banco, cria um acesso ao painel se ainda não houver
+nenhum e sobe dois processos em paralelo:
+
+| | onde | o que é |
+| --- | --- | --- |
+| `next` | http://localhost:3000 | site **e** API — no App Router é o mesmo processo |
+| `studio` | http://localhost:5555 | Prisma Studio, para ver e editar o banco |
+
+O banco em desenvolvimento é um arquivo SQLite: não há servidor para subir. A saída dos
+dois processos vem com prefixo, e `Ctrl+C` derruba a árvore inteira — sem deixar processo
+órfão segurando a porta.
+
+Na primeira execução o script imprime um e-mail e uma senha de acesso ao painel. Anote:
+ela não é mostrada de novo. Troque em `/admin/conta`.
 
 ```bash
 npm run dev

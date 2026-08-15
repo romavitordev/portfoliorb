@@ -4,6 +4,7 @@
   "private": true,
   "description": "Roma & Buganza — estúdio de desenvolvimento. Sites, landing pages, sistemas web e produtos digitais.",
   "scripts": {
+    "up": "node scripts/up.mjs",
     "dev": "next dev",
     "build": "prisma generate && next build",
     "start": "next start",
