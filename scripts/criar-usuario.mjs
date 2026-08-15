@@ -16,12 +16,26 @@ import { PrismaClient } from '@prisma/client'
 const scryptAsync = promisify(scrypt)
 const prisma = new PrismaClient()
 
-const [email, nome, senha] = process.argv.slice(2)
+const args = process.argv.slice(2)
 
-if (!email || !nome || !senha) {
-  console.error('Uso: npm run usuario -- "email@dominio.com" "Nome Sobrenome" "senha-forte"')
+/**
+ * Exige exatamente 3 argumentos.
+ *
+ * Sem isso, um nome com espaço que perca as aspas no caminho
+ * (shell → npm → node) vira dois argumentos: o sobrenome escorrega para
+ * a posição da senha e a conta nasce com nome e senha errados, sem
+ * nenhum aviso. Melhor falhar alto.
+ */
+if (args.length !== 3) {
+  console.error(
+    `\nEsperava 3 argumentos, recebi ${args.length}: ${JSON.stringify(args)}\n\n` +
+      'Uso: npm run usuario -- "email@dominio.com" "Nome Sobrenome" "senha-forte"\n\n' +
+      'Se o nome tem espaço, mantenha as aspas.\n',
+  )
   process.exit(1)
 }
+
+const [email, nome, senha] = args
 
 if (!/\S+@\S+\.\S+/.test(email)) {
   console.error('E-mail inválido.')
