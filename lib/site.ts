@@ -476,36 +476,48 @@ export const manifesto = {
   titulo: 'Dois sócios, nenhuma camada no meio',
   texto:
     'Agência grande te vende um diretor de contas e te entrega um estagiário. Aqui quem atende é quem faz: dois desenvolvedores, os dois com a mão no código do seu projeto. Você fala com quem está construindo, do orçamento ao deploy.',
+  /**
+   * Cada ponto é um contraste contra a praxe do mercado — isso já estava
+   * no texto ("não temos tabela fixa", "sem refém de plataforma", "não
+   * são extra"). O campo `comum` só extrai esse lado para o design poder
+   * mostrar os dois, em vez de esconder a retórica dentro do parágrafo.
+   */
   pontos: [
     {
+      comum: 'tabela de preços fixa',
       titulo: 'Orçamento sob medida',
       texto:
-        'Não temos tabela fixa. O preço nasce do tamanho do projeto e do momento do seu negócio — um autônomo começando e uma empresa que já investe em anúncios não pagam o mesmo pelo mesmo trabalho.',
+        'O preço nasce do tamanho do projeto e do momento do seu negócio — um autônomo começando e uma empresa que já investe em anúncios não pagam o mesmo pelo mesmo trabalho.',
     },
     {
+      comum: 'valor que cresce no meio',
       titulo: 'Preço fechado, escopo escrito',
       texto:
-        'Fechado o valor, ele não muda no meio. O que está e o que não está incluso sai por escrito na proposta. Se o escopo crescer, a gente conversa antes — nunca depois da fatura.',
+        'Fechado o valor, ele não muda. O que está e o que não está incluso sai por escrito na proposta. Se o escopo crescer, a gente conversa antes — nunca depois da fatura.',
     },
     {
+      comum: 'site refém da plataforma',
       titulo: 'O código é seu',
       texto:
-        'Repositório entregue no fim do projeto. Sem refém de plataforma e sem fidelidade: se um dia quiser seguir sem a gente, leva tudo e o site continua no ar.',
+        'Repositório entregue no fim do projeto. Sem fidelidade: se um dia quiser seguir sem a gente, leva tudo e o site continua no ar.',
     },
     {
+      comum: 'chamar o fornecedor pra trocar um preço',
       titulo: 'Conteúdo que você edita',
       texto:
         'Textos, preços e imagens centralizados num arquivo só. Trocar o cardápio ou a tabela de preços não exige nos chamar.',
     },
     {
+      comum: 'performance cobrada à parte',
       titulo: 'Rápido de verdade',
       texto:
-        'Performance e acessibilidade não são extra: entram no orçamento base. Site lento perde venda e some do Google.',
+        'Performance e acessibilidade entram no orçamento base. Site lento perde venda e some do Google.',
     },
     {
+      comum: 'três boletos de fornecedores diferentes',
       titulo: 'Uma conta só, sem surpresa',
       texto:
-        'No plano mensal, domínio e hospedagem entram inclusos. Você não recebe cobrança de três fornecedores diferentes nem descobre no susto que o domínio venceu — é uma mensalidade e o site fica no ar.',
+        'No plano mensal, domínio e hospedagem entram inclusos. Você não descobre no susto que o domínio venceu — é uma mensalidade e o site fica no ar.',
     },
   ],
 }
