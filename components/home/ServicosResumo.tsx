@@ -24,7 +24,12 @@ export function ServicosResumo() {
               <Reveal delay={i * 0.04}>
                 <Link
                   href={`/servicos#${servico.id}`}
-                  className="group grid items-baseline gap-x-8 gap-y-3 border-b border-linha py-8 transition-colors duration-500 hover:bg-nevoa/50 md:grid-cols-[4rem_1fr_1.1fr_2rem] md:py-9"
+                  /*
+                    Padding lateral pro conteúdo não encostar na borda
+                    quando o hover pinta o fundo. As linhas divisórias
+                    continuam na largura da página; o texto é que recua.
+                  */
+                  className="group grid items-baseline gap-x-8 gap-y-3 border-b border-linha px-5 py-8 transition-colors duration-500 hover:bg-nevoa/60 md:grid-cols-[4rem_1fr_1.1fr_2rem] md:px-7 md:py-9"
                 >
                   <span className="font-mono text-[0.7rem] tracking-[0.2em] text-ciano">
                     {servico.numero}

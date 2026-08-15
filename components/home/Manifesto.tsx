@@ -12,22 +12,33 @@ export function Manifesto() {
             <p className="t-lead measure mt-7 text-luz/65">{manifesto.texto}</p>
           </Reveal>
 
+          {/*
+            Antes cada card repetia o número DUAS vezes — um pequeno em
+            ciano e um gigante fantasma atrás — e ainda empilhava tudo na
+            vertical, o que deixava os blocos altíssimos.
+
+            Agora o número vive numa coluna própria à esquerda do texto:
+            uma ocorrência só, e a altura cai porque o título e o texto
+            passam a dividir a linha com ele em vez de ficar embaixo.
+          */}
           <div className="grade-moldura grade-moldura-2 sm:grid-cols-2">
             {manifesto.pontos.map((ponto, i) => (
               <Reveal key={ponto.titulo} className="h-full" delay={i * 0.06}>
-                <div className="celula">
-                  <span aria-hidden className="celula-num">
+                <div className="celula flex gap-4 !p-6">
+                  <span
+                    aria-hidden
+                    className="mt-0.5 shrink-0 font-mono text-[0.66rem] tracking-[0.2em] text-ciano"
+                  >
                     {String(i + 1).padStart(2, '0')}
                   </span>
-                  <span className="relative font-mono text-[0.66rem] tracking-[0.2em] text-ciano">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <h3 className="relative mt-4 font-display text-xl tracking-tight">
-                    {ponto.titulo}
-                  </h3>
-                  <p className="relative mt-3 text-sm leading-relaxed text-luz/60">
-                    {ponto.texto}
-                  </p>
+                  <div>
+                    <h3 className="font-display text-lg leading-snug tracking-tight">
+                      {ponto.titulo}
+                    </h3>
+                    <p className="mt-2 text-[0.82rem] leading-relaxed text-luz/55">
+                      {ponto.texto}
+                    </p>
+                  </div>
                 </div>
               </Reveal>
             ))}

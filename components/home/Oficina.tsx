@@ -254,14 +254,22 @@ function ItemEtapa({ etapa, ativa }: { etapa: (typeof processo)[number]; ativa: 
 
 function JanelaMontando({ estagio }: { estagio: number }) {
   /**
-   * Cada camada acende no seu estágio e PERMANECE acesa — a janela ganha
-   * fidelidade em vez de trocar de tela. Por isso são comparações `>=`
-   * e não igualdade.
+   * Uma camada por estágio, e SÓ a do estágio atual.
+   *
+   * A versão anterior acumulava (`>=`) na ideia de "ganhar fidelidade",
+   * mas na prática o texto do escopo atravessava o wireframe e os cards:
+   * camada de texto não é bloco de construção, é um momento que passou.
+   *
+   * A sensação de progressão continua, porque cada estágio é uma versão
+   * mais acabada do MESMO layout — não precisa empilhar para isso.
+   *
+   * Exceção: `publicado` fica aceso também no estágio 6, porque "Depois"
+   * é o mesmo site no ar com o selo de manutenção por cima.
    */
-  const conversa = estagio >= 0 ? 1 : 0
-  const escopo = estagio >= 1 ? 1 : 0
-  const wireframe = estagio >= 2 ? 1 : 0
-  const construcao = estagio >= 3 ? 1 : 0
+  const conversa = estagio === 0 ? 1 : 0
+  const escopo = estagio === 1 ? 1 : 0
+  const wireframe = estagio === 2 ? 1 : 0
+  const construcao = estagio === 3 ? 1 : 0
   const publicado = estagio >= 4 ? 1 : 0
   const manutencao = estagio >= 5 ? 1 : 0
 
@@ -288,7 +296,7 @@ function JanelaMontando({ estagio }: { estagio: number }) {
 
       <div className="relative h-full p-5">
         {/* 01 — conversa: um cursor piscando numa folha em branco */}
-        <div data-camada="conversa" style={{ opacity: conversa }} className="absolute inset-5 flex items-center">
+        <div data-camada="conversa" style={{ opacity: conversa }} className="absolute inset-5 transition-opacity duration-700 ease-saida transition-opacity duration-700 ease-saida flex items-center">
           <p className="rascunho-texto text-sm">
             o que você precisa?
             <span className="ml-1 inline-block h-4 w-[6px] translate-y-0.5 animate-caret bg-violeta" />
@@ -296,7 +304,7 @@ function JanelaMontando({ estagio }: { estagio: number }) {
         </div>
 
         {/* 02 — escopo: itens sendo fechados */}
-        <div data-camada="escopo" style={{ opacity: escopo }} className="absolute inset-5 space-y-2 pt-8">
+        <div data-camada="escopo" style={{ opacity: escopo }} className="absolute inset-5 transition-opacity duration-700 ease-saida transition-opacity duration-700 ease-saida space-y-2 pt-8">
           {['catálogo com filtros', 'painel do vendedor', 'contato no WhatsApp', 'domínio e deploy'].map(
             (item) => (
               <p key={item} className="rascunho-texto flex items-center gap-2 text-[0.72rem]">
@@ -307,7 +315,7 @@ function JanelaMontando({ estagio }: { estagio: number }) {
         </div>
 
         {/* 03 — wireframe tracejado por cima do escopo */}
-        <div data-camada="wireframe" style={{ opacity: wireframe }} className="absolute inset-5 flex flex-col gap-2">
+        <div data-camada="wireframe" style={{ opacity: wireframe }} className="absolute inset-5 transition-opacity duration-700 ease-saida transition-opacity duration-700 ease-saida flex flex-col gap-2">
           <div className="rascunho h-8 w-full rounded" />
           <div className="rascunho h-20 w-full rounded" />
           <div className="grid flex-1 grid-cols-3 gap-2">
@@ -318,7 +326,7 @@ function JanelaMontando({ estagio }: { estagio: number }) {
         </div>
 
         {/* 04 — construção: os blocos ganham conteúdo cinza */}
-        <div data-camada="construcao" style={{ opacity: construcao }} className="absolute inset-5 flex flex-col gap-2">
+        <div data-camada="construcao" style={{ opacity: construcao }} className="absolute inset-5 transition-opacity duration-700 ease-saida transition-opacity duration-700 ease-saida flex flex-col gap-2">
           <div className="flex items-center justify-between rounded bg-nevoa px-3 py-2">
             <div className="rascunho-bloco h-2.5 w-20" />
             <div className="flex gap-1.5">
@@ -350,7 +358,7 @@ function JanelaMontando({ estagio }: { estagio: number }) {
         <div
           data-camada="publicado"
           style={{ opacity: publicado }}
-          className="absolute inset-5 flex flex-col gap-2"
+          className="absolute inset-5 transition-opacity duration-700 ease-saida flex flex-col gap-2"
         >
           <div className="flex items-center justify-between rounded-lg bg-nevoa px-3 py-2.5">
             <span className="font-display text-[0.85rem] tracking-tight">Peças Menezes</span>
@@ -394,12 +402,15 @@ function JanelaMontando({ estagio }: { estagio: number }) {
         </div>
 
         {/* 06 — depois: o selo de cuidado contínuo */}
-        <div data-camada="manutencao" style={{ opacity: manutencao }}
-          className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full border border-violeta/40 bg-abismo/90 px-3 py-1.5 backdrop-blur-sm"
+        <div
+          data-camada="manutencao"
+          style={{ opacity: manutencao }}
+          className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full border border-lima/40 bg-abismo/90 px-3 py-1.5 backdrop-blur-sm transition-opacity duration-700 ease-saida"
         >
+          {/* Lima: é o selo de "crescendo", a ponta do espectro */}
           <span className="relative flex h-1.5 w-1.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-violeta opacity-70" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-violeta" />
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-lima opacity-70" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-lima" />
           </span>
           <span className="font-mono text-[0.58rem] uppercase tracking-[0.16em] text-luz/70">
             no ar e cuidado

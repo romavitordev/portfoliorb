@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 import {
   categoriasDisponiveis,
@@ -11,8 +11,7 @@ import {
   type Categoria,
   type Natureza,
 } from '@/lib/projetos'
-import { ease } from '@/lib/design'
-import { ProjetoCard } from '@/components/projetos/ProjetoCard'
+import { IndiceProjetos } from '@/components/projetos/IndiceProjetos'
 
 type FiltroCategoria = Categoria | 'todos'
 type FiltroNatureza = Natureza | 'todos'
@@ -70,22 +69,14 @@ export function CatalogoProjetos() {
         {visiveis.length} {visiveis.length === 1 ? 'projeto' : 'projetos'}
       </p>
 
-      <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <AnimatePresence mode="popLayout">
-          {visiveis.map((projeto, i) => (
-            <motion.div
-              key={projeto.slug}
-              layout
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.45, delay: i * 0.03, ease: ease.outExpo }}
-            >
-              <ProjetoCard projeto={projeto} prioridade={i < 3} />
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
+      {/*
+        Índice em lista no lugar da grade de três colunas: oito projetos
+        cabem na tela de uma vez, e o nome do projeto vira o protagonista
+        em vez da foto. A imagem aparece no painel que segue o cursor.
+      */}
+      <motion.div layout className="mt-6">
+        <IndiceProjetos projetos={visiveis} />
+      </motion.div>
 
       {visiveis.length === 0 && (
         <p className="measure py-16 text-luz/55">

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
-import { ArrowRight, ArrowDown, Search, TrendingUp } from 'lucide-react'
+import { ArrowRight, Search, TrendingUp } from 'lucide-react'
 
 import { brand } from '@/lib/site'
 import { projetos } from '@/lib/projetos'
@@ -220,17 +220,6 @@ export function Hero() {
         </motion.div>
       </div>
 
-      <motion.div
-        aria-hidden
-        className="absolute inset-x-0 bottom-8 hidden justify-center md:flex"
-        initial={reduzir ? false : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 1.4 }}
-      >
-        <span className="inline-flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.28em] text-luz/35">
-          <ArrowDown size={13} /> role
-        </span>
-      </motion.div>
     </section>
   )
 }
