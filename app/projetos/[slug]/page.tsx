@@ -14,6 +14,7 @@ import {
 } from '@/lib/projetos'
 import { CampoDeLuz } from '@/components/fx/CampoDeLuz'
 import { Reveal } from '@/components/ui/Reveal'
+import { BLUR_ESCURO } from '@/lib/blur'
 
 type Params = { params: { slug: string } }
 
@@ -128,6 +129,8 @@ export default function ProjetoPage({ params }: Params) {
           <Reveal>
             <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-linha">
               <Image
+                placeholder="blur"
+                blurDataURL={BLUR_ESCURO}
                 src={projeto.imagem}
                 alt={projeto.imagemAlt}
                 fill

@@ -4,6 +4,7 @@ import { ArrowRight, ArrowUpRight } from 'lucide-react'
 
 import { projetos, projetosDestaque, rotulosCategoria } from '@/lib/projetos'
 import { Reveal } from '@/components/ui/Reveal'
+import { BLUR_ESCURO } from '@/lib/blur'
 
 /**
  * Vitrine da home.
@@ -59,6 +60,8 @@ export function ProjetosDestaque() {
                     }}
                   />
                   <Image
+                    placeholder="blur"
+                    blurDataURL={BLUR_ESCURO}
                     src={projeto.imagem}
                     alt={projeto.imagemAlt}
                     fill

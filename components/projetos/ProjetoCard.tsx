@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 
 import { rotulosCategoria, rotulosNatureza, type Projeto } from '@/lib/projetos'
+import { BLUR_ESCURO } from '@/lib/blur'
 
 type Props = {
   projeto: Projeto
@@ -41,6 +42,8 @@ export function ProjetoCard({ projeto, grande = false, prioridade = false }: Pro
         />
 
         <Image
+          placeholder="blur"
+          blurDataURL={BLUR_ESCURO}
           src={projeto.imagem}
           alt={projeto.imagemAlt}
           fill

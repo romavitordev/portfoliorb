@@ -8,6 +8,7 @@ import { CampoDeLuz } from '@/components/fx/CampoDeLuz'
 import { Reveal } from '@/components/ui/Reveal'
 import { Numeros } from '@/components/home/Numeros'
 import { CtaFinal } from '@/components/home/CtaFinal'
+import { BLUR_ESCURO } from '@/lib/blur'
 
 export const metadata: Metadata = {
   title: 'Estúdio',
@@ -41,6 +42,8 @@ export default function EstudioPage() {
             <div className="relative aspect-[21/9] overflow-hidden rounded-2xl border border-linha">
               {/* PLACEHOLDER — troque por uma foto real de vocês dois. */}
               <Image
+                placeholder="blur"
+                blurDataURL={BLUR_ESCURO}
                 src={imagens.estudio.src}
                 alt={imagens.estudio.alt}
                 fill

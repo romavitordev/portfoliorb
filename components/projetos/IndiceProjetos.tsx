@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 
 import { rotulosCategoria, rotulosNatureza, type Projeto } from '@/lib/projetos'
+import { BLUR_ESCURO } from '@/lib/blur'
 
 /**
  * ÍNDICE DE PROJETOS — o catálogo como lista, não como grade.
@@ -99,7 +100,9 @@ export function IndiceProjetos({ projetos }: { projetos: Projeto[] }) {
               {/* Miniatura embutida — só onde não há cursor pra guiar */}
               {!temCursor && (
                 <span className="relative hidden h-11 w-16 shrink-0 overflow-hidden rounded sm:block">
-                  <Image src={projeto.imagem} alt="" fill sizes="64px" className="object-cover" />
+                  <Image
+                    placeholder="blur"
+                    blurDataURL={BLUR_ESCURO} src={projeto.imagem} alt="" fill sizes="64px" className="object-cover" />
                 </span>
               )}
 
@@ -134,6 +137,8 @@ export function IndiceProjetos({ projetos }: { projetos: Projeto[] }) {
             <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl border border-linha bg-nevoa">
               {projetos.map((projeto, i) => (
                 <Image
+                  placeholder="blur"
+                  blurDataURL={BLUR_ESCURO}
                   key={projeto.slug}
                   src={projeto.imagem}
                   alt=""
