@@ -12,7 +12,7 @@ import { BLUR_ESCURO } from '@/lib/blur'
  * ÍNDICE DE PROJETOS — o catálogo como lista, não como grade.
  *
  * A grade de três colunas com card grande obrigava a rolar muito para
- * ver oito projetos e dava o mesmo peso visual a todos. Uma lista
+ * ver o catálogo e dava o mesmo peso visual a todos. Uma lista
  * tipográfica é varrida em segundos e deixa o NOME do projeto ser o
  * protagonista em vez da foto.
  *

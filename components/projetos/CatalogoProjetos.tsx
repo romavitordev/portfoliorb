@@ -70,9 +70,9 @@ export function CatalogoProjetos() {
       </p>
 
       {/*
-        Índice em lista no lugar da grade de três colunas: oito projetos
-        cabem na tela de uma vez, e o nome do projeto vira o protagonista
-        em vez da foto. A imagem aparece no painel que segue o cursor.
+        Índice em lista no lugar da grade de três colunas: o catálogo
+        inteiro cabe numa tela, e o nome do projeto vira o protagonista em
+        vez da foto. A imagem vive numa coluna fixa ao lado.
       */}
       <motion.div layout className="mt-6">
         <IndiceProjetos projetos={visiveis} />

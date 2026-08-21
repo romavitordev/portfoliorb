@@ -110,9 +110,9 @@ export const projetos: Projeto[] = [
     papel: ['Arquitetura', 'Back-end e banco', 'Front-end', 'Painel administrativo', 'Deploy'],
     repo: 'https://github.com/romavitordev/buganza_imoveis',
     demo: 'https://romavitordev.github.io/layout_buganza/',
-    imagem:
-      'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1600&q=80',
-    imagemAlt: 'Fachada de casa moderna com placa de imobiliária',
+    imagem: '/projetos/marcelo-imoveis.webp',
+    imagemAlt:
+      'Tela inicial do site Marcelo Imóveis, com skyline noturno ilustrado e a chamada "Seu Imóvel, Sem Complicação"',
     emDestaque: true,
   },
 
@@ -160,9 +160,9 @@ export const projetos: Projeto[] = [
     papel: ['Definição de produto', 'Arquitetura do monorepo', 'Front-end', 'API', 'Design system'],
     repo: 'https://github.com/romavitordev/fisgou',
     demo: 'https://romavitordev.github.io/fisgou_layout/',
-    imagem:
-      'https://images.unsplash.com/photo-1445264718234-a623be589d37?auto=format&fit=crop&w=1600&q=80',
-    imagemAlt: 'Pescador lançando a linha ao amanhecer num lago calmo',
+    imagem: '/projetos/fisgou.webp',
+    imagemAlt:
+      'Tela inicial do Fisgou, com a chamada sobre registrar fisgadas e os cartões de feed, coleção, capturas e mapa',
     emDestaque: true,
   },
 
@@ -204,9 +204,9 @@ export const projetos: Projeto[] = [
     papel: ['Front-end', 'API', 'Banco', 'Infraestrutura e deploy'],
     repo: 'https://github.com/romavitordev/TriAmici',
     demo: 'https://romavitordev.github.io/layout_triamici/',
-    imagem:
-      'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&w=1600&q=80',
-    imagemAlt: 'Câmera fotográfica sobre mesa de madeira com lentes ao redor',
+    imagem: '/projetos/tri-amici.webp',
+    imagemAlt:
+      'Tela inicial da Tri Amici Photography Academy, com uma câmera em close e a chamada "Fotografia que muda"',
     emDestaque: true,
   },
 
@@ -257,9 +257,9 @@ export const projetos: Projeto[] = [
     papel: ['Copy e estrutura', 'Front-end', 'API', 'Banco', 'SEO técnico'],
     repo: 'https://github.com/romavitordev/portfolioadv_rafael',
     demo: 'https://romavitordev.github.io/portfolioadv_rafael/',
-    imagem:
-      'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1600&q=80',
-    imagemAlt: 'Escritório de advocacia com estante de livros jurídicos',
+    imagem: '/projetos/rafael-pedroso-advocacia.webp',
+    imagemAlt:
+      'Tela inicial do site de Rafael Pedroso Advocacia, com o nome em destaque e botões de agendamento',
     emDestaque: false,
   },
 
@@ -303,9 +303,9 @@ export const projetos: Projeto[] = [
     papel: ['Direção de arte', 'Copy', 'Front-end', 'Sistema de design'],
     repo: 'https://github.com/romavitordev/baltazarburger_lndpage',
     demo: 'https://romavitordev.github.io/layout_baltazar/',
-    imagem:
-      'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1600&q=80',
-    imagemAlt: 'Hambúrguer artesanal grelhado visto de perto',
+    imagem: '/projetos/baltazar-burger.webp',
+    imagemAlt:
+      'Tela inicial da Baltazar Grilled Burger, com o nome em caixa alta sobre fundo de brasa',
     emDestaque: true,
   },
 
@@ -346,9 +346,9 @@ export const projetos: Projeto[] = [
     papel: ['Naming e identidade', 'Copy', 'Direção de arte', 'Front-end'],
     repo: 'https://github.com/romavitordev/serenocafe_lndpage',
     demo: 'https://romavitordev.github.io/layout_serenocafe/',
-    imagem:
-      'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1600&q=80',
-    imagemAlt: 'Barista preparando café coado sob luz quente',
+    imagem: '/projetos/sereno-cafe.webp',
+    imagemAlt:
+      'Tela inicial do Sereno café & torrefação, com xícara fotografada e a frase "O instante antes do dia começar"',
     emDestaque: true,
   },
 
@@ -376,40 +376,12 @@ export const projetos: Projeto[] = [
     papel: ['Fotografia', 'Design', 'Front-end'],
     repo: 'https://github.com/romavitordev/romafotografias',
     demo: 'https://romavitordev.github.io/romafotografias/',
-    imagem:
-      'https://images.unsplash.com/photo-1471341971476-ae15ff5dd4ea?auto=format&fit=crop&w=1600&q=80',
-    imagemAlt: 'Fotógrafo enquadrando cena ao entardecer',
+    imagem: '/projetos/roma-fotografias.webp',
+    imagemAlt:
+      'Tela inicial do site Vitor Roma Fotografias, com foto autoral em tela cheia',
     emDestaque: false,
   },
 
-  /* ---------------------------------------------------------------- */
-  {
-    slug: 'click-manager',
-    nome: 'Click Manager',
-    cliente: 'Produto do estúdio',
-    categoria: 'automacao',
-    natureza: 'proprio',
-    ano: 2026,
-    resumo: 'Painel de gestão e automação de processos repetitivos',
-    intro:
-      'Ferramenta interna que virou produto: um painel para organizar e disparar as tarefas repetitivas que consomem o dia de quem opera.',
-    desafio:
-      'Trabalho manual repetido todo dia é caro e some do radar — ninguém mede o tempo que se perde copiando dado de um lugar para outro.',
-    solucao:
-      'Interface de gestão que centraliza processos, registra execução e expõe o que está travando. Base para as automações em Python que o estúdio entrega aos clientes.',
-    destaques: [
-      { titulo: 'Processos centralizados', texto: 'Cada rotina vira um item gerenciável, com estado e histórico.' },
-      { titulo: 'Base para automações', texto: 'O painel é a casca onde entram os scripts de coleta e disparo feitos sob medida.' },
-    ],
-    stack: ['HTML5', 'CSS3', 'JavaScript', 'Python'],
-    papel: ['Produto', 'Front-end', 'Automação'],
-    repo: 'https://github.com/romavitordev/click_manager_v2',
-    demo: 'https://romavitordev.github.io/click_manager_v2/',
-    imagem:
-      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80',
-    imagemAlt: 'Painel com gráficos e indicadores em tela de computador',
-    emDestaque: false,
-  },
 ]
 
 /* ------------------------------------------------------------------ */
