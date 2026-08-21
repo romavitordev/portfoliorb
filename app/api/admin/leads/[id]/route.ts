@@ -34,8 +34,14 @@ export async function PATCH(req: Request, { params }: Params) {
     return NextResponse.json({ erro: 'Dados inválidos.' }, { status: 422 })
   }
 
-  // Marca quem mexeu, para os dois sócios não ligarem para o mesmo lead.
+  /*
+    Guarda no próprio handler, não só no middleware: o `matcher` é uma
+    string, e mexer na estrutura de pastas derruba a proteção sem quebrar
+    nada visível. A sessão serve às duas coisas — barrar quem não entrou
+    e marcar quem mexeu, para os dois sócios não ligarem pro mesmo lead.
+  */
   const sessao = await lerSessao(cookies().get(COOKIE_SESSAO)?.value)
+  if (!sessao) return NextResponse.json({ erro: 'Não autorizado.' }, { status: 401 })
 
   try {
     const lead = await prisma.lead.update({
@@ -54,6 +60,9 @@ export async function PATCH(req: Request, { params }: Params) {
 
 /** Apaga um lead de vez. Sem lixeira — o painel confirma antes. */
 export async function DELETE(_req: Request, { params }: Params) {
+  const sessao = await lerSessao(cookies().get(COOKIE_SESSAO)?.value)
+  if (!sessao) return NextResponse.json({ erro: 'Não autorizado.' }, { status: 401 })
+
   try {
     await prisma.lead.delete({ where: { id: params.id } })
     return NextResponse.json({ ok: true })

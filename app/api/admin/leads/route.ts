@@ -1,16 +1,29 @@
 import { NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
 
 import { prisma } from '@/lib/prisma'
 import { ehStatusValido } from '@/lib/lead-status'
+import { COOKIE_SESSAO, lerSessao } from '@/lib/session'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 /**
- * Lista os leads do painel. Protegida pelo middleware — se chegou aqui,
- * a sessão já foi validada.
+ * Lista os leads do painel.
+ *
+ * A sessão é checada AQUI, e não só no `middleware.ts`, de propósito. O
+ * middleware é uma linha de defesa frágil: vive num `matcher` de string.
+ * Renomear uma pasta, editar o matcher sem perceber ou o framework mudar
+ * de comportamento derruba a proteção sem quebrar nada visível — a rota
+ * simplesmente passa a responder para qualquer um.
+ *
+ * E o que vaza aqui é o pior possível: nome, telefone e mensagem de todo
+ * mundo que preencheu o formulário. Dado de terceiro, não nosso.
  */
 export async function GET(req: Request) {
+  const sessao = await lerSessao(cookies().get(COOKIE_SESSAO)?.value)
+  if (!sessao) return NextResponse.json({ erro: 'Não autorizado.' }, { status: 401 })
+
   const { searchParams } = new URL(req.url)
   const status = searchParams.get('status')
 
