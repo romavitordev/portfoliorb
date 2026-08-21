@@ -36,9 +36,9 @@ const ALTURA = 1080 // 4:3 — proporção mais usada nos cards do portfólio
 const ESPERA_EXTRA = 4500 // preloader + animação de entrada
 
 /*
-  WebP em vez de PNG: os prints saíam com 4,9 MB somados, e o espelho
-  estático serve `images: { unoptimized: true }` — ou seja, o arquivo cru
-  é exatamente o que o visitante baixa, sem o otimizador do Next no meio.
+  WebP em vez de PNG: os prints saíam com 4,9 MB somados, e o site usa
+  `images: { unoptimized: true }` (o otimizador do Next precisa de
+  servidor) — o arquivo cru é exatamente o que o visitante baixa.
 */
 const FORMATO = 'webp'
 const QUALIDADE = 82

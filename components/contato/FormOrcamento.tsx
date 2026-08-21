@@ -48,7 +48,7 @@ export function FormOrcamento() {
     }
     setErros({})
 
-    // Sem API (espelho estático): vai direto pro WhatsApp.
+    // Site estático: não há API. Vai direto pro WhatsApp.
     /*
       Sem servidor: o formulário não "envia", ele PREPARA. Os campos
       viram uma mensagem pronta e o WhatsApp abre com ela escrita.

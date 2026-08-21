@@ -28,12 +28,8 @@ export const brand = {
   instagramUrl: 'https://www.instagram.com/', // PLACEHOLDER
   github: 'https://github.com/romavitordev',
   linkedin: 'https://www.linkedin.com/in/romavitordev',
-  /*
-    Vem do ambiente (NEXT_PUBLIC_SITE_URL), não fixo no código: o espelho
-    estático precisa de outra URL, e antes isso era feito reescrevendo
-    esta linha na hora de sincronizar. Agora os dois repos têm o mesmo
-    arquivo e quem muda é a variável.
-  */
+  // Vem de NEXT_PUBLIC_SITE_URL, definida no deploy — trocar de
+  // endereço (ou entrar num domínio próprio) não mexe em código.
   url: siteUrl(),
   base: 'Sorocaba/SP — atendemos remoto no Brasil inteiro',
   fundacao: 2024,

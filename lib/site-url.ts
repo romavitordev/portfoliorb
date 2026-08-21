@@ -1,14 +1,12 @@
 /**
  * URL pública do site, sem barra final.
  *
- * Portado do Marcelo Imóveis, e aqui resolve uma dor concreta: o espelho
- * estático (GitHub Pages) precisa de uma URL diferente da do site
- * principal, e até agora isso era feito REESCREVENDO `lib/site.ts` na
- * hora de sincronizar — uma substituição de string frágil, que quebra
- * silenciosamente se a linha mudar de formato.
+ * Portado do Marcelo Imóveis. Vem do ambiente e não fixo no código
+ * porque a URL muda conforme onde o site está: no GitHub Pages de
+ * projeto ela tem subcaminho, e num domínio próprio não tem.
  *
- * Com a URL vindo do ambiente, o espelho só declara a variável no
- * `next.config.mjs` e os dois repositórios passam a ter o mesmo arquivo.
+ * É a mesma variável que o workflow define no deploy — trocar de
+ * endereço não exige editar código.
  *
  * Ordem: variável explícita > URL da Vercel > localhost.
  */
