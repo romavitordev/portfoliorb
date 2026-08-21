@@ -29,7 +29,13 @@ jobs:
         run: npm ci
 
       - name: Build static export
+        # O Pages de projeto serve em /portfoliorb. Quando o dominio
+        # proprio entrar, estas duas variaveis mudam aqui e mais nada:
+        # BASE_PATH vira vazio e SITE_URL vira o dominio.
         run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_PATH: /portfoliorb
+          NEXT_PUBLIC_SITE_URL: https://romavitordev.github.io/portfoliorb
 
       - name: Add .nojekyll
         run: touch out/.nojekyll

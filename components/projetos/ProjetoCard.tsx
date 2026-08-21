@@ -4,6 +4,7 @@ import { ArrowUpRight } from 'lucide-react'
 
 import { rotulosCategoria, rotulosNatureza, type Projeto } from '@/lib/projetos'
 import { BLUR_ESCURO } from '@/lib/blur'
+import { comBase } from '@/lib/site-url'
 
 type Props = {
   projeto: Projeto
@@ -44,7 +45,7 @@ export function ProjetoCard({ projeto, grande = false, prioridade = false }: Pro
         <Image
           placeholder="blur"
           blurDataURL={BLUR_ESCURO}
-          src={projeto.imagem}
+          src={comBase(projeto.imagem)}
           alt={projeto.imagemAlt}
           fill
           sizes={grande ? '(max-width: 768px) 100vw, 66vw' : '(max-width: 768px) 100vw, 33vw'}

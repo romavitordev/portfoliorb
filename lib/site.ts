@@ -21,8 +21,8 @@ export const brand = {
     'Sites, landing pages e sistemas sob medida — construídos do primeiro rabisco ao deploy, por duas pessoas que assinam o que entregam.',
   descricao:
     'Estúdio de desenvolvimento web de Sorocaba/SP. Criamos landing pages de conversão, sites institucionais, sistemas com catálogo e painel administrativo, automações e produtos digitais do zero. Next.js, TypeScript, Prisma e modelagem 3D.',
-  // PLACEHOLDER — troque pelo número real (só dígitos, com DDI 55).
-  whatsapp: '5515991234567',
+  // 55 (Brasil) + 15 (Sorocaba) + o número. Formato que o wa.me exige.
+  whatsapp: '5515991023998',
   email: 'contato@romabuganza.com.br', // PLACEHOLDER
   instagram: '@romabuganza', // PLACEHOLDER
   instagramUrl: 'https://www.instagram.com/', // PLACEHOLDER

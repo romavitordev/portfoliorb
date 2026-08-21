@@ -9,16 +9,16 @@ Marcelo Imóveis.
 
 ---
 
-## 1. Contato 🔴
+## 1. Contato 🟠
 
 | | |
 |---|---|
 | **Onde** | `lib/site.ts` → `brand.whatsapp`, `brand.email`, `brand.instagram` |
-| **Hoje** | `5515991234567` (inventado), `contato@romabuganza.com.br` (não existe), Instagram apontando pra home do site |
-| **Risco** | O site é estático e **todo caminho leva ao WhatsApp** — inclusive o formulário, que agora monta a mensagem e abre a conversa. Com número errado, o site inteiro não recebe contato. É o item mais crítico da lista. |
+| **Hoje** | WhatsApp ✅ `5515991023998` · e-mail `contato@romabuganza.com.br` (não existe) · Instagram apontando pra home do site |
+| **Risco** | O WhatsApp está resolvido, e como todo caminho do site leva a ele, **o site já recebe contato**. Faltam e-mail e Instagram, que aparecem na seção de contato e no rodapé com destino errado. |
 
 **Respostas:**
-- WhatsApp real (só dígitos, com 55): `_______________`
+- ~~WhatsApp~~ ✅ resolvido
 - E-mail: `_______________`
 - Instagram: `_______________`
 
@@ -86,10 +86,11 @@ Marcelo Imóveis.
 
 ## Resumo: o que trava o lançamento
 
-1. **WhatsApp real** (item 1) — sozinho já torna o site utilizável
-2. **Decisão do nome** (item 2) — destrava domínio, e-mail e logo
+Sobrou **um**: a **decisão do nome** (item 2), que destrava domínio,
+e-mail e logo de uma vez.
 
-O resto publica e melhora depois.
+O WhatsApp já está no ar, então o site é utilizável hoje — alguém pode
+entrar, ver os projetos e chamar vocês.
 
 ---
 

@@ -15,6 +15,7 @@ import {
 import { CampoDeLuz } from '@/components/fx/CampoDeLuz'
 import { Reveal } from '@/components/ui/Reveal'
 import { BLUR_ESCURO } from '@/lib/blur'
+import { comBase } from '@/lib/site-url'
 
 type Params = { params: { slug: string } }
 
@@ -131,7 +132,7 @@ export default function ProjetoPage({ params }: Params) {
               <Image
                 placeholder="blur"
                 blurDataURL={BLUR_ESCURO}
-                src={projeto.imagem}
+                src={comBase(projeto.imagem)}
                 alt={projeto.imagemAlt}
                 fill
                 sizes="(max-width: 1280px) 100vw, 80rem"

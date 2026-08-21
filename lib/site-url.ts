@@ -24,3 +24,23 @@ export function siteUrl(): string {
 export function dominioDoSite(): string {
   return siteUrl().replace(/^https?:\/\//, '')
 }
+
+/**
+ * Prefixa um caminho de `/public` com o basePath.
+ *
+ * Necessário porque `images.unoptimized` faz o next/image usar o `src`
+ * cru, sem passar pelo loader que aplica o basePath. O resultado é um
+ * HTML pedindo /projetos/x.webp enquanto o arquivo mora em
+ * /portfoliorb/projetos/x.webp — 404 em produção, e a home fica sem
+ * nenhuma imagem de projeto.
+ *
+ * Isso passou despercebido porque em `npm run dev` não há basePath, e o
+ * problema só aparece no site publicado.
+ *
+ * URL absoluta passa direto: só caminho interno precisa do prefixo.
+ */
+export function comBase(caminho: string): string {
+  if (/^https?:\/\//.test(caminho)) return caminho
+  const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
+  return `${base}${caminho.startsWith('/') ? '' : '/'}${caminho}`
+}
