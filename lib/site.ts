@@ -1,7 +1,7 @@
 import { siteUrl } from '@/lib/site-url'
 
 /**
- * Roma & Buganza — estúdio de desenvolvimento
+ * Roma Buganza Estúdio — desenvolvimento web
  * ---------------------------------------------------------------
  * TODO o conteúdo editável do site vive aqui: marca, sócios,
  * serviços, processo, números, FAQ e contatos.
@@ -12,10 +12,10 @@ import { siteUrl } from '@/lib/site-url'
  */
 
 export const brand = {
-  nome: 'Roma & Buganza',
-  sufixo: 'estúdio de desenvolvimento',
-  nomeCurto: 'R&B',
-  nomeCompleto: 'Roma & Buganza — estúdio de desenvolvimento',
+  nome: 'Roma Buganza Estúdio',
+  sufixo: 'desenvolvimento web',
+  nomeCurto: 'RB',
+  nomeCompleto: 'Roma Buganza Estúdio — desenvolvimento web',
   tagline: 'Software que sai do ar de ideia e entra no ar de verdade.',
   promessa:
     'Sites, landing pages e sistemas sob medida — construídos do primeiro rabisco ao deploy, por duas pessoas que assinam o que entregam.',
@@ -57,9 +57,9 @@ export function waLink(mensagem: string) {
 }
 
 export const waMensagens = {
-  geral: 'Oi! Vim pelo site da Roma & Buganza e quero conversar sobre um projeto.',
+  geral: `Oi! Vim pelo site da ${brand.nome} e quero conversar sobre um projeto.`,
   servico: (nome: string) =>
-    `Oi! Vim pelo site da Roma & Buganza. Tenho interesse em ${nome} — pode me explicar como funciona?`,
+    `Oi! Vim pelo site da ${brand.nome}. Tenho interesse em ${nome} — pode me explicar como funciona?`,
   projeto: (nome: string) =>
     `Oi! Vi o case do ${nome} no site de vocês e quero algo parecido pro meu negócio.`,
   orcamento: (tipo: string, prazo: string, sobre: string) =>

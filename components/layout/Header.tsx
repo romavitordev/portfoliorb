@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 
 import { brand, nav } from '@/lib/site'
 import { rolarPara } from '@/lib/lenis'
+import { Marca } from '@/components/layout/Marca'
 
 export function Header() {
   const pathname = usePathname()
@@ -70,11 +71,9 @@ export function Header() {
           className="group flex items-baseline gap-2.5"
           aria-label={`${brand.nome} — página inicial`}
         >
-          <span className="font-display text-[1.35rem] tracking-tight md:text-2xl">
-            Roma <span className="text-ciano">&amp;</span> Buganza
-          </span>
+          <Marca />
           <span className="hidden font-mono text-[0.56rem] uppercase tracking-[0.28em] text-luz/50 transition-colors group-hover:text-ciano lg:inline">
-            estúdio
+            {brand.sufixo}
           </span>
         </Link>
 

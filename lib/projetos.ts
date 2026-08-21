@@ -1,5 +1,5 @@
 /**
- * Catálogo de projetos — o "produto" da Roma & Buganza.
+ * Catálogo de projetos — o "produto" do estúdio.
  * ---------------------------------------------------------------
  * Cada item vira um card em /projetos e uma página de case em
  * /projetos/[slug]. Para adicionar um projeto novo, basta acrescentar

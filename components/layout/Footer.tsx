@@ -3,6 +3,7 @@ import { Github, Instagram, Linkedin, Mail, MessageCircle } from 'lucide-react'
 
 import { brand, nav, servicos, waLink, waMensagens } from '@/lib/site'
 import { projetos } from '@/lib/projetos'
+import { Marca } from '@/components/layout/Marca'
 
 const redes = [
   { label: 'GitHub', href: brand.github, Icone: Github },
@@ -21,8 +22,8 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           {/* Marca */}
           <div>
-            <p className="font-display text-2xl tracking-tight">
-              Roma <span className="text-ciano">&amp;</span> Buganza
+            <p>
+              <Marca tamanho="lg" />
             </p>
             <p className="mt-3 measure-sm text-sm leading-relaxed text-luz/60">{brand.promessa}</p>
             <p className="mt-5 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-luz/45">

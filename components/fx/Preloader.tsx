@@ -49,8 +49,12 @@ export function Preloader() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: ease.outExpo }}
           >
-            {brand.nome.split(' & ')[0]} <span className="text-ciano">&amp;</span>{' '}
-            {brand.nome.split(' & ')[1]}
+              {/*
+                Antes isto fazia `brand.nome.split(' & ')` pra pintar o
+                "&" de ciano. O nome mudou e deixou de ter " & ", então o
+                segundo pedaço virava `undefined` na tela.
+              */}
+              Roma Buganza <span className="text-ciano">Estúdio</span>
           </motion.span>
         </motion.div>
       )}
