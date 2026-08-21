@@ -20,7 +20,7 @@ export default function NaoEncontrado() {
           <Link href="/" className="btn-primary">
             Voltar ao início
           </Link>
-          <Link href="/projetos" className="btn-ghost">
+          <Link href="/#projetos" className="btn-ghost">
             Ver projetos <ArrowRight size={16} />
           </Link>
         </div>

@@ -15,7 +15,7 @@ export function Socios() {
               <p className="prancha">Quem faz</p>
               <h2 className="t-h2 mt-5 font-display">Dois nomes na porta</h2>
             </div>
-            <Link href="/estudio" className="btn-link">
+            <Link href="/#socios" className="btn-link">
               Conhecer o estúdio <ArrowRight size={15} />
             </Link>
           </div>

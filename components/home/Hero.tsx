@@ -109,10 +109,10 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.72, ease: ease.outExpo }}
           >
-            <Link href="/contato" className="btn-primary">
+            <Link href="/#contato" className="btn-primary">
               Começar um projeto <ArrowRight size={16} />
             </Link>
-            <Link href="/projetos" className="btn-ghost">
+            <Link href="/#projetos" className="btn-ghost">
               Ver os {projetos.length} projetos
             </Link>
           </motion.div>

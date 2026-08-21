@@ -10,16 +10,13 @@ import { validarLead, type ErrosCampo } from '@/lib/lead-input'
 /**
  * Formulário de orçamento.
  *
- * Grava o lead em /api/leads e dispara o aviso por e-mail. No espelho
- * estático do GitHub Pages não existe API — lá `NEXT_PUBLIC_LEADS=off`
- * faz o botão cair direto no WhatsApp, que é o comportamento honesto
- * para uma demo sem servidor.
+ * O site é estático (GitHub Pages), então não há para onde "enviar".
+ * Os campos servem para ORGANIZAR o pedido: viram uma mensagem pronta e
+ * o WhatsApp abre com ela já escrita.
  *
- * Se a API existir mas falhar, o WhatsApp também aparece como saída:
- * lead perdido por erro de servidor é o pior desfecho possível.
+ * A validação continua existindo — não pra proteger um banco, mas pra
+ * pessoa não abrir o WhatsApp com o pedido pela metade.
  */
-const CAPTURA_ATIVA = process.env.NEXT_PUBLIC_LEADS !== 'off'
-
 type Estado = 'parado' | 'enviando' | 'enviado' | 'falhou'
 
 export function FormOrcamento() {
@@ -52,36 +49,16 @@ export function FormOrcamento() {
     setErros({})
 
     // Sem API (espelho estático): vai direto pro WhatsApp.
-    if (!CAPTURA_ATIVA) {
-      window.open(waLink(mensagemWa), '_blank', 'noopener')
-      return
-    }
+    /*
+      Sem servidor: o formulário não "envia", ele PREPARA. Os campos
+      viram uma mensagem pronta e o WhatsApp abre com ela escrita.
 
-    setEstado('enviando')
-    try {
-      const res = await fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(v.valor),
-      })
-
-      if (res.ok) {
-        setEstado('enviado')
-        return
-      }
-
-      const corpo = await res.json().catch(() => null)
-      if (res.status === 422 && corpo?.campos) {
-        setErros(corpo.campos)
-        setEstado('parado')
-        return
-      }
-      setErroGeral(corpo?.erro ?? 'Não conseguimos enviar agora.')
-      setEstado('falhou')
-    } catch {
-      setErroGeral('Sem conexão com o servidor.')
-      setEstado('falhou')
-    }
+      Isso é melhor que um formulário que promete e-mail e depende de um
+      terceiro pra cumprir: a conversa começa no canal onde a gente
+      responde de fato, e a pessoa vê o texto antes de mandar.
+    */
+    window.open(waLink(mensagemWa), '_blank', 'noopener')
+    setEstado('enviado')
   }
 
   if (estado === 'enviado') {
@@ -216,28 +193,14 @@ export function FormOrcamento() {
 
       <button
         type="submit"
-        disabled={estado === 'enviando'}
         className="btn-primary mt-8 w-full sm:w-auto"
       >
-        {estado === 'enviando' ? (
-          <>
-            <Loader2 size={16} className="animate-spin" /> Enviando
-          </>
-        ) : CAPTURA_ATIVA ? (
-          <>
-            <Send size={16} /> Enviar pedido de orçamento
-          </>
-        ) : (
-          <>
-            <MessageCircle size={16} /> Abrir no WhatsApp
-          </>
-        )}
+        <MessageCircle size={16} /> Abrir no WhatsApp com o pedido
       </button>
 
       <p className="mt-5 text-[0.72rem] leading-relaxed text-luz/40">
-        {CAPTURA_ATIVA
-          ? `Seus dados ficam só com a gente, usados para responder este pedido — nada de lista de disparo. Prefere conversar direto? Chame no WhatsApp ou escreva para ${brand.email}.`
-          : 'Esta é a versão de demonstração do site: o botão abre o WhatsApp com a mensagem pronta e você revisa antes de mandar.'}
+        Nada é enviado daqui: o botão abre o WhatsApp com a mensagem já escrita e você
+        revisa antes de mandar. Prefere e-mail? Escreva para {brand.email}.
       </p>
     </form>
   )

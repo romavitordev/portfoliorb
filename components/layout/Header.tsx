@@ -105,12 +105,12 @@ export function Header() {
             )
           })}
 
-          <Link href="/contato" className="btn-primary !px-5 !py-2.5 text-[0.8rem]">
+          <Link href="/#contato" className="btn-primary !px-5 !py-2.5 text-[0.8rem]">
             Começar um projeto
           </Link>
         </nav>
 
-        <Link href="/contato" className="btn-primary !px-4 !py-2 text-[0.75rem] md:hidden">
+        <Link href="/#contato" className="btn-primary !px-4 !py-2 text-[0.75rem] md:hidden">
           Orçamento
         </Link>
       </div>

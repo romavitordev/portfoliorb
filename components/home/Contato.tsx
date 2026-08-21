@@ -1,19 +1,18 @@
-import type { Metadata } from 'next'
 import { Github, Instagram, Linkedin, Mail, MessageCircle } from 'lucide-react'
 
-import { brand, contato, processo, waLink, waMensagens } from '@/lib/site'
+import { brand, contato, waLink, waMensagens } from '@/lib/site'
 import { CampoDeLuz } from '@/components/fx/CampoDeLuz'
 import { Reveal } from '@/components/ui/Reveal'
 import { FormOrcamento } from '@/components/contato/FormOrcamento'
-import { Faq } from '@/components/home/Faq'
 
-export const metadata: Metadata = {
-  title: 'Contato',
-  description:
-    'Peça um orçamento para site, landing page, sistema sob medida, produto digital, automação ou modelagem 3D. Resposta no mesmo dia útil.',
-  alternates: { canonical: '/contato' },
-}
-
+/**
+ * Seção de contato — formulário e canais.
+ *
+ * Vivia em /contato. Numa página única ela é o destino final da rolagem,
+ * então reúne as duas formas de falar com o estúdio: o formulário, que
+ * organiza o pedido e abre o WhatsApp com ele pronto, e os canais
+ * diretos, para quem prefere pular a etapa.
+ */
 const canais = [
   {
     label: 'WhatsApp',
@@ -28,20 +27,19 @@ const canais = [
   { label: 'Instagram', valor: brand.instagram, href: brand.instagramUrl, Icone: Instagram },
 ]
 
-export default function ContatoPage() {
+export function Contato() {
   return (
-    <>
-      <section className="relative overflow-hidden pb-4 pt-32 md:pt-40">
-        <CampoDeLuz variante="topo-direita" />
+    <div id="contato" className="relative">
+      <div className="seam absolute inset-x-0 top-0" aria-hidden />
+      <CampoDeLuz forca="discreta" variante="topo-direita" />
 
-        <div className="container-page relative">
-          <Reveal>
-            <p className="prancha">Contato</p>
-            <h1 className="t-h1 mt-6 font-display">{contato.titulo}</h1>
-            <p className="t-lead measure mt-7 text-luz/65">{contato.texto}</p>
-          </Reveal>
-        </div>
-      </section>
+      <div className="container-page relative pt-[clamp(4rem,8vw,7rem)]">
+        <Reveal>
+          <p className="prancha">Contato</p>
+          <h2 className="t-h2 mt-5 font-display">{contato.titulo}</h2>
+          <p className="t-lead measure mt-6 text-luz/65">{contato.texto}</p>
+        </Reveal>
+      </div>
 
       <section className="section-y">
         <div className="container-page grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
@@ -84,27 +82,6 @@ export default function ContatoPage() {
               </div>
             </Reveal>
 
-            <Reveal delay={0.14}>
-              <div className="surface p-8">
-                <p className="kicker-poeira">O que acontece depois</p>
-                <ol className="mt-6 space-y-5">
-                  {processo.slice(0, 3).map((etapa) => (
-                    <li key={etapa.numero} className="flex gap-4">
-                      <span className="font-mono text-[0.7rem] tracking-[0.2em] text-ciano">
-                        {etapa.numero}
-                      </span>
-                      <span>
-                        <span className="block text-sm font-medium">{etapa.titulo}</span>
-                        <span className="mt-1 block text-[0.8rem] leading-relaxed text-luz/55">
-                          {etapa.texto}
-                        </span>
-                      </span>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            </Reveal>
-
             <Reveal delay={0.2}>
               <p className="px-2 text-[0.78rem] leading-relaxed text-luz/40">
                 {brand.base}. Reunião presencial na região de Sorocaba, o resto por chamada de
@@ -115,7 +92,6 @@ export default function ContatoPage() {
         </div>
       </section>
 
-      <Faq />
-    </>
+    </div>
   )
 }

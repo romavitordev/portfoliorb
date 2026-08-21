@@ -80,7 +80,7 @@ export function Footer() {
               ))}
               <li>
                 <Link
-                  href="/servicos#plano-mensal"
+                  href="/#plano-mensal"
                   className="text-luz/70 transition-colors hover:text-ciano"
                 >
                   Plano mensal

@@ -1,8 +1,8 @@
 # O que falta para o site ir ao ar
 
-Formato emprestado do `INFORMACOES-PENDENTES.md` do Marcelo Imóveis: cada
-item diz **onde está hoje**, **o que está no lugar** e **o risco de
-publicar assim**.
+Cada item diz **onde está hoje**, **o que está no lugar** e **o risco de
+publicar assim**. Formato emprestado do `INFORMACOES-PENDENTES.md` do
+Marcelo Imóveis.
 
 **Legenda de risco**
 🔴 trava o lançamento · 🟠 publica, mas prejudica · 🟢 melhoria
@@ -15,7 +15,7 @@ publicar assim**.
 |---|---|
 | **Onde** | `lib/site.ts` → `brand.whatsapp`, `brand.email`, `brand.instagram` |
 | **Hoje** | `5515991234567` (inventado), `contato@romabuganza.com.br` (não existe), Instagram apontando pra home do site |
-| **Risco** | **Todo** CTA do site cai num número que não é de vocês. Orçamento, "falar sobre o plano" e "quero algo assim" — todos. Um site que não consegue receber contato não deveria estar no ar. |
+| **Risco** | O site é estático e **todo caminho leva ao WhatsApp** — inclusive o formulário, que agora monta a mensagem e abre a conversa. Com número errado, o site inteiro não recebe contato. É o item mais crítico da lista. |
 
 **Respostas:**
 - WhatsApp real (só dígitos, com 55): `_______________`
@@ -28,23 +28,21 @@ publicar assim**.
 
 | | |
 |---|---|
-| **Onde** | `lib/site.ts` → `brand.nome` · `NEXT_PUBLIC_SITE_URL` |
+| **Onde** | `lib/site.ts` → `brand.nome` · variável `NEXT_PUBLIC_SITE_URL` |
 | **Hoje** | "Roma & Buganza", declarado provisório |
-| **Risco** | Nome trava domínio, e-mail e logo — os três de uma vez. Trocar depois de indexado custa SEO. |
+| **Risco** | Nome trava domínio, e-mail e logo de uma vez. Trocar depois de indexado custa SEO. |
 
 **Decisão:** manter · mudar para `_______________`
 
 ---
 
-## 3. Imagens dos projetos 🟠
+## 3. Demo do Rafael Pedroso com placeholders 🟠
 
 | | |
 |---|---|
-| **Onde** | `lib/projetos.ts` → campo `imagem` dos 8 projetos |
-| **Hoje** | 8 de 8 são banco de imagens (Unsplash). Uma **floresta** ilustra o Fisgou. |
-| **Risco** | O catálogo agora mostra a imagem em destaque no hover, então a foto genérica ficou mais visível que antes. Um estúdio que mostra foto de banco no próprio portfólio contradiz o que vende. |
-
-**O ideal:** screenshot real de cada projeto (1200×900 ou maior).
+| **Onde** | print em `public/projetos/rafael-pedroso-advocacia.webp` |
+| **Hoje** | A demo mostra `[CIDADE]/SP`, `([DDD]) 9 [NUMERO]`, `[EMAIL]`, `OAB/SP [NUMERO_OAB]` e uma moldura de foto vazia |
+| **Risco** | O print veio da demo publicada, então o portfólio exibe trabalho inacabado. Preencher a demo e rodar `npm run print:projetos` resolve. |
 
 ---
 
@@ -52,9 +50,9 @@ publicar assim**.
 
 | | |
 |---|---|
-| **Onde** | `lib/site.ts` → `imagens.estudio` · usada em `/estudio` |
+| **Onde** | `lib/site.ts` → `imagens.estudio` |
 | **Hoje** | Dupla genérica de banco de imagens |
-| **Risco** | A página inteira fala em "quem atende é quem faz" — com foto de gente que não é vocês. |
+| **Risco** | A seção diz "quem atende é quem faz" — com foto de gente que não é vocês. |
 
 ---
 
@@ -63,8 +61,8 @@ publicar assim**.
 | | |
 |---|---|
 | **Onde** | `lib/site.ts` → `socios[1].links` |
-| **Hoje** | LinkedIn genérico (`linkedin.com`), cai na home do LinkedIn |
-| **Risco** | Link quebrado em página de apresentação pessoal. |
+| **Hoje** | LinkedIn genérico, cai na home do LinkedIn |
+| **Risco** | Link quebrado na apresentação pessoal. |
 
 **Respostas:** LinkedIn `_______________` · GitHub `_______________`
 
@@ -75,16 +73,14 @@ publicar assim**.
 | | |
 |---|---|
 | **Onde** | `lib/site.ts` → `numeros` |
-| **Hoje** | Conferir se cada número é verificável |
-| **Risco** | Número inflado em site de serviço é problema de CDC, não só de imagem. |
+| **Risco** | Número inflado em site de serviço é questão de CDC, não só de imagem. Conferir se cada um é verificável. |
 
 ---
 
 ## 7. Melhorias 🟢
 
-- **Analytics** — não existe nenhum. Sem isso não dá pra saber qual projeto atrai interesse nem de onde vem o tráfego. O Marcelo Imóveis tem `lib/analytics.ts` com dedupe por hash e sem gravar IP (LGPD), adaptável aqui.
-- **Testes** — hoje só `tests/admin-guard.test.ts`. `lib/ratelimit.ts` e `lib/totp.ts` não têm cobertura.
-- **Docs de deploy** — o Marcelo Imóveis tem `DEPLOY.md` e `CHECKLIST-DEPLOY.md`; aqui não há.
+- **Analytics** — não existe. Sem servidor, a saída é algo client-side e leve (Plausible, Umami ou GoatCounter). Sem isso não dá pra saber qual projeto atrai interesse.
+- **Domínio próprio no Pages** — GitHub Pages aceita domínio customizado. Depende do item 2.
 
 ---
 
@@ -94,3 +90,17 @@ publicar assim**.
 2. **Decisão do nome** (item 2) — destrava domínio, e-mail e logo
 
 O resto publica e melhora depois.
+
+---
+
+## Como o site está montado hoje
+
+- **Estático**, sem servidor nem banco. Publica no GitHub Pages pelo
+  workflow em `.github/workflows/deploy.yml`.
+- **Uma página** (`/`) com tudo em rolagem e âncoras, mais **7 páginas de
+  case** em `/projetos/[slug]`.
+- **Formulário** não envia nada: valida, monta a mensagem e abre o
+  WhatsApp. O campo `site` é honeypot anti-spam e deve ficar vazio.
+- **Prints dos projetos** são gerados por `npm run print:projetos`.
+- O painel de leads, a API e o Prisma foram removidos e estão preservados
+  na branch **`com-painel`**.

@@ -70,7 +70,7 @@ export default function ProjetoPage({ params }: Params) {
         <CampoDeLuz variante="topo-esquerda" forca="discreta" />
 
         <div className="container-page relative">
-          <Link href="/projetos" className="btn-link">
+          <Link href="/#projetos" className="btn-link">
             <ArrowLeft size={15} /> Todos os projetos
           </Link>
 

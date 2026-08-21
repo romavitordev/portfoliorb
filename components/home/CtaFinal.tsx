@@ -22,7 +22,7 @@ export function CtaFinal() {
           </p>
 
           <div className="mt-11 flex flex-wrap justify-center gap-3">
-            <Link href="/contato" className="btn-primary">
+            <Link href="/#contato" className="btn-primary">
               Pedir orçamento <ArrowRight size={16} />
             </Link>
             <a

@@ -48,11 +48,11 @@ export const brand = {
  * na navbar do mobile, vale o `href`.
  */
 export const nav = [
-  { secao: 'projetos', href: '/projetos', label: 'Projetos' },
-  { secao: 'servicos', href: '/servicos', label: 'Serviços' },
-  { secao: 'plano-mensal', href: '/servicos#plano-mensal', label: 'Plano mensal' },
-  { secao: 'socios', href: '/estudio', label: 'Estúdio' },
-  { secao: 'contato', href: '/contato', label: 'Contato' },
+  { secao: 'projetos', href: '/#projetos', label: 'Projetos' },
+  { secao: 'servicos', href: '/#servicos', label: 'Serviços' },
+  { secao: 'plano-mensal', href: '/#plano-mensal', label: 'Plano mensal' },
+  { secao: 'socios', href: '/#socios', label: 'Estúdio' },
+  { secao: 'contato', href: '/#contato', label: 'Contato' },
 ]
 
 /** Monta um link de WhatsApp com mensagem pré-preenchida. */
