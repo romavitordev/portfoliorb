@@ -73,7 +73,7 @@ export function Header() {
         >
           <Marca />
           <span className="hidden font-mono text-[0.56rem] uppercase tracking-[0.28em] text-luz/50 transition-colors group-hover:text-ciano lg:inline">
-            {brand.sufixo}
+            estúdio
           </span>
         </Link>
 

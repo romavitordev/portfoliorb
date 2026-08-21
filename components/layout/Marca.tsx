@@ -1,13 +1,16 @@
 /**
  * O logotipo escrito.
  *
- * Existia em duas cópias idênticas em JSX — header e rodapé — cada uma
- * com o nome cravado na marcação. Quando o nome mudou de "Roma &
- * Buganza" para "Roma Buganza Estúdio", as duas precisaram de conserto
- * manual; a terceira cópia teria ficado para trás.
+ * O "&" em ciano não é enfeite: ele é o que diz "somos DOIS". Sem o
+ * separador, "Roma Buganza" lê como o nome de uma pessoa só — foi o que
+ * aconteceu quando o nome virou "Roma Buganza Estúdio" por um momento.
  *
- * O acento em ciano estava no "&". Sem ele, passou para "Estúdio" — a
- * palavra que agora distingue o nome.
+ * A categoria ("estúdio") vive ao lado, em corpo pequeno, e não dentro
+ * do nome: o logotipo fica curto e a palavra longa não compete com ele.
+ *
+ * Existia em duas cópias em JSX — header e rodapé —, cada uma com o nome
+ * cravado na marcação. Virou componente porque na primeira troca de nome
+ * as duas precisaram de conserto manual.
  */
 export function Marca({ tamanho = 'md' }: { tamanho?: 'md' | 'lg' }) {
   return (
@@ -16,7 +19,7 @@ export function Marca({ tamanho = 'md' }: { tamanho?: 'md' | 'lg' }) {
         tamanho === 'lg' ? 'text-2xl' : 'text-[1.35rem] md:text-2xl'
       }`}
     >
-      Roma Buganza <span className="text-ciano">Estúdio</span>
+      Roma <span className="text-ciano">&amp;</span> Buganza
     </span>
   )
 }

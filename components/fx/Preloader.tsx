@@ -50,11 +50,11 @@ export function Preloader() {
             transition={{ duration: 0.6, ease: ease.outExpo }}
           >
               {/*
-                Antes isto fazia `brand.nome.split(' & ')` pra pintar o
-                "&" de ciano. O nome mudou e deixou de ter " & ", então o
-                segundo pedaço virava `undefined` na tela.
+                Escrito, e não `brand.nome.split(' & ')` como era antes:
+                o split devolvia `undefined` NA TELA no dia em que o nome
+                deixou de ter " & ". Nome de marca não é dado pra fatiar.
               */}
-              Roma Buganza <span className="text-ciano">Estúdio</span>
+              Roma <span className="text-ciano">&amp;</span> Buganza
           </motion.span>
         </motion.div>
       )}
