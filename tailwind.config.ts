@@ -89,6 +89,11 @@ const config: Config = {
         shimmer: {
           '100%': { transform: 'translateX(100%)' },
         },
+        // A régua da .prancha sendo puxada quando a seção entra
+        'desenhar-regua': {
+          from: { transform: 'scaleX(0)' },
+          to: { transform: 'scaleX(1)' },
+        },
       },
       animation: {
         descer: 'descer 1.8s ease-in-out infinite',

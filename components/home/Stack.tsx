@@ -22,9 +22,17 @@ export function Stack() {
           {fita.map((item, i) => (
             <span
               key={`${item.nome}-${i}`}
-              className="inline-flex shrink-0 items-baseline gap-3 rounded-full border border-linha bg-nevoa px-6 py-3"
+              /*
+                A fita anda sozinha, mas cada item também responde: o
+                mouse acende a borda e o nome em ciano. Sem isso a fita é
+                um letreiro; com isso, é uma lista que dá pra examinar
+                item a item enquanto passa.
+              */
+              className="group/chip inline-flex shrink-0 items-baseline gap-3 rounded-full border border-linha bg-nevoa px-6 py-3 transition-colors duration-300 hover:border-ciano/50"
             >
-              <span className="font-display text-lg tracking-tight">{item.nome}</span>
+              <span className="font-display text-lg tracking-tight transition-colors duration-300 group-hover/chip:text-ciano">
+                {item.nome}
+              </span>
               <span className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-luz/40">
                 {item.nota}
               </span>

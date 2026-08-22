@@ -10,6 +10,7 @@ import { ease } from '@/lib/design'
 import { CampoDeLuz } from '@/components/fx/CampoDeLuz'
 import { SplitWords } from '@/components/ui/SplitWords'
 import { Magnetico } from '@/components/fx/Magnetico'
+import { Inclinar } from '@/components/fx/Inclinar'
 
 /**
  * A miniatura ao lado do título é a tese do site em pequeno: um bloco
@@ -123,9 +124,10 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* A miniatura que se monta */}
+        {/* A miniatura que se monta — e que reage ao cursor */}
+        <Inclinar className="hidden lg:block">
         <motion.div
-          className="cotas relative hidden aspect-[4/3] overflow-hidden rounded-2xl border border-linha bg-nevoa/80 shadow-elev-2 backdrop-blur-sm lg:block"
+          className="cotas relative aspect-[4/3] overflow-hidden rounded-2xl border border-linha bg-nevoa/80 shadow-elev-2 backdrop-blur-sm"
           initial={reduzir ? false : { opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.45, ease: ease.outExpo }}
@@ -256,6 +258,7 @@ export function Hero() {
             </Camada>
           </div>
         </motion.div>
+        </Inclinar>
       </div>
 
     </section>

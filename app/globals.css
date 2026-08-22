@@ -119,6 +119,21 @@
       rgba(109, 74, 255, 0.35) 45%,
       transparent
     );
+    /*
+      A régua é DESENHADA quando a seção chega, não já pronta. É o gesto
+      mais fiel ao conceito: a prancha é a mesa de desenho, e o traço
+      sendo puxado é o site se desenhando na frente de quem lê.
+
+      O estado de repouso é a régua INTEIRA. Só quando o `Reveal`
+      confirma que há JS e que a seção entrou é que ela recolhe e se
+      desenha — sem isso, quem estiver sem JS veria a régua sumida em
+      vez de animada.
+    */
+    transform-origin: left;
+    transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  [data-visivel] .prancha::after {
+    animation: desenhar-regua 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   /* ---------------------------------------------------------------- */

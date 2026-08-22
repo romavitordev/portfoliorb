@@ -4,6 +4,7 @@ import { brand, contato, waLink, waMensagens } from '@/lib/site'
 import { CampoDeLuz } from '@/components/fx/CampoDeLuz'
 import { Reveal } from '@/components/ui/Reveal'
 import { FormOrcamento } from '@/components/contato/FormOrcamento'
+import { Copiar } from '@/components/ui/Copiar'
 
 /**
  * Seção de contato — formulário e canais.
@@ -20,8 +21,17 @@ const canais = [
     href: '',
     Icone: MessageCircle,
     destaque: true,
+    copiavel: brand.whatsapp,
   },
-  { label: 'E-mail', valor: brand.email, href: `mailto:${brand.email}`, Icone: Mail },
+  {
+    label: 'E-mail',
+    valor: brand.email,
+    href: `mailto:${brand.email}`,
+    Icone: Mail,
+    // Só e-mail e telefone ganham botão de copiar: são os que a pessoa
+    // leva pra outro lugar. Copiar uma URL de perfil não ajuda ninguém.
+    copiavel: brand.email,
+  },
   { label: 'GitHub', valor: 'romavitordev', href: brand.github, Icone: Github },
   { label: 'LinkedIn', valor: 'romavitordev', href: brand.linkedin, Icone: Linkedin },
   { label: 'Instagram', valor: brand.instagram, href: brand.instagramUrl, Icone: Instagram },
@@ -52,8 +62,8 @@ export function Contato() {
               <div className="surface p-8">
                 <p className="kicker-poeira">Ou direto</p>
                 <ul className="mt-6 space-y-4">
-                  {canais.map(({ label, valor, href, Icone, destaque }) => (
-                    <li key={label}>
+                  {canais.map(({ label, valor, href, Icone, destaque, copiavel }) => (
+                    <li key={label} className="flex items-center gap-3">
                       <a
                         href={destaque ? waLink(waMensagens.geral) : href}
                         target="_blank"
@@ -76,6 +86,8 @@ export function Contato() {
                           <span className="block text-[0.75rem] text-luz/45">{valor}</span>
                         </span>
                       </a>
+
+                      {copiavel && <Copiar valor={copiavel} rotulo={label} />}
                     </li>
                   ))}
                 </ul>
