@@ -116,7 +116,7 @@ export function Hero() {
                 Começar um projeto <ArrowRight size={16} />
               </Link>
             </Magnetico>
-            <Magnetico forca={0.2}>
+            <Magnetico>
               <Link href="/#projetos" className="btn-ghost">
                 Ver os {projetos.length} projetos
               </Link>

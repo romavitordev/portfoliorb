@@ -29,12 +29,20 @@ import type { ReactNode } from 'react'
 export function Magnetico({
   children,
   className = '',
-  /** Fator de atração. O pico fica em `forca * raio / 4`. */
-  forca = 0.3,
-  /** Quanto a zona de atração passa da borda do elemento, em pixels. */
-  alcance = 60,
+  /*
+    CALIBRAGEM — mexer aqui e em nenhum outro lugar.
+
+    O pico do deslocamento é `forca * raio / 4`. Com um botão de 224px e
+    estes valores, dá ~5px: o suficiente pra mão perceber que o botão
+    respondeu, e pouco o bastante pra não parecer que ele está fugindo.
+
+    Passou por 46px (com salto) e por 13px antes de chegar aqui. Micro-
+    interação boa é a que você sente sem conseguir apontar.
+  */
+  forca = 0.14,
+  alcance = 40,
   /** Teto absoluto, pra nenhuma combinação de tamanho estourar. */
-  teto = 14,
+  teto = 6,
 }: {
   children: ReactNode
   className?: string

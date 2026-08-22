@@ -105,7 +105,7 @@ export function Header() {
             )
           })}
 
-          <Magnetico forca={0.22}>
+          <Magnetico>
             <Link href="/#contato" className="btn-primary !px-5 !py-2.5 text-[0.8rem]">
               Começar um projeto
             </Link>
