@@ -16,6 +16,7 @@ import { CampoDeLuz } from '@/components/fx/CampoDeLuz'
 import { Reveal } from '@/components/ui/Reveal'
 import { BLUR_ESCURO } from '@/lib/blur'
 import { comBase } from '@/lib/site-url'
+import { Realce } from '@/components/fx/Realce'
 
 type Params = { params: { slug: string } }
 
@@ -195,18 +196,20 @@ export default function ProjetoPage({ params }: Params) {
           <div className="grade-moldura grade-moldura-2 mt-12 md:grid-cols-2">
             {projeto.destaques.map((d, i) => (
               <Reveal key={d.titulo} className="h-full" delay={i * 0.05}>
-                <div className="celula">
+                {/*
+                  O número aparecia DUAS vezes aqui — um pequeno em ciano
+                  e um gigante fantasma atrás. Mesmo ruído que já tinha
+                  sido tirado do Manifesto; sobreviveu nesta página.
+                */}
+                <Realce como="div" className="celula">
                   <span aria-hidden className="celula-num">
                     {String(i + 1).padStart(2, '0')}
                   </span>
-                  <span className="relative font-mono text-[0.66rem] tracking-[0.2em] text-ciano">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <h3 className="relative mt-4 font-display text-xl tracking-tight">{d.titulo}</h3>
+                  <h3 className="relative font-display text-xl tracking-tight">{d.titulo}</h3>
                   <p className="relative mt-3 measure text-sm leading-relaxed text-luz/60">
                     {d.texto}
                   </p>
-                </div>
+                </Realce>
               </Reveal>
             ))}
           </div>

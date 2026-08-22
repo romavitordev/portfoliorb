@@ -62,13 +62,13 @@ export function Manutencao() {
         <div className="grade-moldura grade-moldura-2 grade-moldura-3 mt-8 md:grid-cols-2 lg:grid-cols-3">
           {manutencao.inclui.map((item, i) => (
             <Reveal key={item.titulo} className="h-full" delay={i * 0.05}>
-              <div className="celula">
+              <Realce como="div" className="celula">
                 <span aria-hidden className="celula-num">
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <h3 className="relative font-display text-xl tracking-tight">{item.titulo}</h3>
                 <p className="relative mt-3 text-sm leading-relaxed text-luz/60">{item.texto}</p>
-              </div>
+              </Realce>
             </Reveal>
           ))}
         </div>
