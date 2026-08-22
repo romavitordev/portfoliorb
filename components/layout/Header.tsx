@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react'
 import { brand, nav } from '@/lib/site'
 import { rolarPara } from '@/lib/lenis'
 import { Marca } from '@/components/layout/Marca'
-import { Magnetico } from '@/components/fx/Magnetico'
 
 export function Header() {
   const pathname = usePathname()
@@ -105,11 +104,9 @@ export function Header() {
             )
           })}
 
-          <Magnetico>
             <Link href="/#contato" className="btn-primary !px-5 !py-2.5 text-[0.8rem]">
               Começar um projeto
             </Link>
-          </Magnetico>
         </nav>
 
         <Link href="/#contato" className="btn-primary !px-4 !py-2 text-[0.75rem] md:hidden">

@@ -187,17 +187,60 @@
     @apply active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50;
   }
 
+  /**
+   * HOVER SEM DESLOCAMENTO.
+   *
+   * Os botões subiam 2px no hover (`-translate-y-0.5`). Somado ao efeito
+   * magnético que existiu aqui, o conjunto ficava inquieto — e botão que
+   * se mexe embaixo do cursor é justamente o que dificulta acertar o
+   * clique.
+   *
+   * A resposta agora é de LUZ e COR, com a peça parada: o preenchimento
+   * clareia um passo, o halo do espectro cresce por baixo e a seta anda.
+   * A seta pode andar porque ela é a indicação de direção — o alvo do
+   * clique é o botão, e ele não sai do lugar.
+   *
+   * `active:scale` fica: aperto é confirmação do toque, não movimento
+   * ocioso.
+   */
   .btn-primary {
-    @apply btn bg-violeta font-semibold text-luz hover:-translate-y-0.5 hover:shadow-violeta active:translate-y-0;
+    @apply btn bg-violeta font-semibold text-luz;
+    box-shadow: 0 0 0 0 rgba(109, 74, 255, 0);
+  }
+  .btn-primary:hover {
+    background-color: #7f5cff;
+    box-shadow: 0 12px 34px -12px rgba(109, 74, 255, 0.65);
   }
 
   /* CTA de resultado — usa a ponta "crescimento" do espectro */
   .btn-crescer {
-    @apply btn bg-lima font-semibold text-abismo hover:-translate-y-0.5 hover:shadow-lima active:translate-y-0;
+    @apply btn bg-lima font-semibold text-abismo;
+    box-shadow: 0 0 0 0 rgba(166, 255, 77, 0);
+  }
+  .btn-crescer:hover {
+    background-color: #b6ff68;
+    box-shadow: 0 12px 34px -14px rgba(166, 255, 77, 0.5);
   }
 
   .btn-ghost {
-    @apply btn border border-luz/20 text-luz hover:-translate-y-0.5 hover:border-ciano/70 hover:text-ciano active:translate-y-0;
+    @apply btn border border-luz/20 text-luz;
+  }
+  .btn-ghost:hover {
+    border-color: rgba(0, 212, 200, 0.6);
+    color: #00d4c8;
+    background-color: rgba(0, 212, 200, 0.06);
+  }
+
+  /* A seta acompanha o hover — direção, não deslocamento do alvo. */
+  .btn-primary svg,
+  .btn-crescer svg,
+  .btn-ghost svg {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .btn-primary:hover svg,
+  .btn-crescer:hover svg,
+  .btn-ghost:hover svg {
+    transform: translateX(3px);
   }
 
   /**
