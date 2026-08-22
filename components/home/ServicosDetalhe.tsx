@@ -3,6 +3,7 @@ import { ArrowRight, Check } from 'lucide-react'
 
 import { servicos, waLink, waMensagens } from '@/lib/site'
 import { Reveal } from '@/components/ui/Reveal'
+import { Realce } from '@/components/fx/Realce'
 
 /**
  * Detalhe dos serviços — o que entra, prazo típico e para quem serve.
@@ -32,8 +33,10 @@ export function ServicosDetalhe() {
     <div className="container-page space-y-6">
       {servicos.map((servico, i) => (
         <Reveal key={servico.id} delay={i * 0.04}>
-          <article
+          <Realce
             id={servico.id}
+            como="article"
+            forca="forte"
             className="surface scroll-mt-28 p-8 md:p-12"
           >
             <div className="grid gap-10 lg:grid-cols-[1fr_1fr]">
@@ -87,7 +90,7 @@ export function ServicosDetalhe() {
                 </ul>
               </div>
             </div>
-          </article>
+          </Realce>
         </Reveal>
       ))}
     </div>

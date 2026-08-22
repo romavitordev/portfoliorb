@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react'
 
 import { socios } from '@/lib/site'
 import { Reveal } from '@/components/ui/Reveal'
+import { Realce } from '@/components/fx/Realce'
 
 /** Resumo dos dois sócios. As bios completas ficam em /estudio. */
 export function Socios() {
@@ -24,7 +25,7 @@ export function Socios() {
         <div className="mt-14 grid gap-6 md:grid-cols-2">
           {socios.map((socio, i) => (
             <Reveal key={socio.id} delay={i * 0.08}>
-              <article className="surface h-full p-8 md:p-10">
+              <Realce como="article" className="surface h-full p-8 md:p-10">
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <h3 className="t-h3 font-display">{socio.nome}</h3>
@@ -48,7 +49,7 @@ export function Socios() {
                     </li>
                   ))}
                 </ul>
-              </article>
+              </Realce>
             </Reveal>
           ))}
         </div>

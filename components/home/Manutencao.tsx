@@ -3,6 +3,7 @@ import { Check, X } from 'lucide-react'
 import { manutencao, waLink, waMensagens } from '@/lib/site'
 import { CampoDeLuz } from '@/components/fx/CampoDeLuz'
 import { Reveal } from '@/components/ui/Reveal'
+import { Realce } from '@/components/fx/Realce'
 
 /**
  * Plano mensal. Opcional de verdade — e por isso o comparativo
@@ -80,7 +81,7 @@ export function Manutencao() {
         <div className="mt-8 grid gap-6 md:grid-cols-3">
           {manutencao.niveis.map((nivel, i) => (
             <Reveal key={nivel.nome} delay={i * 0.07}>
-              <article className="surface h-full p-8">
+              <Realce como="article" className="surface h-full p-8">
                 <h3 className="t-h3 font-display">{nivel.nome}</h3>
                 <p className="mt-2 font-mono text-[0.66rem] uppercase tracking-[0.18em] text-ciano">
                   {nivel.para}
@@ -93,7 +94,7 @@ export function Manutencao() {
                     </li>
                   ))}
                 </ul>
-              </article>
+              </Realce>
             </Reveal>
           ))}
         </div>

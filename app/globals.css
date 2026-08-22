@@ -185,8 +185,40 @@
     @apply btn border border-luz/20 text-luz hover:-translate-y-0.5 hover:border-ciano/70 hover:text-ciano active:translate-y-0;
   }
 
+  /**
+   * Link de texto: o traço é DESENHADO da esquerda pra direita, não
+   * simplesmente aceso. A diferença é de leitura — traço que cresce diz
+   * "você está aqui agora"; traço que aparece inteiro é só um estado.
+   *
+   * `scaleX` com `transform-origin` e não `width`: transform não
+   * recalcula layout, então o desenho não engasga junto com a rolagem.
+   */
   .btn-link {
-    @apply inline-flex items-center gap-2 text-sm tracking-wide text-luz/70 transition-colors hover:text-ciano;
+    @apply relative inline-flex items-center gap-2 text-sm tracking-wide text-luz/70 transition-colors hover:text-ciano;
+  }
+  .btn-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 1px;
+    width: 100%;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .btn-link:hover::after,
+  .btn-link:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  /* A seta acompanha o traço, sem precisar de classe no JSX. */
+  .btn-link svg {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .btn-link:hover svg {
+    transform: translateX(3px);
   }
 
   .chip {
@@ -239,6 +271,48 @@
   }
   .celula:hover .celula-num {
     color: rgba(0, 212, 200, 0.16);
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* REALCE — o campo de luz seguindo o cursor                        */
+  /* ---------------------------------------------------------------- */
+  /**
+   * Mesmo motivo do fundo, agora dentro do card e reagindo ao ponteiro.
+   *
+   * O brilho é um pseudo-elemento, não um filho: assim ele não entra no
+   * fluxo, não é lido por leitor de tela e não intercepta clique.
+   *
+   * `--realce` (0 ou 1) controla a presença e `--mx/--my` a posição. As
+   * três são escritas pelo componente direto no style, sem passar por
+   * React — por isso a transição de opacidade mora aqui, senão o brilho
+   * apareceria e sumiria de estalo.
+   */
+  .realce {
+    position: relative;
+    isolation: isolate;
+  }
+  .realce::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    opacity: var(--realce, 0);
+    transition: opacity 0.45s ease;
+    background: radial-gradient(
+      22rem circle at var(--mx, 50%) var(--my, 50%),
+      rgba(109, 74, 255, 0.16),
+      rgba(0, 212, 200, 0.07) 40%,
+      transparent 65%
+    );
+  }
+  .realce-forte::before {
+    background: radial-gradient(
+      26rem circle at var(--mx, 50%) var(--my, 50%),
+      rgba(109, 74, 255, 0.26),
+      rgba(0, 212, 200, 0.12) 42%,
+      transparent 68%
+    );
   }
 
   /* ---------------------------------------------------------------- */

@@ -9,6 +9,7 @@ import { projetos } from '@/lib/projetos'
 import { ease } from '@/lib/design'
 import { CampoDeLuz } from '@/components/fx/CampoDeLuz'
 import { SplitWords } from '@/components/ui/SplitWords'
+import { Magnetico } from '@/components/fx/Magnetico'
 
 /**
  * A miniatura ao lado do título é a tese do site em pequeno: um bloco
@@ -109,12 +110,16 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.72, ease: ease.outExpo }}
           >
-            <Link href="/#contato" className="btn-primary">
-              Começar um projeto <ArrowRight size={16} />
-            </Link>
-            <Link href="/#projetos" className="btn-ghost">
-              Ver os {projetos.length} projetos
-            </Link>
+            <Magnetico>
+              <Link href="/#contato" className="btn-primary">
+                Começar um projeto <ArrowRight size={16} />
+              </Link>
+            </Magnetico>
+            <Magnetico forca={0.2}>
+              <Link href="/#projetos" className="btn-ghost">
+                Ver os {projetos.length} projetos
+              </Link>
+            </Magnetico>
           </motion.div>
         </div>
 
