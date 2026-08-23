@@ -159,7 +159,7 @@ export function IndiceProjetos({ projetos }: { projetos: Projeto[] }) {
                 }`}
                 style={{
                   backgroundImage:
-                    'linear-gradient(150deg, rgba(109,74,255,0.30), rgba(0,212,200,0.12) 55%, rgba(20,18,30,1))',
+                    'linear-gradient(150deg, rgb(var(--primaria) / 0.30), rgb(var(--terciaria) / 0.12) 55%, rgb(var(--superficie) / 1))',
                 }}
               />
             </div>

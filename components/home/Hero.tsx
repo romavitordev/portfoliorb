@@ -218,7 +218,7 @@ export function Hero() {
                       <div
                         className="relative flex-1"
                         style={{
-                          backgroundImage: `linear-gradient(${160 + i * 30}deg, rgba(109,74,255,0.32), rgba(0,212,200,0.14) 60%, rgba(11,10,18,0.9))`,
+                          backgroundImage: `linear-gradient(${160 + i * 30}deg, rgb(var(--primaria) / 0.32), rgb(var(--terciaria) / 0.14) 60%, rgb(var(--fundo) / 0.9))`,
                         }}
                       >
                         {p.selo && (

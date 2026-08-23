@@ -7,6 +7,7 @@ import { Search, TrendingUp } from 'lucide-react'
 import { processo } from '@/lib/site'
 import { CampoDeLuz } from '@/components/fx/CampoDeLuz'
 import { Digitando } from '@/components/ui/Digitando'
+import { Inclinar } from '@/components/fx/Inclinar'
 
 /** O catálogo que a janela mostra quando o site fica pronto. */
 const catalogo = [
@@ -278,6 +279,13 @@ function JanelaMontando({ estagio }: { estagio: number }) {
   const publicada = estagio >= 4
 
   return (
+    /*
+      Inclina menos que a miniatura do hero (2.2° contra 4°). Lá a peça é
+      pequena e o gesto precisa se anunciar; aqui a janela é grande e
+      ocupa metade da tela — o mesmo ângulo daria a sensação de que a
+      seção inteira está balançando enquanto a pessoa lê as etapas.
+    */
+    <Inclinar grau={2.2}>
     <div
       className={`cotas relative aspect-[16/11] w-full overflow-hidden rounded-xl border bg-abismo/60 shadow-elev-2 transition-colors duration-700 ${
         publicada ? 'border-solid border-linha' : 'border-dashed border-luz/20'
@@ -398,7 +406,7 @@ function JanelaMontando({ estagio }: { estagio: number }) {
                 <div
                   className="relative flex-1"
                   style={{
-                    backgroundImage: `linear-gradient(${160 + i * 30}deg, rgba(109,74,255,0.32), rgba(0,212,200,0.14) 60%, rgba(11,10,18,0.9))`,
+                    backgroundImage: `linear-gradient(${160 + i * 30}deg, rgb(var(--primaria) / 0.32), rgb(var(--terciaria) / 0.14) 60%, rgb(var(--fundo) / 0.9))`,
                   }}
                 >
                   {item.selo && (
@@ -447,6 +455,7 @@ function JanelaMontando({ estagio }: { estagio: number }) {
         </div>
       </div>
     </div>
+    </Inclinar>
   )
 }
 

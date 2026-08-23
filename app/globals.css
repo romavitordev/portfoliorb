@@ -3,6 +3,54 @@
 @tailwind utilities;
 
 @layer base {
+  /* ================================================================ */
+  /* ESPECTRO DE CORES — o único lugar pra trocar a paleta            */
+  /* ================================================================ */
+  /**
+   * Mude os valores AQUI e o site inteiro acompanha: Tailwind, sombras,
+   * campos de luz, gradientes e réguas leem todos daqui.
+   *
+   * Os canais são separados por ESPAÇO (e não `rgb(...)`) de propósito:
+   * é o formato que o Tailwind precisa pra aplicar opacidade sozinho —
+   * assim `bg-violeta/30` continua funcionando com a cor vinda daqui.
+   *
+   * As quatro do espectro têm ordem: primária é a origem (ideia),
+   * quaternária é o fim (resultado). Elementos que representam
+   * progresso — etapas, barras, números — devem caminhar nessa ordem.
+   *
+   * ATENÇÃO AO CONTRASTE ao trocar. Sobre o fundo atual:
+   *   texto        17.8:1   qualquer tamanho
+   *   quaternária  15.1:1   qualquer tamanho
+   *   terciária    10.2:1   qualquer tamanho
+   *   texto-suave   6.4:1   texto de apoio
+   *   primária      3.8:1   SÓ preenchimento, borda e texto grande
+   *
+   * A primária reprova para texto pequeno, e é por isso que todo rótulo
+   * do site usa a TERCIÁRIA. Se você inverter as duas, os rótulos ficam
+   * ilegíveis sem nenhum erro aparecer.
+   *
+   * TRÊS LUGARES NÃO LEEM DAQUI, e precisam ser trocados na mão:
+   *   app/layout.tsx   → themeColor
+   *   app/manifest.ts  → background_color e theme_color
+   *   app/icon.svg     → o degradê do ícone
+   * Não é descuido: o navegador e o sistema operacional consomem esses
+   * valores ANTES de qualquer CSS carregar, então variável não serve.
+   */
+  :root {
+    /* Espectro, do início ao fim */
+    --primaria: 109 74 255; /* violeta — ideia, inovação */
+    --secundaria: 45 139 255; /* azul — desenho, especificação */
+    --terciaria: 0 212 200; /* ciano — tecnologia, sistema rodando */
+    --quaternaria: 166 255 77; /* lima — crescimento, resultado */
+
+    /* Neutros */
+    --fundo: 11 10 18; /* quase-preto com desvio da primária */
+    --superficie: 20 18 30; /* cards e blocos elevados */
+    --linha: 34 31 50; /* filetes e bordas */
+    --texto: 236 234 245;
+    --texto-suave: 148 144 171;
+  }
+
   html {
     scroll-behavior: auto;
   }
@@ -77,13 +125,13 @@
     filter: blur(80px);
   }
   .campo-violeta {
-    background: radial-gradient(closest-side, rgba(109, 74, 255, 0.28), transparent 70%);
+    background: radial-gradient(closest-side, rgb(var(--primaria) / 0.28), transparent 70%);
   }
   .campo-ciano {
-    background: radial-gradient(closest-side, rgba(0, 212, 200, 0.2), transparent 70%);
+    background: radial-gradient(closest-side, rgb(var(--terciaria) / 0.2), transparent 70%);
   }
   .campo-lima {
-    background: radial-gradient(closest-side, rgba(166, 255, 77, 0.16), transparent 70%);
+    background: radial-gradient(closest-side, rgb(var(--quaternaria) / 0.16), transparent 70%);
   }
 
   /* ---------------------------------------------------------------- */
@@ -115,8 +163,8 @@
     height: 1px;
     background-image: linear-gradient(
       90deg,
-      rgba(0, 212, 200, 0.5),
-      rgba(109, 74, 255, 0.35) 45%,
+      rgb(var(--terciaria) / 0.5),
+      rgb(var(--primaria) / 0.35) 45%,
       transparent
     );
     /*
@@ -205,30 +253,30 @@
    */
   .btn-primary {
     @apply btn bg-violeta font-semibold text-luz;
-    box-shadow: 0 0 0 0 rgba(109, 74, 255, 0);
+    box-shadow: 0 0 0 0 rgb(var(--primaria) / 0);
   }
   .btn-primary:hover {
-    background-color: #7f5cff;
-    box-shadow: 0 12px 34px -12px rgba(109, 74, 255, 0.65);
+    background-color: color-mix(in srgb, rgb(var(--primaria)) 82%, white);
+    box-shadow: 0 12px 34px -12px rgb(var(--primaria) / 0.65);
   }
 
   /* CTA de resultado — usa a ponta "crescimento" do espectro */
   .btn-crescer {
     @apply btn bg-lima font-semibold text-abismo;
-    box-shadow: 0 0 0 0 rgba(166, 255, 77, 0);
+    box-shadow: 0 0 0 0 rgb(var(--quaternaria) / 0);
   }
   .btn-crescer:hover {
-    background-color: #b6ff68;
-    box-shadow: 0 12px 34px -14px rgba(166, 255, 77, 0.5);
+    background-color: color-mix(in srgb, rgb(var(--quaternaria)) 82%, white);
+    box-shadow: 0 12px 34px -14px rgb(var(--quaternaria) / 0.5);
   }
 
   .btn-ghost {
     @apply btn border border-luz/20 text-luz;
   }
   .btn-ghost:hover {
-    border-color: rgba(0, 212, 200, 0.6);
-    color: #00d4c8;
-    background-color: rgba(0, 212, 200, 0.06);
+    border-color: rgb(var(--terciaria) / 0.6);
+    color: rgb(var(--terciaria));
+    background-color: rgb(var(--terciaria) / 0.06);
   }
 
   /* A seta acompanha o hover — direção, não deslocamento do alvo. */
@@ -322,7 +370,7 @@
     @apply relative h-full bg-nevoa p-7 transition-colors duration-500 md:p-8;
   }
   .celula:hover {
-    background-color: rgba(28, 25, 44, 0.9);
+    background-color: rgb(var(--superficie) / 0.9);
   }
   /**
    * O número grande da célula.
@@ -339,7 +387,7 @@
     @apply pointer-events-none absolute right-5 top-3 font-display text-6xl text-luz/[0.12] transition-colors duration-500;
   }
   .celula:hover .celula-num {
-    color: rgba(0, 212, 200, 0.32);
+    color: rgb(var(--terciaria) / 0.32);
   }
 
   /* ---------------------------------------------------------------- */
@@ -370,16 +418,16 @@
     transition: opacity 0.45s ease;
     background: radial-gradient(
       22rem circle at var(--mx, 50%) var(--my, 50%),
-      rgba(109, 74, 255, 0.16),
-      rgba(0, 212, 200, 0.07) 40%,
+      rgb(var(--primaria) / 0.16),
+      rgb(var(--terciaria) / 0.07) 40%,
       transparent 65%
     );
   }
   .realce-forte::before {
     background: radial-gradient(
       26rem circle at var(--mx, 50%) var(--my, 50%),
-      rgba(109, 74, 255, 0.26),
-      rgba(0, 212, 200, 0.12) 42%,
+      rgb(var(--primaria) / 0.26),
+      rgb(var(--terciaria) / 0.12) 42%,
       transparent 68%
     );
   }
@@ -406,7 +454,7 @@
     position: absolute;
     width: 10px;
     height: 10px;
-    border-color: rgba(0, 212, 200, 0.55);
+    border-color: rgb(var(--terciaria) / 0.55);
     border-style: solid;
     pointer-events: none;
     z-index: 1;
@@ -427,7 +475,7 @@
   /* ---------------------------------------------------------------- */
   /* Texto que percorre a escala inteira — usado em uma palavra por página */
   .texto-espectro {
-    background-image: linear-gradient(100deg, #6d4aff, #2d8bff 30%, #00d4c8 62%, #a6ff4d);
+    background-image: linear-gradient(100deg, rgb(var(--primaria)), rgb(var(--secundaria)) 30%, rgb(var(--terciaria)) 62%, rgb(var(--quaternaria)));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -439,8 +487,8 @@
     background-image: linear-gradient(
       90deg,
       transparent,
-      rgba(109, 74, 255, 0.45),
-      rgba(0, 212, 200, 0.45),
+      rgb(var(--primaria) / 0.45),
+      rgb(var(--terciaria) / 0.45),
       transparent
     );
   }
@@ -460,7 +508,7 @@
   .skeleton::after {
     content: '';
     @apply absolute inset-0 -translate-x-full animate-shimmer;
-    background: linear-gradient(90deg, transparent, rgba(236, 234, 245, 0.06), transparent);
+    background: linear-gradient(90deg, transparent, rgb(var(--texto) / 0.06), transparent);
   }
 }
 

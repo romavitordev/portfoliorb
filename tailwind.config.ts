@@ -26,19 +26,29 @@ const config: Config = {
   content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './lib/**/*.{ts,tsx}'],
   theme: {
     extend: {
+      /*
+        Nenhuma cor mora aqui. Todas vêm do bloco ESPECTRO DE CORES em
+        `app/globals.css` — trocar a paleta é editar aquele `:root`.
+
+        `<alpha-value>` é o marcador que o Tailwind substitui pela
+        opacidade da classe, e é o que mantém `bg-violeta/30` funcionando
+        com a cor vinda de variável.
+
+        Os nomes das classes seguem a COR (violeta, ciano) e as variáveis
+        seguem o PAPEL (primária, terciária). Se um dia a primária deixar
+        de ser violeta, é aqui que os dois se reconciliam — e o resto do
+        código não muda.
+      */
       colors: {
-        // Tela — quase-preto com desvio violeta, não cinza neutro
-        abismo: '#0B0A12',
-        nevoa: '#14121E', // superfícies elevadas
-        linha: '#221F32', // hairlines
-        // Texto
-        luz: '#ECEAF5',
-        bruma: '#9490AB',
-        // O espectro
-        violeta: '#6D4AFF',
-        azul: '#2D8BFF',
-        ciano: '#00D4C8',
-        lima: '#A6FF4D',
+        abismo: 'rgb(var(--fundo) / <alpha-value>)',
+        nevoa: 'rgb(var(--superficie) / <alpha-value>)',
+        linha: 'rgb(var(--linha) / <alpha-value>)',
+        luz: 'rgb(var(--texto) / <alpha-value>)',
+        bruma: 'rgb(var(--texto-suave) / <alpha-value>)',
+        violeta: 'rgb(var(--primaria) / <alpha-value>)',
+        azul: 'rgb(var(--secundaria) / <alpha-value>)',
+        ciano: 'rgb(var(--terciaria) / <alpha-value>)',
+        lima: 'rgb(var(--quaternaria) / <alpha-value>)',
       },
       fontFamily: {
         display: ['var(--font-instrument)', 'Georgia', 'serif'],
@@ -56,11 +66,11 @@ const config: Config = {
       },
       boxShadow: {
         // Elevação: hairline interna + profundidade difusa, sem sombra preta chapada
-        'elev-1': '0 1px 0 0 rgba(236,234,245,0.05) inset, 0 8px 24px -16px rgba(0,0,0,0.8)',
-        'elev-2': '0 1px 0 0 rgba(236,234,245,0.06) inset, 0 18px 50px -28px rgba(0,0,0,0.9)',
-        violeta: '0 14px 40px -12px rgba(109,74,255,0.5)',
-        ciano: '0 14px 40px -12px rgba(0,212,200,0.4)',
-        lima: '0 14px 40px -14px rgba(166,255,77,0.35)',
+        'elev-1': '0 1px 0 0 rgb(var(--texto) / 0.05) inset, 0 8px 24px -16px rgba(0,0,0,0.8)',
+        'elev-2': '0 1px 0 0 rgb(var(--texto) / 0.06) inset, 0 18px 50px -28px rgba(0,0,0,0.9)',
+        violeta: '0 14px 40px -12px rgb(var(--primaria) / 0.5)',
+        ciano: '0 14px 40px -12px rgb(var(--terciaria) / 0.4)',
+        lima: '0 14px 40px -14px rgb(var(--quaternaria) / 0.35)',
       },
       keyframes: {
         descer: {

@@ -3,7 +3,7 @@
  * next/image). As fotos surgem com um fade em vez de "pipocar" na tela.
  *
  * Portado do Marcelo Imóveis, com uma diferença: lá o tom era cinza-claro
- * porque o site é claro. Aqui o retângulo tem que ser #14121E (nevoa), a
+ * porque o site é claro. Aqui o retângulo tem que ser rgb(var(--superficie)) (nevoa), a
  * cor das superfícies do tema escuro — um placeholder claro daria um
  * flash branco no meio de uma página quase preta, que é pior que não ter
  * placeholder nenhum.

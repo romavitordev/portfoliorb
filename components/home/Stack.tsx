@@ -33,8 +33,21 @@ export function Stack() {
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
-    const VELOCIDADE = 0.035 // % da largura por quadro, a 60fps
-    const SUAVIDADE = 0.045 // quanto a velocidade se aproxima do alvo por quadro
+    /*
+      A velocidade é declarada em SEGUNDOS POR VOLTA, não em porcentagem
+      por quadro. Ao trocar a animação CSS por este laço eu escolhi um
+      número solto e a fita ficou 2.3x mais rápida que o `marquee 55s`
+      anterior — erro que a unidade errada esconde e a unidade certa
+      denuncia.
+
+      A volta é de 50% porque a lista é duplicada: nesse ponto a cópia
+      cai exatamente sobre o original e a emenda some.
+    */
+    const SEGUNDOS_POR_VOLTA = 80
+    const VELOCIDADE = 50 / (SEGUNDOS_POR_VOLTA * 60)
+
+    /** Quanto a velocidade se aproxima do alvo por quadro. */
+    const SUAVIDADE = 0.045
 
     let x = 0
     let atual = 1
