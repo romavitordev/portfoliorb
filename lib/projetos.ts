@@ -214,9 +214,9 @@ export const projetos: Projeto[] = [
   {
     slug: 'rafael-pedroso-advocacia',
     nome: 'Rafael Pedroso Advocacia',
-    cliente: 'Rafael Pedroso — advocacia',
+    cliente: 'Peça conceitual — advocacia',
     categoria: 'landing',
-    natureza: 'cliente',
+    natureza: 'conceito',
     ano: 2026,
     resumo: 'Landing page jurídica com triagem de leads, LGPD e painel protegido',
     intro:

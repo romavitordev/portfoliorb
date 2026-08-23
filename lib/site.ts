@@ -115,10 +115,16 @@ export const socios: Socio[] = [
       'Diagnóstico de negócio e posicionamento',
       'Modelagem e visualização 3D de produtos',
     ],
-    links: [
-      // PLACEHOLDER — adicione os perfis do Marcelo quando tiver.
-      { label: 'LinkedIn', url: 'https://www.linkedin.com/' },
-    ],
+    /*
+      Vazio de propósito, e não com um link genérico.
+      Havia um `linkedin.com` aqui que caía na home do LinkedIn — link
+      quebrado numa apresentação pessoal é pior que botão nenhum, porque
+      quem clica interpreta como descuido.
+
+      Os perfis do estúdio (não pessoais) entram aqui quando existirem;
+      o card já lida com a lista vazia.
+    */
+    links: [],
   },
 ]
 
@@ -606,14 +612,14 @@ export const contato = {
 /* Imagens (Unsplash — placeholders do conceito)                       */
 /* ------------------------------------------------------------------ */
 
+/**
+ * Só o cartão social sobrou aqui.
+ *
+ * `estudio` e `processo` foram removidos: as páginas que os usavam
+ * viraram seções na consolidação, e as duas entradas ficaram declaradas
+ * com ZERO usos — dado morto que o próximo a abrir o arquivo tentaria
+ * entender.
+ */
 export const imagens = {
   og: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1200&q=80',
-  estudio: {
-    src: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=80',
-    alt: 'Dupla trabalhando lado a lado em frente a monitores',
-  },
-  processo: {
-    src: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=1600&q=80',
-    alt: 'Rabiscos de wireframe em papel sobre a mesa',
-  },
 }
