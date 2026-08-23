@@ -26,7 +26,12 @@ const nextConfig = {
   basePath,
   images: {
     unoptimized: true,
-    remotePatterns: [{ protocol: 'https', hostname: 'images.unsplash.com' }],
+    /*
+      Sem `remotePatterns`: não há mais imagem externa. Os prints dos
+      projetos e o cartão social são arquivos locais em /public. Deixar a
+      permissão aberta pro unsplash seria autorizar uma origem que o site
+      não usa.
+    */
   },
 }
 

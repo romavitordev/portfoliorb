@@ -7,7 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "lint": "next lint",
-    "print:projetos": "node scripts/print-projetos.mjs"
+    "print:projetos": "node scripts/print-projetos.mjs",
+    "og": "node scripts/gerar-og.mjs"
   },
   "dependencies": {
     "framer-motion": "^11.11.0",

@@ -621,5 +621,16 @@ export const contato = {
  * entender.
  */
 export const imagens = {
-  og: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1200&q=80',
+  /*
+    ABSOLUTA, e montada com `siteUrl()` — não `/og.png`.
+
+    O Next resolve URL relativa contra o `metadataBase`, e caminho que
+    começa com barra volta pra RAIZ do domínio. Com o site num subcaminho
+    (…github.io/portfoliorb), `/og.png` viraria
+    `…github.io/og.png` — 404, e o cartão sumiria em silêncio, porque
+    nenhuma rede social avisa que não conseguiu buscar a imagem.
+
+    Gerada por `npm run og` a partir de scripts/og/cartao.html.
+  */
+  og: `${siteUrl()}/og.png`,
 }
