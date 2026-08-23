@@ -1,13 +1,57 @@
+'use client'
+
+import { useEffect, useRef } from 'react'
+
 import { stackFlat, stackNota } from '@/lib/site'
 import { Reveal } from '@/components/ui/Reveal'
 
 /**
- * Marquee infinito com a stack. A lista é duplicada e o container anda
- * -50%, então a emenda é invisível. Pausa no hover; parada em reduced-motion
- * pela regra global do globals.css.
+ * Fita infinita com a stack.
+ *
+ * POR QUE NÃO É MAIS UMA ANIMAÇÃO CSS
+ * Antes a fita usava `animation: marquee` e o hover aplicava
+ * `animation-play-state: paused`. Esse estado não é transicionável: a
+ * fita travava de estalo e voltava de estalo, o que num movimento
+ * contínuo lê como engasgo.
+ *
+ * Agora um `requestAnimationFrame` desloca a fita e a velocidade é
+ * interpolada até o alvo (1 andando, 0 parada). Ela DESACELERA até
+ * parar e volta a acelerar ao sair — que é o que o olho espera de algo
+ * com massa.
+ *
+ * A lista é duplicada e o deslocamento reinicia em -50%, então a emenda
+ * é invisível.
  */
 export function Stack() {
   const fita = [...stackFlat, ...stackFlat]
+  const trilhoRef = useRef<HTMLDivElement>(null)
+  const alvoRef = useRef(1)
+
+  useEffect(() => {
+    const trilho = trilhoRef.current
+    if (!trilho) return
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const VELOCIDADE = 0.035 // % da largura por quadro, a 60fps
+    const SUAVIDADE = 0.045 // quanto a velocidade se aproxima do alvo por quadro
+
+    let x = 0
+    let atual = 1
+    let raf = 0
+
+    const passo = () => {
+      // Aproximação exponencial: rápida no começo, macia no fim.
+      atual += (alvoRef.current - atual) * SUAVIDADE
+      x -= VELOCIDADE * atual
+      if (x <= -50) x += 50 // a emenda cai exatamente na cópia
+      trilho.style.transform = `translate3d(${x}%, 0, 0)`
+      raf = requestAnimationFrame(passo)
+    }
+
+    raf = requestAnimationFrame(passo)
+    return () => cancelAnimationFrame(raf)
+  }, [])
 
   return (
     <section className="relative section-y-tight overflow-hidden border-y border-linha bg-nevoa/20">
@@ -17,17 +61,21 @@ export function Stack() {
         </Reveal>
       </div>
 
-      <div className="group relative mt-10 flex overflow-hidden" aria-hidden>
-        <div className="flex w-max animate-marquee gap-4 group-hover:[animation-play-state:paused]">
+      {/*
+        `aria-hidden` na fita: ela é decorativa e duplicada, então um
+        leitor de tela anunciaria a stack inteira duas vezes. A lista
+        legível fica na nota abaixo.
+      */}
+      <div
+        className="relative mt-10 flex overflow-hidden"
+        aria-hidden
+        onMouseEnter={() => (alvoRef.current = 0)}
+        onMouseLeave={() => (alvoRef.current = 1)}
+      >
+        <div ref={trilhoRef} className="flex w-max gap-4 will-change-transform">
           {fita.map((item, i) => (
             <span
               key={`${item.nome}-${i}`}
-              /*
-                A fita anda sozinha, mas cada item também responde: o
-                mouse acende a borda e o nome em ciano. Sem isso a fita é
-                um letreiro; com isso, é uma lista que dá pra examinar
-                item a item enquanto passa.
-              */
               className="group/chip inline-flex shrink-0 items-baseline gap-3 rounded-full border border-linha bg-nevoa px-6 py-3 transition-colors duration-300 hover:border-ciano/50"
             >
               <span className="font-display text-lg tracking-tight transition-colors duration-300 group-hover/chip:text-ciano">
@@ -52,15 +100,6 @@ export function Stack() {
           </p>
         </Reveal>
       </div>
-
-      {/* Versão acessível da mesma informação, para leitor de tela */}
-      <ul className="sr-only">
-        {stackFlat.map((item) => (
-          <li key={item.nome}>
-            {item.nome} — {item.nota}
-          </li>
-        ))}
-      </ul>
     </section>
   )
 }

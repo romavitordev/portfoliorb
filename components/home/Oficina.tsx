@@ -6,6 +6,7 @@ import { Search, TrendingUp } from 'lucide-react'
 
 import { processo } from '@/lib/site'
 import { CampoDeLuz } from '@/components/fx/CampoDeLuz'
+import { Digitando } from '@/components/ui/Digitando'
 
 /** O catálogo que a janela mostra quando o site fica pronto. */
 const catalogo = [
@@ -287,10 +288,16 @@ function JanelaMontando({ estagio }: { estagio: number }) {
         <span className="h-2 w-2 rounded-full bg-luz/15" />
         <span className="h-2 w-2 rounded-full bg-luz/15" />
         <span style={{ opacity: publicado }} className="h-2 w-2 rounded-full bg-violeta/70" />
-        <span style={{ opacity: publicado }}
-          className="ml-3 font-mono text-[0.6rem] tracking-wide text-luz/40"
+        {/*
+          O endereço é DIGITADO quando o site fica no ar, em vez de
+          aparecer pronto. É o gesto que fecha a história da seção:
+          alguém abre o navegador pra ver o que acabou de nascer.
+        */}
+        <span
+          style={{ opacity: publicado }}
+          className="ml-3 font-mono text-[0.6rem] tracking-wide text-luz/55"
         >
-          seucliente.com.br
+          <Digitando texto="seucliente.com.br" ativo={estagio >= 4} />
         </span>
       </div>
 

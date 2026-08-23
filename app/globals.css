@@ -324,11 +324,22 @@
   .celula:hover {
     background-color: rgba(28, 25, 44, 0.9);
   }
+  /**
+   * O número grande da célula.
+   *
+   * Estava em `luz/0.05` — cerca de 1.1:1 sobre a superfície, ou seja,
+   * quase invisível. Um número que não dá pra ler não ordena nada; era
+   * textura, não informação.
+   *
+   * Subiu pra 0.12 em repouso e o hover passa a acender em ciano com o
+   * dobro da presença. Continua atrás do texto (não compete com o
+   * título) mas agora cumpre o papel de contar de 01 a 06.
+   */
   .celula-num {
-    @apply pointer-events-none absolute right-5 top-3 font-display text-6xl text-luz/[0.05] transition-colors duration-500;
+    @apply pointer-events-none absolute right-5 top-3 font-display text-6xl text-luz/[0.12] transition-colors duration-500;
   }
   .celula:hover .celula-num {
-    color: rgba(0, 212, 200, 0.16);
+    color: rgba(0, 212, 200, 0.32);
   }
 
   /* ---------------------------------------------------------------- */
