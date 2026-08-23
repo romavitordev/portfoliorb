@@ -72,7 +72,7 @@ export function Footer() {
               {servicos.map((s) => (
                 <li key={s.id}>
                   <Link
-                    href={`/servicos#${s.id}`}
+                    href={`/#${s.id}`}
                     className="text-luz/70 transition-colors hover:text-ciano"
                   >
                     {s.nome}
