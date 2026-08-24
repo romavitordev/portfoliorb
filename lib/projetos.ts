@@ -382,6 +382,51 @@ export const projetos: Projeto[] = [
     emDestaque: false,
   },
 
+  /* ---------------------------------------------------------------- */
+  {
+    slug: 'motor-de-reservas',
+    nome: 'Leads — Motor de Reservas',
+    cliente: 'Produto do estúdio',
+    categoria: 'sistema',
+    natureza: 'proprio',
+    ano: 2026,
+    resumo: 'SaaS que acha empresas sem presença digital e as reserva com exclusividade',
+    intro:
+      'Um SaaS que varre empresas brasileiras com presença digital falha — sem site, sem WhatsApp, nota baixa, perfil incompleto — e entrega cada uma como lead exclusivo para quem vende esses serviços. Não vende lista: vende o direito de manter N empresas reservadas só para você.',
+    desafio:
+      'Lista de leads é commodity: a mesma empresa é vendida para dez pessoas e ninguém fecha. O produto só tem valor se a exclusividade for real — e exclusividade real é problema de banco de dados, não de promessa comercial. Duas pessoas pedindo a mesma empresa no mesmo instante não podem levar as duas.',
+    solucao:
+      'Um motor de alocação com seis regras — piso de disponibilidade, teto de concentração, cooldown, cláusula de uso, transação e paridade — que decide quem fica com o quê. A reserva acontece dentro de uma transação: ou é sua, ou não existe. Um job periódico expira o que não foi trabalhado, senão a trava anti-acaparamento existiria só no papel.',
+    destaques: [
+      {
+        titulo: 'Exclusividade que é transação, não promessa',
+        texto:
+          'A alocação roda dentro de uma transação de banco. Se duas requisições disputam a mesma empresa, uma ganha e a outra recebe negativa — nunca as duas.',
+      },
+      {
+        titulo: '108 testes, com uma suíte só de segurança',
+        texto:
+          'Oito arquivos cobrindo regra de negócio, migração, limite de taxa e admin. A suíte de segurança prova que ataques específicos falham, em vez de afirmar que o sistema é seguro.',
+      },
+      {
+        titulo: 'Limite de taxa que sobrevive a vários processos',
+        texto:
+          'Em produção o contador vive no Redis. Sem ele, o limite valeria por processo — com quatro workers, o teto real viraria quatro vezes o configurado. A aplicação avisa no boot quando está nesse modo.',
+      },
+      {
+        titulo: 'Schema versionado, nunca improvisado',
+        texto:
+          'As tabelas vêm de migrações Alembic, e não de um create_all. É o que permite mudar o banco em produção sem perder dado nem adivinhar em que estado ele está.',
+      },
+    ],
+    stack: ['Python', 'FastAPI', 'SQLAlchemy', 'Alembic', 'Redis', 'React', 'TypeScript'],
+    papel: ['Produto', 'Back-end', 'Front-end', 'Banco de dados'],
+    repo: 'https://github.com/romavitordev/local-business-scraper',
+    imagem: '/projetos/motor-de-reservas.webp',
+    imagemAlt:
+      'Tela inicial do Leads, com a chamada "Empresas sem site, reservadas só para você"',
+    emDestaque: false,
+  },
 ]
 
 /* ------------------------------------------------------------------ */

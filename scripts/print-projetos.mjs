@@ -49,17 +49,31 @@ function acharChrome() {
   return achado
 }
 
-/** Lê slug + demo direto do catálogo, pra lista nunca sair de sincronia. */
+/**
+ * Lê slug + demo direto do catálogo, pra lista nunca sair de sincronia.
+ *
+ * O par é montado DENTRO do bloco de cada projeto, não por índice entre
+ * duas listas. A versão anterior fazia `slugs[i]` com `demos[i]`, o que
+ * só funciona enquanto TODO projeto tem demo — o primeiro projeto sem
+ * demo desloca todos os seguintes, e o script grava o print de um
+ * projeto no arquivo de outro. Sem erro, sem aviso.
+ */
 function alvos() {
   const src = readFileSync('lib/projetos.ts', 'utf-8')
-  const slugs = [...src.matchAll(/slug:\s*'([^']+)'/g)].map((m) => m[1])
-  const demos = [...src.matchAll(/demo:\s*'([^']+)'/g)].map((m) => m[1])
-  return slugs
-    .map((slug, i) => {
+
+  // Cada bloco vai de um `slug:` até o próximo (ou até o fim do arquivo).
+  const blocos = src.split(/(?=
+\s*slug:\s*')/).slice(1)
+
+  return blocos
+    .map((bloco) => {
+      const slug = bloco.match(/slug:\s*'([^']+)'/)?.[1]
+      const demo = bloco.match(/demo:\s*'([^']+)'/)?.[1]
+      if (!slug) return null
       const excecao = EXCECOES[slug] ?? {}
-      return { slug, url: excecao.url ?? demos[i], rolar: excecao.rolar ?? 0 }
+      return { slug, url: excecao.url ?? demo, rolar: excecao.rolar ?? 0 }
     })
-    .filter((a) => a.url)
+    .filter((a) => a && a.url)
 }
 
 const destino = path.join('public', 'projetos')
