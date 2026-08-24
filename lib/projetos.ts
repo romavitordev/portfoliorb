@@ -422,6 +422,7 @@ export const projetos: Projeto[] = [
     stack: ['Python', 'FastAPI', 'SQLAlchemy', 'Alembic', 'Redis', 'React', 'TypeScript'],
     papel: ['Produto', 'Back-end', 'Front-end', 'Banco de dados'],
     repo: 'https://github.com/romavitordev/local-business-scraper',
+    demo: 'https://romavitordev.github.io/local_bnss_layout/',
     imagem: '/projetos/motor-de-reservas.webp',
     imagemAlt:
       'Tela inicial do Leads, com a chamada "Empresas sem site, reservadas só para você"',
