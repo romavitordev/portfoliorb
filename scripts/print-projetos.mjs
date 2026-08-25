@@ -72,8 +72,7 @@ function alvos() {
   const src = readFileSync('lib/projetos.ts', 'utf-8')
 
   // Cada bloco vai de um `slug:` até o próximo (ou até o fim do arquivo).
-  const blocos = src.split(/(?=
-\s*slug:\s*')/).slice(1)
+  const blocos = src.split(/(?=\n\s*slug:\s*')/).slice(1)
 
   return blocos
     .map((bloco) => {
@@ -91,6 +90,16 @@ function alvos() {
     .filter((a) => a && a.url)
 }
 
+/**
+ * Filtro por slug: `npm run print:projetos -- motor-de-reservas`.
+ *
+ * Sem ele, corrigir UM print re-captura os oito — e como os sites sao vivos,
+ * os outros sete voltam levemente diferentes (banner novo, foto trocada,
+ * preco atualizado). Isso vira ruido no diff e mexe em imagem que ninguem
+ * pediu pra mexer.
+ */
+const filtro = process.argv.slice(2).filter((a) => !a.startsWith('-'))
+
 const destino = path.join('public', 'projetos')
 mkdirSync(destino, { recursive: true })
 
@@ -100,7 +109,13 @@ const navegador = await puppeteer.launch({
   args: ['--hide-scrollbars', '--disable-gpu'],
 })
 
-for (const { slug, url, rolar, ocultar } of alvos()) {
+const escolhidos = alvos().filter((a) => filtro.length === 0 || filtro.includes(a.slug))
+
+if (filtro.length && !escolhidos.length) {
+  console.log(`Nenhum projeto com demo bate com: ${filtro.join(', ')}`)
+}
+
+for (const { slug, url, rolar, ocultar } of escolhidos) {
   const pagina = await navegador.newPage()
   await pagina.setViewport({ width: LARGURA, height: ALTURA, deviceScaleFactor: 1 })
 
